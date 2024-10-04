@@ -1,0 +1,124 @@
+/* Contenedor del carrusel */
+.novedades-carousel-container {
+    position: relative;
+    display: block;
+    width: 100%;
+    margin: 0 auto;
+    padding: 20px 0;
+}
+
+/* Cada elemento del carrusel */
+.novedad-item {
+    position: relative;
+    padding: 0 10px;
+    overflow: hidden;
+    height: 100%; /* Mantén el alto al 100% del contenedor */
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    border-radius: 10px;
+    max-height: 400px; /* Ajusta esto según el tamaño que quieras para todas las cards */
+}
+.novedad-item > div {
+    min-height: 280px; /* Establece un alto mínimo de 800px para los elementos hijos */
+}
+
+
+/* Imágenes dentro del carrusel */
+.novedad-item img {
+    width: 100%;
+    height: 250px; /* Fija la altura de las imágenes */
+    object-fit: cover; /* Asegura que la imagen se recorte correctamente */
+    border-radius: 10px;
+    flex-shrink: 0; /* Evita que la imagen se encoja */
+}
+
+/* Cada elemento del carrusel */
+.novedad-item {
+    position: relative;
+    padding: 0 10px;
+    overflow: hidden;
+    height: 400px; /* Mantén la altura total fija para las cards */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    border-radius: 10px;
+}
+
+/* Imágenes dentro del carrusel */
+.novedad-item img {
+    width: 100%;
+    height: auto;
+    max-height: 250px; /* Limita la altura de la imagen, pero deja que se ajuste dinámicamente */
+    object-fit: contain; /* Asegura que la imagen se ajuste sin recortarse */
+    border-radius: 10px 10px 0 0; /* Borde redondeado solo en la parte superior */
+}
+
+/* Texto con sombra dentro de la imagen */
+.novedad-caption {
+    background: rgba(0, 0, 0, 0.5);
+    color: white;
+    padding: 10px;
+    text-align: center;
+    font-size: 1rem;
+    border-radius: 0 0 10px 10px;
+    box-sizing: border-box;
+    width: 100%;
+    height: 80px;
+    margin-top: auto;
+    overflow: hidden;
+}
+
+
+/* Opcional: Estilo de los slides para eliminar el borde de enfoque */
+.slick-slide {
+    outline: none;
+}
+
+/* Estilo de los botones de navegación (prev y next) */
+.slick-prev, .slick-next {
+    font-size: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    z-index: 1;
+}
+
+/* Iconos de los botones de navegación */
+.slick-prev:before, .slick-next:before {
+    font-size: 20px;
+    color: white;
+}
+
+/* Ajustes responsivos */
+@media (max-width: 768px) {
+    .novedad-item {
+        flex: 0 0 45%;
+    }
+}
+
+@media (max-width: 576px) {
+    .novedad-item {
+        flex: 0 0 100%;
+    }
+}
+
+/* Personalización de los puntos de navegación (dots) */
+.slick-dots li button:before {
+    font-size: 12px;
+    color: rgba(0, 0, 0, 0.5);
+}
+
+.slick-dots li.slick-active button:before {
+    color: black;
+}
+
+.slick-dots {
+    bottom: -30px;
+}
+
+.slick-dots {
+    margin-top: 20px;
+    position: relative;
+}

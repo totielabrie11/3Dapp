@@ -1,0 +1,38 @@
+[
+  {
+    "id": 1,
+    "image": "/assets/img/portfolio/1727096190241.png",
+    "text": "Empleado del Mes. Leonardo D",
+    "span": "Gracias Leonardo por tu responsabilidad y compromiso para con la empresa. Esperamos que tu imagen sirva de inspiración de superación y compromiso hacia los demás. "
+  },
+  {
+    "id": 2,
+    "image": "/assets/img/portfolio/1725645369067.png",
+    "text": "Nuevo Modelo de Bomba Dosificadora EMD MAX",
+    "span": "Presentamos nuestra nueva bomba dosificadora de alta precisión. Diseñada para mejorar la eficiencia en procesos industriales, ofreciendo un rendimiento superior y bajo consumo energético."
+  },
+  {
+    "id": 3,
+    "image": "/assets/img/portfolio/1725646504396.jpeg",
+    "text": "Mantenimiento Preventivo para Bombas de Vacío",
+    "span": "Nuestro equipo de expertos ofrece servicios de mantenimiento preventivo para prolongar la vida útil de tus bombas de vacío. Contáctanos para más información y evita costosas reparaciones."
+  },
+  {
+    "id": 4,
+    "image": "/assets/img/portfolio/1725646654326.jpeg",
+    "text": "Certificación ISO 9001:2024",
+    "span": "Nos complace anunciar que hemos obtenido la certificación ISO 9001:2024, garantizando la calidad en la fabricación de nuestras bombas dosificadoras y de vacío."
+  },
+  {
+    "id": 5,
+    "image": "/assets/img/portfolio/1725646844264.jpg",
+    "text": "Capacitación Técnica para Clientes",
+    "span": "Ofrecemos un nuevo programa de capacitación técnica para nuestros clientes, enfocado en el uso y mantenimiento de bombas dosificadoras y de vacío. ¡Aprovecha esta oportunidad!"
+  },
+  {
+    "id": 6,
+    "image": "/assets/img/portfolio/1725647883100.jpg",
+    "text": "Empleado del Mes. Javier\r\n\r\n",
+    "span": "Felicidades a Juan Javier por su destacado trabajo y compromiso con la empresa. Su dedicación en la mejora continua es un ejemplo para todo el equipo."
+  }
+]

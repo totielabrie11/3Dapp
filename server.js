@@ -1,0 +1,990 @@
+const express = require('express');
+const fs = require('fs');
+const path = require('path');
+const multer = require('multer');
+const getGLTFFiles = require('./scripts/getModels');
+const session = require('express-session');
+const { upload, enviarCorreo } = require('./controllers/emailHandler');
+const fondoController = require('./controllers/fondosController');
+const pageController = require('./controllers/pageController');  
+
+const app = express();
+const port = process.env.PORT || 5000;
+
+// Configuración de tamaño límite para JSON
+app.use(express.json({ limit: '1gb' }));
+app.use(express.urlencoded({ limit: '1gb', extended: true }));
+
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  res.status(500).send('Algo salió mal');
+});
+
+
+// Configuración de sesiones
+app.use(session({
+  secret: 'your-secret-key',
+  resave: false,
+  saveUninitialized: true,
+  cookie: { maxAge: 60 * 60 * 1000 } // 1 hora de duración de la sesión
+}));
+
+// Usar fondoController para manejar las rutas relacionadas con fondos
+app.use(fondoController);
+
+// Usar pageController para manejar la asignacion de fondos de pantalla 
+app.use(pageController);
+
+// Directorios y archivos de datos
+const dataDir = path.join(__dirname, 'data');
+if (!fs.existsSync(dataDir)) {
+  fs.mkdirSync(dataDir);
+}
+
+const mailsPath = path.join(dataDir, 'mails.json');
+
+if (!fs.existsSync(mailsPath)) {
+  fs.writeFileSync(mailsPath, JSON.stringify([]));
+}
+
+const videosPath = path.join(dataDir, 'videos.json');
+if (!fs.existsSync(videosPath)) {
+  fs.writeFileSync(videosPath, JSON.stringify([]));
+}
+
+const productosDescriptionPath = path.join(dataDir, 'productosDescription.json');
+if (!fs.existsSync(productosDescriptionPath)) {
+  fs.writeFileSync(productosDescriptionPath, JSON.stringify([]));
+}
+
+const setterProductPath = path.join(dataDir, 'setterProduct.json');
+if (!fs.existsSync(setterProductPath)) {
+  fs.writeFileSync(setterProductPath, JSON.stringify([]));
+}
+
+const productOrderPath = path.join(dataDir, 'productOrder.json');
+if (!fs.existsSync(productOrderPath)) {
+  fs.writeFileSync(productOrderPath, JSON.stringify([]));
+}
+
+const usersPath = path.join(dataDir, 'us.json');
+if (!fs.existsSync(usersPath)) {
+  fs.writeFileSync(usersPath, JSON.stringify([]));
+}
+
+const novedadesPath = path.join(dataDir, 'novedades.json');
+if (!fs.existsSync(novedadesPath)) {
+  fs.writeFileSync(novedadesPath, JSON.stringify([]));
+}
+
+const equipoPath = path.join(dataDir, 'equipo.json');
+if (!fs.existsSync(equipoPath)) {
+  fs.writeFileSync(equipoPath, JSON.stringify([]));
+}
+
+const distribuidoresPath = path.join(dataDir, 'distribuidores.json');
+if (!fs.existsSync(distribuidoresPath)) {
+  fs.writeFileSync(distribuidoresPath, JSON.stringify([]));
+}
+
+
+// Funciones auxiliares para leer y escribir archivos JSON
+const readVideosFromFile = () => {
+  if (fs.existsSync(videosPath)) {
+    return JSON.parse(fs.readFileSync(videosPath, 'utf8'));
+  }
+  return [];
+};
+
+
+// Función para leer cualquier archivo JSON
+const readFileFromPath = (filePath) => {
+  if (fs.existsSync(filePath)) {
+    return JSON.parse(fs.readFileSync(filePath, 'utf8'));
+  }
+  return [];
+};
+
+// Función para guardar cualquier archivo JSON
+const saveFileToPath = (filePath, data) => {
+  fs.writeFileSync(filePath, JSON.stringify(data, null, 2));
+};
+
+// Servir archivos estáticos desde la carpeta 'public'
+app.use(express.static(path.join(__dirname, 'public')));
+
+// Servir la carpeta 'uploads' de forma pública
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+
+// Configuración de middlewares
+app.use(express.json());
+
+// Configuración de Multer para subir productos 3D (Modelos)
+const storageModels = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, path.join(__dirname, 'public', 'models')); // Directorio de destino para modelos
+  },
+  filename: (req, file, cb) => {
+    cb(null, file.originalname);  // Mantener el nombre original
+  }
+});
+
+const uploadModels = multer({ storage: storageModels }); // Multer para productos 3D
+
+// Configuración de multer para subir imágenes a public/images
+const storageImages = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, path.join(__dirname, 'public', 'images')); // Carpeta donde se almacenan las imágenes
+  },
+  filename: (req, file, cb) => {
+    const userFilename = req.body.name ? req.body.name : Date.now().toString(); // Usar el nombre proporcionado o timestamp
+    cb(null, userFilename + path.extname(file.originalname)); // Guardar archivo con el nombre proporcionado
+  }
+});
+
+const uploadImages = multer({ storage: storageImages });  // Multer para imágenes
+
+
+
+// Configuración de Multer para las novedades
+const storageNovedades = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, path.join(__dirname, 'public', 'assets', 'img', 'portfolio'));  // Directorio de novedades
+  },
+  filename: (req, file, cb) => {
+    cb(null, Date.now() + path.extname(file.originalname));  // Nombre único
+  }
+});
+
+const uploadNovedades = multer({ storage: storageNovedades });  // Multer para novedades
+
+// Configuración de Multer para el equipo
+const storageEquipo = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, path.join(__dirname, 'public', 'assets', 'img', 'team'));  // Directorio para imágenes del equipo
+  },
+  filename: (req, file, cb) => {
+    cb(null, Date.now() + path.extname(file.originalname));  // Nombre único
+  }
+});
+
+const uploadEquipo = multer({ storage: storageEquipo });  // Multer para equipo
+
+// Endpoint para manejo de login
+app.post('/api/login', (req, res) => {
+  const { username, password } = req.body;
+  const users = JSON.parse(fs.readFileSync(usersPath, 'utf8'));
+
+  const user = users.find(user => user.username === username && user.password === password);
+  if (user) {
+    res.json({ success: true, username: user.username, role: user.role });
+  } else {
+    res.status(401).json({ success: false, message: 'Invalid credentials' });
+  }
+});
+
+// Endpoint para subir productos 3D o imágenes
+app.post('/api/upload', uploadModels.single('file'), (req, res) => {  // Cambiado "upload" por "uploadModels"
+  if (!req.file) {
+    return res.status(400).json({ message: 'No se ha podido subir el producto' });
+  }
+
+  const fileExtension = path.extname(req.file.originalname).toLowerCase();
+  const validExtensions = ['.glb', '.gltf', '.jpg', '.png'];
+
+  if (!validExtensions.includes(fileExtension)) {
+    return res.status(400).json({ message: 'Tipo de archivo no soportado' });
+  }
+
+  const modelName = req.body.name || path.basename(req.file.originalname, fileExtension);
+  const modelPath = `/models/${req.file.originalname}`;
+
+  const descriptions = readFileFromPath(productosDescriptionPath);
+  const existingProduct = descriptions.find(product => product.name.toLowerCase() === modelName.toLowerCase());
+
+  if (existingProduct) {
+    if (fileExtension === '.jpg' || fileExtension === '.png') {
+      existingProduct['path-image'] = modelPath;
+    } else {
+      existingProduct.path = modelPath;
+    }
+  } else {
+    const newProduct = { name: modelName, description: '', path: '', 'path-image': '', caracteristicas: [] };
+    if (fileExtension === '.jpg' || fileExtension === '.png') {
+      newProduct['path-image'] = modelPath;
+    } else {
+      newProduct.path = modelPath;
+    }
+    descriptions.push(newProduct);
+  }
+
+  saveFileToPath(productosDescriptionPath, descriptions);
+
+  const order = readFileFromPath(productOrderPath);
+  if (!order.includes(modelName.toLowerCase())) {
+    order.push(modelName.toLowerCase());
+  }
+  saveFileToPath(productOrderPath, order);
+
+  res.status(200).json({ message: 'Producto subido exitosamente', file: req.file });
+});
+
+// Registrar productos en la base de datos
+function registerProducts(models) {
+  const descriptions = readFileFromPath(productosDescriptionPath);
+  let order = readFileFromPath(productOrderPath);
+  const uniqueProducts = new Map();
+
+  models.forEach(model => {
+    if (!uniqueProducts.has(model.name)) {
+      uniqueProducts.set(model.name, model);
+    } else {
+      const existingProduct = uniqueProducts.get(model.name);
+      if (model.path.endsWith('.jpg') || model.path.endsWith('.png')) {
+        existingProduct['path-image'] = model.path;
+      }
+    }
+  });
+
+  const uniqueModels = Array.from(uniqueProducts.values());
+
+  uniqueModels.forEach(model => {
+    const existingProduct = descriptions.find(product => product.name === model.name);
+    if (existingProduct) {
+      if (model.path.endsWith('.jpg') || model.path.endsWith('.png')) {
+        existingProduct['path-image'] = model.path;
+      } else {
+        existingProduct.path = model.path;
+      }
+    } else {
+      const newProduct = { name: model.name, description: '', path: model.path, caracteristicas: [] };
+      if (model.path.endsWith('.jpg') || model.path.endsWith('.png')) {
+        newProduct['path-image'] = model.path;
+      }
+      descriptions.push(newProduct);
+      if (!order.includes(model.name)) {
+        order.push(model.name);
+      }
+    }
+  });
+
+  saveFileToPath(productosDescriptionPath, descriptions);
+  saveFileToPath(productOrderPath, order);
+}
+
+// Obtener modelos 3D
+app.get('/api/models', (req, res) => {
+  const result = getGLTFFiles();
+  registerProducts(result.models);
+  res.json(result);
+});
+
+// Obtener descripciones de productos
+app.get('/api/product-descriptions', (req, res) => {
+  const descriptions = readFileFromPath(productosDescriptionPath);
+  res.json(descriptions);
+});
+
+// Obtener orden de productos
+app.get('/api/product-order', (req, res) => {
+  const order = readFileFromPath(productOrderPath);
+  res.json(order);
+});
+
+// Establecer el orden de los productos
+app.post('/api/product-order', (req, res) => {
+  const { order } = req.body;
+  saveFileToPath(productOrderPath, order);
+  res.json({ success: true });
+});
+
+// Actualizar descripciones de productos
+app.post('/api/product-descriptions', (req, res) => {
+  const { name, description } = req.body;
+  const descriptions = readFileFromPath(productosDescriptionPath);
+
+  const existingProduct = descriptions.find(product => product.name === name);
+  if (existingProduct) {
+    existingProduct.description = description;
+  } else {
+    descriptions.push({ name, description, caracteristicas: [] });
+  }
+
+  saveFileToPath(productosDescriptionPath, descriptions);
+  res.json({ success: true });
+});
+
+// Actualizar detalles del producto (manual, folleto)
+app.post('/api/product-details', (req, res) => {
+  const { name, manual, folleto } = req.body;
+
+  if (!name) {
+    return res.status(400).json({ message: 'El nombre del producto es obligatorio.' });
+  }
+
+  const descriptions = readFileFromPath(productosDescriptionPath);
+  const existingProduct = descriptions.find(product => product.name === name);
+
+  if (existingProduct) {
+    if (manual) existingProduct.rutas = { ...existingProduct.rutas, manual };
+    if (folleto) existingProduct.rutas = { ...existingProduct.rutas, folleto };
+
+    saveFileToPath(productosDescriptionPath, descriptions);
+
+    return res.status(200).json({ success: true, message: 'Detalles actualizados correctamente.' });
+  } else {
+    return res.status(404).json({ message: 'Producto no encontrado.' });
+  }
+});
+
+// Actualizar características de productos
+app.post('/api/product-characteristics', (req, res) => {
+  const { name, characteristics } = req.body;
+  const descriptions = readFileFromPath(productosDescriptionPath);
+
+  const existingProduct = descriptions.find(product => product.name === name);
+  if (existingProduct) {
+    existingProduct.caracteristicas = characteristics;
+  } else {
+    descriptions.push({ name, description: '', caracteristicas: characteristics });
+  }
+
+  saveFileToPath(productosDescriptionPath, descriptions);
+  res.json({ success: true });
+});
+
+// Establecer configuraciones de productos
+app.post('/api/product-settings', (req, res) => {
+  const { name, lightIntensity, spotLightIntensity, lightPosition, isAnimating, rotationSpeed } = req.body;
+  const settings = readFileFromPath(setterProductPath);
+
+  const existingProduct = settings.find(product => product.name === name);
+  if (existingProduct) {
+    existingProduct.lightIntensity = lightIntensity;
+    existingProduct.spotLightIntensity = spotLightIntensity;
+    existingProduct.lightPosition = lightPosition;
+    existingProduct.isAnimating = isAnimating;
+    existingProduct.rotationSpeed = rotationSpeed;
+  } else {
+    settings.push({ name, lightIntensity, spotLightIntensity, lightPosition, isAnimating, rotationSpeed });
+  }
+
+  saveFileToPath(setterProductPath, settings);
+  res.json({ success: true });
+});
+
+// Obtener configuraciones de productos
+app.get('/api/product-settings', (req, res) => {
+  const settings = readFileFromPath(setterProductPath);
+  res.json(settings);
+});
+
+// Obtener detalles de un producto por nombre
+app.get('/api/product/:name', (req, res) => {
+  const name = req.params.name;
+  const descriptions = readFileFromPath(productosDescriptionPath);
+  const product = descriptions.find(product => product.name === name);
+
+  if (product) {
+    res.json(product);
+  } else {
+    res.status(404).json({ message: 'Product not found' });
+  }
+});
+
+// Editar el nombre de un producto
+app.post('/api/edit-product-name', (req, res) => {
+  const { oldName, newName } = req.body;
+
+  let descriptions = readFileFromPath(productosDescriptionPath);
+  const existingProduct = descriptions.find(product => product.name === oldName);
+  if (!existingProduct) {
+    return res.status(404).json({ message: 'Product not found' });
+  }
+
+  const oldFilePath = path.join(__dirname, 'public', 'models', path.basename(existingProduct.path));
+  const fileExtension = path.extname(oldFilePath);
+  const newFilePath = path.join(__dirname, 'public', 'models', `${newName}${fileExtension}`);
+
+  fs.rename(oldFilePath, newFilePath, (err) => {
+    if (err) {
+      return res.status(500).json({ message: 'Error renaming file', error: err });
+    }
+
+    let order = readFileFromPath(productOrderPath);
+    order = order.map(name => (name === oldName ? newName : name));
+    saveFileToPath(productOrderPath, order);
+
+    let duplicateProduct = descriptions.find(product => product.name === newName);
+
+    if (existingProduct && !duplicateProduct) {
+      existingProduct.name = newName;
+      existingProduct.path = `/models/${newName}${fileExtension}`;
+    } else if (existingProduct && duplicateProduct) {
+      duplicateProduct.description = existingProduct.description || duplicateProduct.description;
+      duplicateProduct.path = existingProduct.path || duplicateProduct.path;
+      duplicateProduct.caracteristicas = [
+        ...new Set([...duplicateProduct.caracteristicas, ...existingProduct.caracteristicas])
+      ];
+      descriptions = descriptions.filter(product => product.name !== oldName);
+    }
+
+    saveFileToPath(productosDescriptionPath, descriptions);
+
+    let settings = readFileFromPath(setterProductPath);
+    settings = settings.map(setting => {
+      if (setting.name === oldName) {
+        return { ...setting, name: newName };
+      }
+      return setting;
+    });
+    saveFileToPath(setterProductPath, settings);
+
+    res.json({ success: true });
+  });
+});
+
+// Limpiar el orden de productos
+app.get('/api/clean-product-order', (req, res) => {
+  let order = readFileFromPath(productOrderPath);
+  const uniqueOrder = Array.from(new Set(order));
+  saveFileToPath(productOrderPath, uniqueOrder);
+  res.json({ success: true, order: uniqueOrder });
+});
+
+// Endpoint para obtener las novedades
+app.get('/api/novedades', (req, res) => {
+  fs.readFile(novedadesPath, 'utf8', (err, data) => {
+    if (err) {
+      return res.status(500).json({ message: 'Error leyendo novedades.json', error: err });
+    }
+    const novedades = JSON.parse(data);
+    res.json(novedades);
+  });
+});
+
+// Endpoint para crear/editar novedades con subida de imágenes
+app.post('/api/novedades', uploadNovedades.single('image'), (req, res) => {
+  try {
+    const { id, text, span } = req.body;
+    const image = req.file ? `/assets/img/portfolio/${req.file.filename}` : null;
+
+    let novedades = readFileFromPath(novedadesPath);
+
+    if (id) {
+      // Editar una novedad existente
+      const novedadIndex = novedades.findIndex(n => n.id === parseInt(id));
+      if (novedadIndex !== -1) {
+        novedades[novedadIndex].text = text;
+        novedades[novedadIndex].span = span;
+        if (image) {
+          novedades[novedadIndex].image = image;
+        }
+      } else {
+        return res.status(404).json({ message: 'Novedad no encontrada' });
+      }
+    } else {
+      // Crear una nueva novedad
+      const newId = novedades.length ? novedades[novedades.length - 1].id + 1 : 1;
+      const newNovedad = {
+        id: newId,
+        image: image || '',
+        text,
+        span
+      };
+      novedades.push(newNovedad);
+    }
+
+    saveFileToPath(novedadesPath, novedades);
+    res.json(novedades);
+  } catch (error) {
+    res.status(500).json({ message: 'Error procesando la novedad', error });
+  }
+});
+
+// Endpoint para eliminar una novedad
+app.delete('/api/novedades/:id', (req, res) => {
+  const { id } = req.params;
+  let novedades = readFileFromPath(novedadesPath);
+
+  const novedadToDelete = novedades.find(novedad => novedad.id === parseInt(id));
+
+  if (novedadToDelete) {
+    // Eliminar la novedad de la base de datos
+    novedades = novedades.filter(novedad => novedad.id !== parseInt(id));
+    saveFileToPath(novedadesPath, novedades);
+
+    // Eliminar el archivo de imagen si existe
+    if (novedadToDelete.image) {
+      const imagePath = path.join(__dirname, 'public', novedadToDelete.image);
+      if (fs.existsSync(imagePath)) {
+        fs.unlink(imagePath, (err) => {
+          if (err) {
+            console.error('Error al eliminar la imagen:', err);
+          }
+        });
+      }
+    }
+
+    return res.json({ success: true });
+  } else {
+    return res.status(404).json({ message: 'Novedad no encontrada' });
+  }
+});
+
+// Endpoint para obtener los miembros del equipo
+app.get('/api/equipo', (req, res) => {
+  const equipo = readFileFromPath(equipoPath);
+  res.json(equipo);
+});
+
+// Endpoint para crear/editar un miembro del equipo
+app.post('/api/equipo', uploadEquipo.single('image'), (req, res) => {
+  try {
+    const { id, nombre, rol, email, telefono, linkedin } = req.body;
+    const image = req.file ? `/assets/img/team/${req.file.filename}` : null;
+
+    let equipo = readFileFromPath(equipoPath);
+
+    if (id) {
+      // Editar miembro existente
+      const miembroIndex = equipo.findIndex(m => m.id === parseInt(id));
+      if (miembroIndex !== -1) {
+        equipo[miembroIndex].nombre = nombre;
+        equipo[miembroIndex].rol = rol;
+        equipo[miembroIndex].email = email;
+        equipo[miembroIndex].telefono = telefono;
+        equipo[miembroIndex].linkedin = linkedin;
+        if (image) {
+          equipo[miembroIndex].image = image;
+        }
+      } else {
+        return res.status(404).json({ message: 'Miembro no encontrado' });
+      }
+    } else {
+      // Crear un nuevo miembro
+      const newId = equipo.length ? equipo[equipo.length - 1].id + 1 : 1;
+      const newMiembro = {
+        id: newId,
+        nombre,
+        rol,
+        email,
+        telefono,
+        linkedin,
+        image: image || ''
+      };
+      equipo.push(newMiembro);
+    }
+
+    saveFileToPath(equipoPath, equipo);
+    res.json(equipo);
+  } catch (error) {
+    res.status(500).json({ message: 'Error procesando el miembro del equipo', error });
+  }
+});
+
+// Endpoint para eliminar un miembro del equipo
+app.delete('/api/equipo/:id', (req, res) => {
+  const { id } = req.params;
+  let equipo = readFileFromPath(equipoPath);
+
+  const miembroToDelete = equipo.find(miembro => miembro.id === parseInt(id));
+
+  if (miembroToDelete) {
+    // Eliminar el miembro del equipo
+    equipo = equipo.filter(miembro => miembro.id !== parseInt(id));
+    saveFileToPath(equipoPath, equipo);
+
+    // Eliminar el archivo de imagen si existe
+    if (miembroToDelete.image) {
+      const imagePath = path.join(__dirname, 'public', miembroToDelete.image);
+      if (fs.existsSync(imagePath)) {
+        fs.unlink(imagePath, (err) => {
+          if (err) {
+            console.error('Error al eliminar la imagen:', err);
+          }
+        });
+      }
+    }
+
+    res.json(equipo);
+  } else {
+    res.status(404).json({ message: 'Miembro no encontrado' });
+  }
+});
+
+// Endpoint para obtener los distribuidores
+app.get('/api/distribuidores', (req, res) => {
+  const distribuidores = readFileFromPath(distribuidoresPath);
+  res.json(distribuidores);
+});
+
+// Crear o editar un distribuidor
+app.post('/api/distribuidores', (req, res) => {
+  try {
+    const { id, nombre, direccion, provincia, telefono, mail, tipo, posicion } = req.body;
+    let distribuidores = readFileFromPath(distribuidoresPath);
+
+    if (id) {
+      // Editar distribuidor existente
+      const distribuidorIndex = distribuidores.findIndex(d => d.id === parseInt(id));
+      if (distribuidorIndex !== -1) {
+        distribuidores[distribuidorIndex] = {
+          ...distribuidores[distribuidorIndex],
+          nombre,
+          direccion,
+          provincia,
+          telefono,
+          mail,
+          tipo,
+          posicion
+        };
+      } else {
+        return res.status(404).json({ message: 'Distribuidor no encontrado' });
+      }
+    } else {
+      // Crear un nuevo distribuidor
+      const newId = distribuidores.length ? Math.max(...distribuidores.map(d => d.id)) + 1 : 1;
+      const newDistribuidor = {
+        id: newId,
+        nombre,
+        direccion,
+        provincia,
+        telefono,
+        mail,
+        tipo,
+        posicion
+      };
+      distribuidores.push(newDistribuidor);
+    }
+
+    saveFileToPath(distribuidoresPath, distribuidores);
+    res.json(distribuidores);
+  } catch (error) {
+    res.status(500).json({ message: 'Error al procesar el distribuidor', error });
+  }
+});
+
+// Eliminar distribuidor
+app.delete('/api/distribuidores/:id', (req, res) => {
+  const { id } = req.params;
+  let distribuidores = readFileFromPath(distribuidoresPath);
+
+  const distribuidorToDelete = distribuidores.find(distribuidor => distribuidor.id === parseInt(id));
+
+  if (distribuidorToDelete) {
+    distribuidores = distribuidores.filter(distribuidor => distribuidor.id !== parseInt(id));
+    saveFileToPath(distribuidoresPath, distribuidores);
+
+    res.json(distribuidores);
+  } else {
+    res.status(404).json({ message: 'Distribuidor no encontrado' });
+  }
+});
+
+// Editar un distribuidor
+app.put('/api/distribuidores/:id', (req, res) => {
+  const { id } = req.params;
+  const { nombre, direccion, provincia, telefono, mail, tipo, posicion } = req.body;
+
+  let distribuidores = readFileFromPath(distribuidoresPath);
+  const distribuidorIndex = distribuidores.findIndex(d => d.id === parseInt(id));
+
+  if (distribuidorIndex !== -1) {
+    distribuidores[distribuidorIndex] = {
+      id: parseInt(id),
+      nombre,
+      direccion,
+      provincia,
+      telefono,
+      mail,
+      tipo,
+      posicion,
+    };
+
+    saveFileToPath(distribuidoresPath, distribuidores);
+    res.json(distribuidores);
+  } else {
+    res.status(404).json({ message: 'Distribuidor no encontrado' });
+  }
+});
+
+app.get('/api/images', (req, res) => {
+  const imagesDir = path.join(__dirname, 'public', 'images');
+  fs.readdir(imagesDir, (err, files) => {
+    if (err) {
+      return res.status(500).json({ success: false, message: 'Error al leer el directorio' });
+    }
+
+    // Filtrar solo los archivos regulares, excluyendo carpetas
+    const images = [];
+    files.forEach((file) => {
+      const filePath = path.join(imagesDir, file);
+      const stat = fs.lstatSync(filePath);
+
+      if (stat.isFile()) {  // Verifica si es un archivo regular
+        images.push({
+          name: file,
+          url: `/images/${file}`
+        });
+      }
+    });
+
+    res.json({ success: true, images });
+  });
+});
+
+
+// Endpoint para subir una nueva imagen
+app.post('/api/images/upload', uploadImages.single('image'), (req, res) => {
+  if (!req.file) {
+    return res.status(400).json({ success: false, message: 'No se ha subido ninguna imagen' });
+  }
+  res.json({ success: true, message: 'Imagen subida con éxito', url: `/images/${req.file.filename}` });
+});
+
+// Endpoint para eliminar una imagen
+app.delete('/api/images/:filename', (req, res) => {
+  const filename = req.params.filename;
+  const filePath = path.join(__dirname, 'public', 'images', filename);
+
+  fs.unlink(filePath, (err) => {
+    if (err && err.code === 'ENOENT') {
+      // Archivo no encontrado
+      return res.status(404).json({ success: false, message: 'Imagen no encontrada' });
+    } else if (err) {
+      // Otros errores del sistema
+      return res.status(500).json({ success: false, message: 'Error al eliminar la imagen', error: err });
+    }
+
+    res.json({ success: true, message: 'Imagen eliminada con éxito' });
+  });
+});
+
+// Endpoint para reemplazar una imagen existente
+app.put('/api/images/:filename', uploadImages.single('image'), (req, res) => {
+  const filename = req.params.filename;  // Nombre de la imagen actual que se va a reemplazar
+  const filePath = path.join(__dirname, 'public', 'images', filename);
+
+  // Primero, eliminar la imagen existente
+  fs.unlink(filePath, (err) => {
+    if (err && err.code === 'ENOENT') {
+      // Si el archivo no existe, logueamos pero seguimos con la nueva imagen
+      console.log('Archivo no encontrado, subiendo la nueva imagen');
+    } else if (err) {
+      // Si hay un error al eliminar, devolvemos un mensaje de error
+      return res.status(500).json({ success: false, message: 'Error al eliminar la imagen existente', error: err });
+    }
+
+    // Verificamos que el nuevo archivo haya sido subido
+    if (!req.file) {
+      return res.status(400).json({ success: false, message: 'No se ha subido ninguna nueva imagen para reemplazar' });
+    }
+
+    // Devolver éxito con la nueva URL de la imagen
+    res.json({ success: true, message: 'Imagen reemplazada con éxito', url: `/images/${req.file.filename}` });
+  });
+});
+
+// Configuración de Multer para almacenar videos
+const storageVideos = multer.diskStorage({
+  destination: (req, file, cb) => {
+    // Definir la ruta de destino donde se almacenarán los videos
+    cb(null, path.join(__dirname, 'uploads', 'videos'));
+  },
+  filename: (req, file, cb) => {
+    // Guardar el archivo con un nombre único basado en la fecha
+    const uniqueFilename = `${Date.now()}_${file.originalname.replace(/\s+/g, '_')}`;
+    cb(null, uniqueFilename);
+  }
+});
+
+// Inicialización de Multer con almacenamiento y límite de tamaño
+const uploadVideos = multer({
+  storage: storageVideos,
+  limits: { fileSize: 1024 * 1024 * 1024 }, // Límite de 1 GB
+  fileFilter: (req, file, cb) => {
+    const filetypes = /mp4|avi|mkv|mov|webm/;
+    const mimetype = filetypes.test(file.mimetype);
+    const extname = filetypes.test(path.extname(file.originalname).toLowerCase());
+
+    if (mimetype && extname) {
+      cb(null, true); // Aceptar archivo
+    } else {
+      cb(new Error('Solo se permiten archivos de video (mp4, avi, mkv, mov, webm)')); // Rechazar archivo
+    }
+  }
+}).single('video');
+
+
+// Función para guardar el archivo JSON
+function saveVideosToFile(videos) {
+  try {
+    fs.writeFileSync(videosPath, JSON.stringify(videos, null, 2));
+  } catch (error) {
+    console.error('Error al guardar el archivo videos.json:', error);
+  }
+}
+
+
+// Endpoint para subir un nuevo video
+app.post('/api/videos/upload', (req, res) => {
+  uploadVideos(req, res, (err) => {
+    if (err instanceof multer.MulterError) {
+      return res.status(400).json({ success: false, message: 'El tamaño del archivo excede el límite de 1 GB' });
+    } else if (err) {
+      return res.status(400).json({ success: false, message: err.message });
+    }
+
+    if (!req.file) {
+      return res.status(400).json({ success: false, message: 'No se ha subido ningún archivo de video' });
+    }
+
+    // Subida exitosa, ahora actualizamos el archivo JSON
+    const videoId = Date.now(); // Generar un ID único basado en el timestamp
+    const videoUrl = `/uploads/videos/${req.file.filename}`; // Nueva URL del video
+    const newVideo = {
+      id: videoId,
+      name: req.body.name || 'video',
+      filename: req.file.filename,
+      url: videoUrl,
+      isPrincipal: false // El nuevo video no es principal por defecto
+    };
+
+    // Leer el archivo videos.json
+    const videos = readVideosFromFile();
+
+    // Agregar el nuevo video a la lista
+    videos.push(newVideo);
+
+    // Guardar la lista actualizada en videos.json
+    saveVideosToFile(videos);
+
+    // Responder con éxito
+    res.json({ success: true, message: 'Video subido con éxito', video: newVideo });
+  });
+});
+
+// Crear directorio si no existe
+const videoDir = path.join(__dirname, 'uploads', 'videos');
+if (!fs.existsSync(videoDir)) {
+  fs.mkdirSync(videoDir, { recursive: true });
+}
+
+// Endpoint para obtener la lista de videos
+app.get('/api/videos', (req, res) => {
+  const videos = readVideosFromFile();
+  res.json({ success: true, videos });
+});
+
+
+// Endpoint para eliminar un video por ID
+app.delete('/api/videos/:id', (req, res) => {
+  const id = parseInt(req.params.id); // Convertir el ID a número
+  const videos = readVideosFromFile(); // Leer los videos actuales desde el archivo JSON
+  const video = videos.find(video => video.id === id);
+
+  if (!video) {
+    return res.status(404).json({ success: false, message: 'Video no encontrado' });
+  }
+
+  // Construir la ruta completa del archivo del video
+  const filePath = path.join(__dirname, 'uploads', 'videos', video.filename);
+
+  // Eliminar el archivo del video
+  fs.unlink(filePath, (err) => {
+    if (err && err.code !== 'ENOENT') {
+      // Si el archivo no existe, ignorar el error, pero si ocurre otro error, manejarlo
+      return res.status(500).json({ success: false, message: 'Error al eliminar el archivo físico' });
+    }
+
+    // Filtrar la lista de videos para eliminar el video con el ID correspondiente
+    const updatedVideos = videos.filter(v => v.id !== id);
+
+    // Guardar la lista actualizada de videos en el archivo JSON
+    saveVideosToFile(updatedVideos);
+
+    // Responder con éxito
+    res.json({ success: true, message: 'Video eliminado con éxito' });
+  });
+});
+
+
+// Endpoint para actualizar un video (renombrar o cambiar archivo)
+app.put('/api/videos/:id', uploadVideos, (req, res) => {
+  const id = parseInt(req.params.id);
+  const videos = readVideosFromFile();
+  const videoIndex = videos.findIndex(video => video.id === id);
+
+  if (videoIndex === -1) {
+    return res.status(404).json({ success: false, message: 'Video no encontrado' });
+  }
+
+  if (req.file) {
+    // Si se subió un nuevo archivo de video, actualizar el archivo
+    const newFilename = req.file.filename;
+    const oldFilePath = path.join(__dirname, 'public', 'videos', videos[videoIndex].filename);
+    videos[videoIndex].filename = newFilename;
+    videos[videoIndex].url = `/videos/${newFilename}`;
+
+    // Eliminar el archivo anterior de manera asíncrona
+    fs.unlink(oldFilePath, (err) => {
+      if (err && err.code !== 'ENOENT') {
+        console.error('Error al eliminar el archivo anterior:', err);
+        return res.status(500).json({ success: false, message: 'Error al eliminar el archivo anterior' });
+      }
+    });
+  }
+
+  if (req.body.name) {
+    // Actualizar solo el nombre amigable del video
+    videos[videoIndex].name = req.body.name;
+  }
+
+  try {
+    saveVideosToFile(videos);
+    res.json({ success: true, message: 'Video actualizado con éxito', video: videos[videoIndex] });
+  } catch (error) {
+    console.error('Error al guardar video actualizado:', error);
+    res.status(500).json({ success: false, message: 'Error al actualizar el video' });
+  }
+});
+
+
+// Endpoint para marcar un video como principal
+app.put('/api/videos/set-principal/:id', (req, res) => {
+  const id = parseInt(req.params.id);
+  const videos = readVideosFromFile();
+  const videoIndex = videos.findIndex(video => video.id === id);
+
+  if (videoIndex === -1) {
+    return res.status(404).json({ success: false, message: 'Video no encontrado' });
+  }
+
+  // Marcar todos los videos como no principales
+  videos.forEach(video => (video.isPrincipal = false));
+
+  // Marcar el video seleccionado como principal
+  videos[videoIndex].isPrincipal = true;
+  saveVideosToFile(videos);
+
+  res.json({ success: true, message: `El video ${videos[videoIndex].name} ha sido marcado como principal` });
+});
+
+
+// Endpoint para manejar contactos y envío de correos
+app.post('/api/contact', upload.single('file'), enviarCorreo);
+
+
+// Para servir el frontend (React o cualquier SPA)
+app.use(express.static(path.join(__dirname, 'build')));
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, 'build', 'index.html'));
+});
+
+// Iniciar el servidor
+const server = app.listen(port, () => {
+  console.log(`Servidor corriendo en el puerto ${port}`);
+});
+
+server.setTimeout(10 * 60 * 1000); // 10 minutos de timeout
