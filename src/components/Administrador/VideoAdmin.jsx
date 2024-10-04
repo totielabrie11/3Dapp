@@ -1,92 +1,63 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import VideoAdminAsignador from './VideoAdminAsignador'; // Componente para asignar videos a páginas
 
 function VideoAdmin() {
-  const [videos, setVideos] = useState([]);  // Lista de videos
-  const [newVideo, setNewVideo] = useState({ name: '', video: null });  // Video a cargar o editar
-  const [editingVideo, setEditingVideo] = useState(null);  // Video en modo edición
-  const [uploadProgress, setUploadProgress] = useState(0);  // Progreso de la subida
-  const [error, setError] = useState('');  // Mensaje de error
-  const [successMessage, setSuccessMessage] = useState('');  // Mensaje de éxito
+  const [videos, setVideos] = useState([]);
+  const [newVideo, setNewVideo] = useState({ name: '', video: null });
+  const [editingVideo, setEditingVideo] = useState(null); // Permitir la edición de videos
+  const [error, setError] = useState(null);
+  const [showAssignModal, setShowAssignModal] = useState(false);  // Controla el modal de asignación
+  const [selectedVideo, setSelectedVideo] = useState(null);  // Almacena el video seleccionado para asignar
 
-  // Obtener los videos al cargar el componente
+  // Cargar los videos desde el servidor
   useEffect(() => {
     const fetchVideos = async () => {
       try {
-        const response = await axios.get('/api/videos');  // Obtener la lista de videos
-        if (response.data && response.data.videos) {
-          setVideos(response.data.videos);  // Asegúrate de que existan los datos antes de asignarlos
-        }
+        const response = await axios.get('/api/videos');
+        setVideos(response.data.videos || []);
+        setError(null);  // Limpiar cualquier error previo
       } catch (error) {
         console.error('Error al obtener los videos:', error);
-        setError('Error al obtener los videos');
+        setError('Error al cargar los videos.');
       }
     };
     fetchVideos();
   }, []);
 
-  // Manejar cambios en los campos de entrada (nombre o archivo de video)
+  // Maneja los cambios en el formulario
   const handleInputChange = (e) => {
     const { name, value, files } = e.target;
     if (name === 'video') {
-      const file = files[0];
-      setNewVideo({ ...newVideo, video: file });
+      setNewVideo({ ...newVideo, video: files[0] });
     } else {
       setNewVideo({ ...newVideo, [name]: value });
     }
   };
 
-  // Agregar un nuevo video con progreso
-  const handleAddVideo = async (e) => {
-    e.preventDefault();
-    if (!newVideo.video) {
-      setError('Por favor selecciona un archivo de video antes de subirlo.');
+  // Subir un nuevo video
+  const handleAddVideo = async () => {
+    if (!newVideo.name || !newVideo.video) {
+      setError('Debes proporcionar un nombre y seleccionar un video.');
       return;
     }
-  
+
     try {
       const formData = new FormData();
-      formData.append('name', newVideo.name || 'video');
+      formData.append('name', newVideo.name);
       formData.append('video', newVideo.video);
-  
-      setUploadProgress(0);
-      setSuccessMessage('');
-      setError('');
-  
+
       const response = await axios.post('/api/videos/upload', formData, {
-        headers: { 'Content-Type': 'multipart/form-data' },
-        onUploadProgress: (progressEvent) => {
-          const percentCompleted = Math.round((progressEvent.loaded * 100) / progressEvent.total);
-          setUploadProgress(percentCompleted);
-        }
+        headers: { 'Content-Type': 'multipart/form-data' }
       });
-  
-      // Agregar el video subido a la lista de videos
-      const updatedVideos = [...videos, response.data.video];
-      setVideos(updatedVideos); // Actualiza la lista de videos
-      setNewVideo({ name: '', video: null }); // Resetea el formulario
-      setUploadProgress(0);
-      setSuccessMessage('Video subido con éxito');
+
+      const updatedVideos = [...videos, { id: response.data.video.id, name: newVideo.name, url: response.data.video.url }];
+      setVideos(updatedVideos);
+      setNewVideo({ name: '', video: null });
+      setError(null);
     } catch (error) {
       console.error('Error al agregar el video:', error);
-      setUploadProgress(0);
-      setError('Error al subir el video. Por favor intenta nuevamente.');
-    }
-  };
-  
-  // Marcar un video como principal
-  const handleSetPrincipal = async (id) => {
-    try {
-      const response = await axios.put(`/api/videos/set-principal/${id}`);
-      const updatedVideos = videos.map((video) => ({
-        ...video,
-        isPrincipal: video.id === id
-      }));
-      setVideos(updatedVideos);
-      setSuccessMessage(response.data.message);
-    } catch (error) {
-      console.error('Error al marcar el video como principal:', error);
-      setError('Error al marcar el video como principal. Intenta nuevamente.');
+      setError('Error al agregar el video.');
     }
   };
 
@@ -96,42 +67,38 @@ function VideoAdmin() {
     setNewVideo({ name: video.name, video: null });
   };
 
-  // Guardar los cambios de un video en modo edición
-  const handleSaveEdit = async (e) => {
-    e.preventDefault();
-    if (!newVideo.video && newVideo.name === editingVideo.name) {
-      setError('No se detectaron cambios para guardar.');
+  // Guardar cambios de edición
+  const handleSaveEdit = async () => {
+    if (!newVideo.name) {
+      setError('Debes proporcionar un nombre.');
       return;
     }
 
     try {
       const formData = new FormData();
       formData.append('name', newVideo.name);
+
       if (newVideo.video) {
         formData.append('video', newVideo.video);
       }
 
       const response = await axios.put(`/api/videos/${editingVideo.id}`, formData, {
-        headers: { 'Content-Type': 'multipart/form-data' },
-        onUploadProgress: (progressEvent) => {
-          const percentCompleted = Math.round((progressEvent.loaded * 100) / progressEvent.total);
-          setUploadProgress(percentCompleted);
-        }
+        headers: { 'Content-Type': 'multipart/form-data' }
       });
 
       const updatedVideos = videos.map((video) =>
-        video.id === editingVideo.id ? { ...video, name: newVideo.name, url: response.data.video.url } : video
+        video.id === editingVideo.id
+          ? { ...video, name: newVideo.name, url: response.data.video.url }
+          : video
       );
 
       setVideos(updatedVideos);
       setEditingVideo(null);
       setNewVideo({ name: '', video: null });
-      setUploadProgress(0);
-      setSuccessMessage('Video editado con éxito');
+      setError(null);
     } catch (error) {
       console.error('Error al guardar los cambios:', error);
-      setUploadProgress(0);
-      setError('Error al guardar los cambios del video. Intenta nuevamente.');
+      setError('Error al guardar los cambios.');
     }
   };
 
@@ -141,77 +108,77 @@ function VideoAdmin() {
       await axios.delete(`/api/videos/${id}`);
       const updatedVideos = videos.filter(video => video.id !== id);
       setVideos(updatedVideos);
+      setError(null);
     } catch (error) {
       console.error('Error al eliminar el video:', error);
+      setError('Error al eliminar el video.');
     }
+  };
+
+  // Abrir el modal de asignación de video
+  const handleAssign = (video) => {
+    setSelectedVideo(video);
+    setShowAssignModal(true);
+  };
+
+  // Cerrar el modal de asignación
+  const handleAssignModalClose = () => {
+    setShowAssignModal(false);
+    setSelectedVideo(null);
   };
 
   return (
     <div className="container my-5">
       <h2>Administrar Videos</h2>
 
-      {/* Lista de videos */}
-      <h3>Videos existentes:</h3>
-      {videos.length > 0 ? (
-        <ul className="list-group mb-4">
-          {videos.map((video) => (
-            video && video.name ? (
-              <li key={video.id} className="list-group-item d-flex justify-content-between align-items-center">
-                <div>
-                  <strong>{video.name}</strong>
-                  <video src={video.url} controls style={{ maxWidth: '100px', marginLeft: '20px' }} />
-                  {video.isPrincipal && <span className="badge bg-primary ms-2">Principal</span>}
-                </div>
-                <div>
-                  <button
-                    className="btn btn-warning btn-sm me-2"
-                    onClick={() => handleEditVideo(video)}
-                  >
-                    Editar
-                  </button>
-                  <button
-                    className="btn btn-danger btn-sm me-2"
-                    onClick={() => handleDeleteVideo(video.id)}
-                  >
-                    Eliminar
-                  </button>
-                  <button
-                    className="btn btn-success btn-sm"
-                    onClick={() => handleSetPrincipal(video.id)}
-                  >
-                    Marcar como Principal
-                  </button>
-                </div>
-              </li>
-            ) : null
-          ))}
-        </ul>
-      ) : (
-        <p>No hay videos disponibles.</p>
-      )}
+      {/* Muestra cualquier error */}
+      {error && <div className="alert alert-danger" role="alert">{error}</div>}
 
-      {/* Progreso de la subida */}
-      {uploadProgress > 0 && (
-        <div className="mb-4">
-          <label>Progreso de la subida:</label>
-          <div className="progress">
-            <div
-              className="progress-bar"
-              role="progressbar"
-              style={{ width: `${uploadProgress}%` }}
-              aria-valuenow={uploadProgress}
-              aria-valuemin="0"
-              aria-valuemax="100"
-            >
-              {uploadProgress}%
-            </div>
-          </div>
-        </div>
-      )}
+      {/* Lista de videos existentes */}
+      <h3>Videos Existentes:</h3>
+      <ul className="list-group mb-4">
+        {videos.length > 0 ? (
+          videos.map(video => (
+            <li key={video.id} className="list-group-item d-flex justify-content-between align-items-center">
+              <div>
+                <strong>{video.name}</strong>
+                <video
+                  src={video.url}
+                  controls
+                  className="ms-3"
+                  style={{ maxWidth: '100px' }}
+                />
+              </div>
+              <div>
+                <button
+                  className="btn btn-warning btn-sm me-2"
+                  onClick={() => handleEditVideo(video)}  // Edita el video
+                >
+                  Editar
+                </button>
+                <button
+                  className="btn btn-danger btn-sm me-2"
+                  onClick={() => handleDeleteVideo(video.id)}  // Elimina el video
+                >
+                  Eliminar
+                </button>
+                <button
+                  className="btn btn-info btn-sm"
+                  onClick={() => handleAssign(video)}  // Asigna el video a una página
+                >
+                  Asignar
+                </button>
+              </div>
+            </li>
+          ))
+        ) : (
+          <li className="list-group-item">No se encontraron videos.</li>
+        )}
+      </ul>
 
       {/* Formulario para agregar o editar un video */}
       <h3>{editingVideo ? 'Editar Video' : 'Agregar Nuevo Video'}</h3>
-      <form onSubmit={editingVideo ? handleSaveEdit : handleAddVideo}>
+      <form onSubmit={e => e.preventDefault()}>
         <div className="mb-3">
           <label htmlFor="videoName" className="form-label">Nombre del Video:</label>
           <input
@@ -221,7 +188,7 @@ function VideoAdmin() {
             name="name"
             value={newVideo.name}
             onChange={handleInputChange}
-            placeholder="Ej. Video de Introducción"
+            placeholder="Ej. Video Promocional"
           />
         </div>
         <div className="mb-3">
@@ -231,13 +198,18 @@ function VideoAdmin() {
             type="file"
             className="form-control"
             name="video"
-            accept="video/*"
             onChange={handleInputChange}
           />
         </div>
-        <button type="submit" className="btn btn-primary">
-          {editingVideo ? 'Guardar Cambios' : 'Agregar Video'}
-        </button>
+        {editingVideo ? (
+          <button type="button" className="btn btn-success" onClick={handleSaveEdit}>
+            Guardar Cambios
+          </button>
+        ) : (
+          <button type="button" className="btn btn-primary" onClick={handleAddVideo}>
+            Agregar Video
+          </button>
+        )}
         {editingVideo && (
           <button type="button" className="btn btn-secondary ms-2" onClick={() => setEditingVideo(null)}>
             Cancelar
@@ -245,9 +217,14 @@ function VideoAdmin() {
         )}
       </form>
 
-      {/* Mensajes de error y éxito */}
-      {error && <p style={{ color: 'red', marginTop: '20px' }}>{error}</p>}
-      {successMessage && <p style={{ color: 'green', marginTop: '20px' }}>{successMessage}</p>}
+      {/* Modal de asignación */}
+      {selectedVideo && (
+        <VideoAdminAsignador
+          show={showAssignModal}
+          handleClose={handleAssignModalClose}
+          selectedVideo={selectedVideo}  // Pasar el video seleccionado al modal
+        />
+      )}
     </div>
   );
 }

@@ -4,6 +4,7 @@ const multer = require('multer');
 
 // Ruta a la base de datos de videos
 const videosPath = path.join(__dirname, '../data/videos.json');
+const pagesVideosPath = path.join(__dirname, '../data/pagesVideos.json');  // Nuevo archivo de asignación de videos a páginas
 
 // Función para leer videos desde el archivo JSON
 const readVideosFromFile = () => {
@@ -16,6 +17,19 @@ const readVideosFromFile = () => {
 // Función para guardar videos en el archivo JSON
 const saveVideosToFile = (videos) => {
   fs.writeFileSync(videosPath, JSON.stringify(videos, null, 2));
+};
+
+// Función para leer asignaciones de videos a páginas
+const readPagesVideosFile = () => {
+  if (fs.existsSync(pagesVideosPath)) {
+    return JSON.parse(fs.readFileSync(pagesVideosPath, 'utf8'));
+  }
+  return {};
+};
+
+// Función para guardar asignaciones de videos a páginas
+const savePagesVideosFile = (data) => {
+  fs.writeFileSync(pagesVideosPath, JSON.stringify(data, null, 2));
 };
 
 // Crear directorio de videos si no existe
@@ -160,6 +174,40 @@ const videoController = {
     saveVideosToFile(videos);
 
     res.json({ success: true, message: `El video ${videos[videoIndex].name} ha sido marcado como principal` });
+  },
+
+  // NUEVAS FUNCIONALIDADES:
+
+  // Asignar video a página
+  assignToPage: (req, res) => {
+    const { videoName, pageName } = req.body;
+
+    if (!videoName || !pageName) {
+      return res.status(400).json({ success: false, message: 'Faltan parámetros (video o página)' });
+    }
+
+    const pagesVideos = readPagesVideosFile();
+    pagesVideos[pageName] = videoName;  // Asignar video a la página
+    savePagesVideosFile(pagesVideos);
+
+    res.json({ success: true, message: `Video ${videoName} asignado a la página ${pageName}` });
+  },
+
+  // Obtener video asignado a una página
+  getPageVideo: (req, res) => {
+    const pageName = req.params.pageName;
+    const pagesVideos = readPagesVideosFile();
+    const videoName = pagesVideos[pageName];
+
+    if (videoName) {
+      const videos = readVideosFromFile();
+      const video = videos.find(v => v.name === videoName);
+      if (video) {
+        return res.json({ success: true, video });
+      }
+    }
+
+    res.status(404).json({ success: false, message: 'No se encontró un video asignado a esta página.' });
   }
 };
 

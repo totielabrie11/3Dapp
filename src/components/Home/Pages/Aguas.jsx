@@ -6,6 +6,7 @@ function Aguas() {
   const [principalVideo, setPrincipalVideo] = useState(null);
   const [loading, setLoading] = useState(true);
   const [backgroundImage, setBackgroundImage] = useState(null); // Estado para el fondo condicional
+  const [pageVideo, setPageVideo] = useState(null); // Estado para el video condicional de la página
 
   // Función para obtener el video principal desde el backend
   const fetchPrincipalVideo = async () => {
@@ -27,26 +28,37 @@ function Aguas() {
     }
   };
 
+  // Función para obtener el video condicional para la página desde el backend
+  const fetchPageVideo = async () => {
+    try {
+      const response = await axios.get('/api/pages/Aguas/video'); // Llama al endpoint para obtener el video asignado a "Aguas"
+      setPageVideo(response.data.video);
+    } catch (error) {
+      console.error('Error al obtener el video condicional:', error);
+    }
+  };
+
   // Función para obtener el fondo condicional desde el backend
   const fetchBackgroundImage = async () => {
     try {
-      const response = await axios.get('/api/background/Aguas');  // Llama al endpoint para obtener el fondo para "Aguas"
+      const response = await axios.get('/api/background/Aguas'); // Llama al endpoint para obtener el fondo para "Aguas"
       setBackgroundImage(response.data.background);
     } catch (error) {
       console.error('Error al obtener el fondo:', error);
     }
   };
 
-  // Cargar el video principal y el fondo cuando se monte el componente
+  // Cargar el video principal, el video condicional y el fondo cuando se monte el componente
   useEffect(() => {
     fetchPrincipalVideo();
-    fetchBackgroundImage();  // Cargar el fondo condicional
+    fetchPageVideo(); // Cargar el video condicional para la página
+    fetchBackgroundImage(); // Cargar el fondo condicional
   }, []);
 
   return (
     <div>
       {/* Sección del video de fondo */}
-      <div 
+      <div
         style={{
           position: 'relative',
           height: '100vh',
@@ -54,7 +66,7 @@ function Aguas() {
           overflow: 'hidden'
         }}
       >
-        <div 
+        <div
           style={{
             position: 'absolute',
             top: 0,
@@ -66,9 +78,9 @@ function Aguas() {
             overflow: 'hidden',
           }}
         >
-          {!loading && principalVideo ? (
+          {!loading && pageVideo ? (
             <video
-              src={principalVideo.url}
+              src={pageVideo.url}
               autoPlay
               muted
               loop
@@ -78,10 +90,26 @@ function Aguas() {
                 objectFit: 'cover',
                 pointerEvents: 'none'
               }}
-              onError={() => console.error('Error al cargar el video desde:', principalVideo.url)}
+              onError={() => console.error('Error al cargar el video desde:', pageVideo.url)}
             />
           ) : (
-            <p>Cargando video...</p>
+            !loading && principalVideo ? (
+              <video
+                src={principalVideo.url}
+                autoPlay
+                muted
+                loop
+                style={{
+                  width: '100%',
+                  height: '100%',
+                  objectFit: 'cover',
+                  pointerEvents: 'none'
+                }}
+                onError={() => console.error('Error al cargar el video desde:', principalVideo.url)}
+              />
+            ) : (
+              <p>Cargando video...</p>
+            )
           )}
         </div>
 
@@ -95,20 +123,20 @@ function Aguas() {
       </div>
 
       {/* Secciones adicionales con fondo condicional */}
-      <div 
-        className="bg-container" 
+      <div
+        className="bg-container"
         style={{
-          backgroundImage: backgroundImage ? `url('/images/fondos/${backgroundImage}')` : 'none',  // Aplica el fondo condicional
-          backgroundSize: 'cover', 
+          backgroundImage: backgroundImage ? `url('/images/fondos/${backgroundImage}')` : 'none', // Aplica el fondo condicional
+          backgroundSize: 'cover',
           backgroundPosition: 'center',
-          padding: '40px 0',  // Espaciado vertical
+          padding: '40px 0', // Espaciado vertical
         }}
       >
         <div className="container">
           <section className="my-5">
             <h2>Sistemas Portátiles de Dosificación</h2>
             <p>
-              Nuestros sistemas portátiles están diseñados para ofrecer soluciones rápidas y eficientes en el tratamiento de agua, 
+              Nuestros sistemas portátiles están diseñados para ofrecer soluciones rápidas y eficientes en el tratamiento de agua,
               adaptándose a diferentes necesidades, desde comunidades pequeñas hasta grandes centros urbanos.
             </p>
           </section>
@@ -116,7 +144,7 @@ function Aguas() {
           <section className="my-5">
             <h2>Sistemas Robustos con Bombas Dosivac</h2>
             <p>
-              Las bombas Dosivac proporcionan una dosificación precisa y segura, asegurando que el tratamiento de agua sea eficaz incluso en las condiciones más desafiantes. 
+              Las bombas Dosivac proporcionan una dosificación precisa y segura, asegurando que el tratamiento de agua sea eficaz incluso en las condiciones más desafiantes.
               Estos sistemas robustos están preparados para plantas de tratamiento de gran escala.
             </p>
           </section>
@@ -124,7 +152,7 @@ function Aguas() {
           <section className="my-5">
             <h2>Beneficios de la Dosificación Eficiente</h2>
             <p>
-              La dosificación eficiente de productos químicos en el agua no solo asegura la pureza del agua potable, sino que también optimiza los costos operativos 
+              La dosificación eficiente de productos químicos en el agua no solo asegura la pureza del agua potable, sino que también optimiza los costos operativos
               y reduce el desperdicio. Esto resulta en agua limpia y segura para todos.
             </p>
           </section>
@@ -132,7 +160,7 @@ function Aguas() {
           <section className="my-5">
             <h2>Impacto Ambiental del Tratamiento de Agua</h2>
             <p>
-              El tratamiento de agua no solo tiene un impacto positivo en la salud pública, sino que también juega un rol clave en la preservación del medio ambiente. 
+              El tratamiento de agua no solo tiene un impacto positivo en la salud pública, sino que también juega un rol clave en la preservación del medio ambiente.
               Con nuestras tecnologías avanzadas, reducimos la contaminación y promovemos la sostenibilidad.
             </p>
           </section>
@@ -140,7 +168,7 @@ function Aguas() {
           <section className="my-5">
             <h2>El Futuro del Agua Pura</h2>
             <p>
-              A medida que avanzan las tecnologías, el futuro del tratamiento de agua apunta hacia soluciones aún más eficientes y sostenibles, con sistemas automatizados 
+              A medida que avanzan las tecnologías, el futuro del tratamiento de agua apunta hacia soluciones aún más eficientes y sostenibles, con sistemas automatizados
               que garantizarán agua pura y limpia para las generaciones futuras.
             </p>
           </section>
