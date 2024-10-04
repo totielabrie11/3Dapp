@@ -10,8 +10,8 @@ function VideoAdminAsignador({ show, handleClose, selectedVideo }) {
     // Detectar automáticamente las páginas disponibles
     const fetchPages = async () => {
       try {
-        const response = await axios.get('/api/pages');
-        setPages(response.data.pages); // Asume que devuelve un array de nombres de páginas
+        const response = await axios.get('/api/pages'); // Asegúrate de que este endpoint devuelve las páginas disponibles
+        setPages(response.data.pages); // Supone que el servidor devuelve un array de nombres de páginas
       } catch (error) {
         console.error('Error al cargar las páginas:', error);
       }
@@ -28,12 +28,12 @@ function VideoAdminAsignador({ show, handleClose, selectedVideo }) {
       }
 
       // Enviar solicitud para asignar el video a la página seleccionada
-      const response = await axios.post(`/api/pages/assignVideo`, {
-        videoId: selectedVideo.id,
+      const response = await axios.post(`/api/videos/assign`, {
+        videoName: selectedVideo.name,
         pageName: selectedPage,
       });
 
-      // Verificar si la asignación fue exitosa
+      // Verificar si la asignación fue exitosa según la respuesta del servidor
       if (response.data.success) {
         alert('Video asignado con éxito');
       } else {

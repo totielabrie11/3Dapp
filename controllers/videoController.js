@@ -2,9 +2,9 @@ const fs = require('fs');
 const path = require('path');
 const multer = require('multer');
 
-// Ruta a la base de datos de videos
+// Rutas a los archivos de base de datos
 const videosPath = path.join(__dirname, '../data/videos.json');
-const pagesVideosPath = path.join(__dirname, '../data/pagesVideos.json');  // Nuevo archivo de asignación de videos a páginas
+const pagesVideosPath = path.join(__dirname, '../data/pagesVideos.json');  // Archivo de asignación de videos a páginas
 
 // Función para leer videos desde el archivo JSON
 const readVideosFromFile = () => {
@@ -19,7 +19,7 @@ const saveVideosToFile = (videos) => {
   fs.writeFileSync(videosPath, JSON.stringify(videos, null, 2));
 };
 
-// Función para leer asignaciones de videos a páginas
+// Función para leer las asignaciones de videos a páginas
 const readPagesVideosFile = () => {
   if (fs.existsSync(pagesVideosPath)) {
     return JSON.parse(fs.readFileSync(pagesVideosPath, 'utf8'));
@@ -27,7 +27,7 @@ const readPagesVideosFile = () => {
   return {};
 };
 
-// Función para guardar asignaciones de videos a páginas
+// Función para guardar las asignaciones de videos a páginas
 const savePagesVideosFile = (data) => {
   fs.writeFileSync(pagesVideosPath, JSON.stringify(data, null, 2));
 };
@@ -126,7 +126,7 @@ const videoController = {
     });
   },
 
-  // Actualizar video
+  // Actualizar video por ID
   updateById: (req, res) => {
     const id = parseInt(req.params.id);
     const videos = readVideosFromFile();
@@ -176,9 +176,7 @@ const videoController = {
     res.json({ success: true, message: `El video ${videos[videoIndex].name} ha sido marcado como principal` });
   },
 
-  // NUEVAS FUNCIONALIDADES:
-
-  // Asignar video a página
+  // Asignar video a una página
   assignToPage: (req, res) => {
     const { videoName, pageName } = req.body;
 
@@ -193,7 +191,7 @@ const videoController = {
     res.json({ success: true, message: `Video ${videoName} asignado a la página ${pageName}` });
   },
 
-  // Obtener video asignado a una página
+  // Obtener el video asignado a una página
   getPageVideo: (req, res) => {
     const pageName = req.params.pageName;
     const pagesVideos = readPagesVideosFile();
