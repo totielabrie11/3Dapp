@@ -6,7 +6,8 @@ const getGLTFFiles = require('./scripts/getModels');
 const session = require('express-session');
 const { upload, enviarCorreo } = require('./controllers/emailHandler');
 const fondoController = require('./controllers/fondosController');
-const pageController = require('./controllers/pageController');  
+const pageController = require('./controllers/pageController');
+const videoController = require('./controllers/videoController');  
 
 const app = express();
 const port = process.env.PORT || 5000;
@@ -20,7 +21,6 @@ app.use((err, req, res, next) => {
   res.status(500).send('Algo salió mal');
 });
 
-
 // Configuración de sesiones
 app.use(session({
   secret: 'your-secret-key',
@@ -32,8 +32,15 @@ app.use(session({
 // Usar fondoController para manejar las rutas relacionadas con fondos
 app.use(fondoController);
 
-// Usar pageController para manejar la asignacion de fondos de pantalla 
+// Usar pageController para manejar la asignación de fondos de pantalla 
 app.use(pageController);
+
+//endpoint para el manejo de videos
+app.post('/api/videos/upload', videoController.upload);
+app.get('/api/videos', videoController.getAll);
+app.delete('/api/videos/:id', videoController.deleteById);
+app.put('/api/videos/:id', videoController.updateById);
+app.put('/api/videos/set-principal/:id', videoController.setPrincipal);
 
 // Directorios y archivos de datos
 const dataDir = path.join(__dirname, 'data');
@@ -42,14 +49,8 @@ if (!fs.existsSync(dataDir)) {
 }
 
 const mailsPath = path.join(dataDir, 'mails.json');
-
 if (!fs.existsSync(mailsPath)) {
   fs.writeFileSync(mailsPath, JSON.stringify([]));
-}
-
-const videosPath = path.join(dataDir, 'videos.json');
-if (!fs.existsSync(videosPath)) {
-  fs.writeFileSync(videosPath, JSON.stringify([]));
 }
 
 const productosDescriptionPath = path.join(dataDir, 'productosDescription.json');
@@ -87,17 +88,7 @@ if (!fs.existsSync(distribuidoresPath)) {
   fs.writeFileSync(distribuidoresPath, JSON.stringify([]));
 }
 
-
 // Funciones auxiliares para leer y escribir archivos JSON
-const readVideosFromFile = () => {
-  if (fs.existsSync(videosPath)) {
-    return JSON.parse(fs.readFileSync(videosPath, 'utf8'));
-  }
-  return [];
-};
-
-
-// Función para leer cualquier archivo JSON
 const readFileFromPath = (filePath) => {
   if (fs.existsSync(filePath)) {
     return JSON.parse(fs.readFileSync(filePath, 'utf8'));
@@ -105,7 +96,6 @@ const readFileFromPath = (filePath) => {
   return [];
 };
 
-// Función para guardar cualquier archivo JSON
 const saveFileToPath = (filePath, data) => {
   fs.writeFileSync(filePath, JSON.stringify(data, null, 2));
 };
@@ -115,9 +105,6 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 // Servir la carpeta 'uploads' de forma pública
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
-
-// Configuración de middlewares
-app.use(express.json());
 
 // Configuración de Multer para subir productos 3D (Modelos)
 const storageModels = multer.diskStorage({
@@ -143,8 +130,6 @@ const storageImages = multer.diskStorage({
 });
 
 const uploadImages = multer({ storage: storageImages });  // Multer para imágenes
-
-
 
 // Configuración de Multer para las novedades
 const storageNovedades = multer.diskStorage({
@@ -734,7 +719,6 @@ app.get('/api/images', (req, res) => {
   });
 });
 
-
 // Endpoint para subir una nueva imagen
 app.post('/api/images/upload', uploadImages.single('image'), (req, res) => {
   if (!req.file) {
@@ -786,195 +770,8 @@ app.put('/api/images/:filename', uploadImages.single('image'), (req, res) => {
   });
 });
 
-// Configuración de Multer para almacenar videos
-const storageVideos = multer.diskStorage({
-  destination: (req, file, cb) => {
-    // Definir la ruta de destino donde se almacenarán los videos
-    cb(null, path.join(__dirname, 'uploads', 'videos'));
-  },
-  filename: (req, file, cb) => {
-    // Guardar el archivo con un nombre único basado en la fecha
-    const uniqueFilename = `${Date.now()}_${file.originalname.replace(/\s+/g, '_')}`;
-    cb(null, uniqueFilename);
-  }
-});
-
-// Inicialización de Multer con almacenamiento y límite de tamaño
-const uploadVideos = multer({
-  storage: storageVideos,
-  limits: { fileSize: 1024 * 1024 * 1024 }, // Límite de 1 GB
-  fileFilter: (req, file, cb) => {
-    const filetypes = /mp4|avi|mkv|mov|webm/;
-    const mimetype = filetypes.test(file.mimetype);
-    const extname = filetypes.test(path.extname(file.originalname).toLowerCase());
-
-    if (mimetype && extname) {
-      cb(null, true); // Aceptar archivo
-    } else {
-      cb(new Error('Solo se permiten archivos de video (mp4, avi, mkv, mov, webm)')); // Rechazar archivo
-    }
-  }
-}).single('video');
-
-
-// Función para guardar el archivo JSON
-function saveVideosToFile(videos) {
-  try {
-    fs.writeFileSync(videosPath, JSON.stringify(videos, null, 2));
-  } catch (error) {
-    console.error('Error al guardar el archivo videos.json:', error);
-  }
-}
-
-
-// Endpoint para subir un nuevo video
-app.post('/api/videos/upload', (req, res) => {
-  uploadVideos(req, res, (err) => {
-    if (err instanceof multer.MulterError) {
-      return res.status(400).json({ success: false, message: 'El tamaño del archivo excede el límite de 1 GB' });
-    } else if (err) {
-      return res.status(400).json({ success: false, message: err.message });
-    }
-
-    if (!req.file) {
-      return res.status(400).json({ success: false, message: 'No se ha subido ningún archivo de video' });
-    }
-
-    // Subida exitosa, ahora actualizamos el archivo JSON
-    const videoId = Date.now(); // Generar un ID único basado en el timestamp
-    const videoUrl = `/uploads/videos/${req.file.filename}`; // Nueva URL del video
-    const newVideo = {
-      id: videoId,
-      name: req.body.name || 'video',
-      filename: req.file.filename,
-      url: videoUrl,
-      isPrincipal: false // El nuevo video no es principal por defecto
-    };
-
-    // Leer el archivo videos.json
-    const videos = readVideosFromFile();
-
-    // Agregar el nuevo video a la lista
-    videos.push(newVideo);
-
-    // Guardar la lista actualizada en videos.json
-    saveVideosToFile(videos);
-
-    // Responder con éxito
-    res.json({ success: true, message: 'Video subido con éxito', video: newVideo });
-  });
-});
-
-// Crear directorio si no existe
-const videoDir = path.join(__dirname, 'uploads', 'videos');
-if (!fs.existsSync(videoDir)) {
-  fs.mkdirSync(videoDir, { recursive: true });
-}
-
-// Endpoint para obtener la lista de videos
-app.get('/api/videos', (req, res) => {
-  const videos = readVideosFromFile();
-  res.json({ success: true, videos });
-});
-
-
-// Endpoint para eliminar un video por ID
-app.delete('/api/videos/:id', (req, res) => {
-  const id = parseInt(req.params.id); // Convertir el ID a número
-  const videos = readVideosFromFile(); // Leer los videos actuales desde el archivo JSON
-  const video = videos.find(video => video.id === id);
-
-  if (!video) {
-    return res.status(404).json({ success: false, message: 'Video no encontrado' });
-  }
-
-  // Construir la ruta completa del archivo del video
-  const filePath = path.join(__dirname, 'uploads', 'videos', video.filename);
-
-  // Eliminar el archivo del video
-  fs.unlink(filePath, (err) => {
-    if (err && err.code !== 'ENOENT') {
-      // Si el archivo no existe, ignorar el error, pero si ocurre otro error, manejarlo
-      return res.status(500).json({ success: false, message: 'Error al eliminar el archivo físico' });
-    }
-
-    // Filtrar la lista de videos para eliminar el video con el ID correspondiente
-    const updatedVideos = videos.filter(v => v.id !== id);
-
-    // Guardar la lista actualizada de videos en el archivo JSON
-    saveVideosToFile(updatedVideos);
-
-    // Responder con éxito
-    res.json({ success: true, message: 'Video eliminado con éxito' });
-  });
-});
-
-
-// Endpoint para actualizar un video (renombrar o cambiar archivo)
-app.put('/api/videos/:id', uploadVideos, (req, res) => {
-  const id = parseInt(req.params.id);
-  const videos = readVideosFromFile();
-  const videoIndex = videos.findIndex(video => video.id === id);
-
-  if (videoIndex === -1) {
-    return res.status(404).json({ success: false, message: 'Video no encontrado' });
-  }
-
-  if (req.file) {
-    // Si se subió un nuevo archivo de video, actualizar el archivo
-    const newFilename = req.file.filename;
-    const oldFilePath = path.join(__dirname, 'public', 'videos', videos[videoIndex].filename);
-    videos[videoIndex].filename = newFilename;
-    videos[videoIndex].url = `/videos/${newFilename}`;
-
-    // Eliminar el archivo anterior de manera asíncrona
-    fs.unlink(oldFilePath, (err) => {
-      if (err && err.code !== 'ENOENT') {
-        console.error('Error al eliminar el archivo anterior:', err);
-        return res.status(500).json({ success: false, message: 'Error al eliminar el archivo anterior' });
-      }
-    });
-  }
-
-  if (req.body.name) {
-    // Actualizar solo el nombre amigable del video
-    videos[videoIndex].name = req.body.name;
-  }
-
-  try {
-    saveVideosToFile(videos);
-    res.json({ success: true, message: 'Video actualizado con éxito', video: videos[videoIndex] });
-  } catch (error) {
-    console.error('Error al guardar video actualizado:', error);
-    res.status(500).json({ success: false, message: 'Error al actualizar el video' });
-  }
-});
-
-
-// Endpoint para marcar un video como principal
-app.put('/api/videos/set-principal/:id', (req, res) => {
-  const id = parseInt(req.params.id);
-  const videos = readVideosFromFile();
-  const videoIndex = videos.findIndex(video => video.id === id);
-
-  if (videoIndex === -1) {
-    return res.status(404).json({ success: false, message: 'Video no encontrado' });
-  }
-
-  // Marcar todos los videos como no principales
-  videos.forEach(video => (video.isPrincipal = false));
-
-  // Marcar el video seleccionado como principal
-  videos[videoIndex].isPrincipal = true;
-  saveVideosToFile(videos);
-
-  res.json({ success: true, message: `El video ${videos[videoIndex].name} ha sido marcado como principal` });
-});
-
-
 // Endpoint para manejar contactos y envío de correos
 app.post('/api/contact', upload.single('file'), enviarCorreo);
-
 
 // Para servir el frontend (React o cualquier SPA)
 app.use(express.static(path.join(__dirname, 'build')));
