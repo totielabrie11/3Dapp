@@ -106,6 +106,9 @@ app.use(express.static(path.join(__dirname, 'public')));
 // Servir la carpeta 'uploads' de forma pública
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
+// Servir la carpeta de videos de forma pública
+app.use('/uploads/videos', express.static(path.join(__dirname, 'uploads/videos')));
+
 // Configuración de Multer para subir productos 3D (Modelos)
 const storageModels = multer.diskStorage({
   destination: (req, file, cb) => {
