@@ -8,6 +8,7 @@ const { upload, enviarCorreo } = require('./controllers/emailHandler');
 const fondoController = require('./controllers/fondosController');
 const pageController = require('./controllers/pageController');
 const videoController = require('./controllers/videoController');  
+const fotosController = require('./controllers/fotosController');
 
 const app = express();
 const port = process.env.PORT || 5000;
@@ -41,6 +42,13 @@ app.get('/api/videos', videoController.getAll);
 app.delete('/api/videos/:id', videoController.deleteById);
 app.put('/api/videos/:id', videoController.updateById);
 app.put('/api/videos/set-principal/:id', videoController.setPrincipal);
+
+//endpoint para el manejo de imagenes
+app.get('/api/images', fotosController.getAllImages);
+app.post('/api/images/upload', fotosController.uploadImages.single('image'), fotosController.uploadImage);
+app.delete('/api/images/:filename', fotosController.deleteImage);
+app.put('/api/images/:filename', fotosController.uploadImages.single('image'), fotosController.replaceImage);
+
 
 // Directorios y archivos de datos
 const dataDir = path.join(__dirname, 'data');
@@ -121,18 +129,6 @@ const storageModels = multer.diskStorage({
 
 const uploadModels = multer({ storage: storageModels }); // Multer para productos 3D
 
-// Configuración de multer para subir imágenes a public/images
-const storageImages = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, path.join(__dirname, 'public', 'images')); // Carpeta donde se almacenan las imágenes
-  },
-  filename: (req, file, cb) => {
-    const userFilename = req.body.name ? req.body.name : Date.now().toString(); // Usar el nombre proporcionado o timestamp
-    cb(null, userFilename + path.extname(file.originalname)); // Guardar archivo con el nombre proporcionado
-  }
-});
-
-const uploadImages = multer({ storage: storageImages });  // Multer para imágenes
 
 // Configuración de Multer para las novedades
 const storageNovedades = multer.diskStorage({
@@ -695,82 +691,6 @@ app.put('/api/distribuidores/:id', (req, res) => {
   } else {
     res.status(404).json({ message: 'Distribuidor no encontrado' });
   }
-});
-
-app.get('/api/images', (req, res) => {
-  const imagesDir = path.join(__dirname, 'public', 'images');
-  fs.readdir(imagesDir, (err, files) => {
-    if (err) {
-      return res.status(500).json({ success: false, message: 'Error al leer el directorio' });
-    }
-
-    // Filtrar solo los archivos regulares, excluyendo carpetas
-    const images = [];
-    files.forEach((file) => {
-      const filePath = path.join(imagesDir, file);
-      const stat = fs.lstatSync(filePath);
-
-      if (stat.isFile()) {  // Verifica si es un archivo regular
-        images.push({
-          name: file,
-          url: `/images/${file}`
-        });
-      }
-    });
-
-    res.json({ success: true, images });
-  });
-});
-
-// Endpoint para subir una nueva imagen
-app.post('/api/images/upload', uploadImages.single('image'), (req, res) => {
-  if (!req.file) {
-    return res.status(400).json({ success: false, message: 'No se ha subido ninguna imagen' });
-  }
-  res.json({ success: true, message: 'Imagen subida con éxito', url: `/images/${req.file.filename}` });
-});
-
-// Endpoint para eliminar una imagen
-app.delete('/api/images/:filename', (req, res) => {
-  const filename = req.params.filename;
-  const filePath = path.join(__dirname, 'public', 'images', filename);
-
-  fs.unlink(filePath, (err) => {
-    if (err && err.code === 'ENOENT') {
-      // Archivo no encontrado
-      return res.status(404).json({ success: false, message: 'Imagen no encontrada' });
-    } else if (err) {
-      // Otros errores del sistema
-      return res.status(500).json({ success: false, message: 'Error al eliminar la imagen', error: err });
-    }
-
-    res.json({ success: true, message: 'Imagen eliminada con éxito' });
-  });
-});
-
-// Endpoint para reemplazar una imagen existente
-app.put('/api/images/:filename', uploadImages.single('image'), (req, res) => {
-  const filename = req.params.filename;  // Nombre de la imagen actual que se va a reemplazar
-  const filePath = path.join(__dirname, 'public', 'images', filename);
-
-  // Primero, eliminar la imagen existente
-  fs.unlink(filePath, (err) => {
-    if (err && err.code === 'ENOENT') {
-      // Si el archivo no existe, logueamos pero seguimos con la nueva imagen
-      console.log('Archivo no encontrado, subiendo la nueva imagen');
-    } else if (err) {
-      // Si hay un error al eliminar, devolvemos un mensaje de error
-      return res.status(500).json({ success: false, message: 'Error al eliminar la imagen existente', error: err });
-    }
-
-    // Verificamos que el nuevo archivo haya sido subido
-    if (!req.file) {
-      return res.status(400).json({ success: false, message: 'No se ha subido ninguna nueva imagen para reemplazar' });
-    }
-
-    // Devolver éxito con la nueva URL de la imagen
-    res.json({ success: true, message: 'Imagen reemplazada con éxito', url: `/images/${req.file.filename}` });
-  });
 });
 
 // Endpoint para manejar contactos y envío de correos
