@@ -6,10 +6,10 @@ const fotoTextController = {
   // Método POST para guardar o actualizar las descripciones
   save: (req, res) => {
     const dataPath = path.join(__dirname, '../data/fotoText.json');
-    const { name, description } = req.body;
+    const { name, description, fontFamily, fontColor, textTransform } = req.body;
 
-    if (!name || !description) {
-      return res.status(400).json({ error: 'El nombre y la descripción son requeridos.' });
+    if (!name || !description || !fontFamily || !fontColor || !textTransform) {
+      return res.status(400).json({ error: 'El nombre, la descripción, el tipo de letra, el color de letra y la transformación del texto son requeridos.' });
     }
 
     try {
@@ -28,8 +28,11 @@ const fotoTextController = {
       const existingIndex = jsonData.findIndex(entry => entry.name === name);
       if (existingIndex !== -1) {
         jsonData[existingIndex].description = description;
+        jsonData[existingIndex].fontFamily = fontFamily;
+        jsonData[existingIndex].fontColor = fontColor;
+        jsonData[existingIndex].textTransform = textTransform;
       } else {
-        jsonData.push({ name, description });
+        jsonData.push({ name, description, fontFamily, fontColor, textTransform });
       }
 
       // Guardar los cambios en el archivo JSON
@@ -42,14 +45,16 @@ const fotoTextController = {
   },
 
   // Método GET para obtener todas las descripciones guardadas
-  getAll: (req, res) => {
-    const dataPath = path.join(__dirname, '../data/fotoText.json');
+ // Método GET para obtener todas las descripciones guardadas
+getAll: (req, res) => {
+  const dataPath = path.join(__dirname, '../data/fotoText.json');
 
     try {
       if (fs.existsSync(dataPath)) {
-        const fileData = fs.readFileSync(dataPath);
+        const fileData = fs.readFileSync(dataPath, 'utf8');
         const jsonData = JSON.parse(fileData);
-        return res.status(200).json(jsonData); // Devolver el contenido del archivo JSON
+        console.log('Datos enviados:', jsonData); // <-- Asegúrate de ver estos datos
+        return res.status(200).json(jsonData); // Devolver todo el contenido del archivo JSON
       } else {
         return res.status(404).json({ message: 'No se encontraron descripciones.' });
       }
@@ -58,6 +63,7 @@ const fotoTextController = {
       return res.status(500).json({ error: 'Error al obtener las descripciones.' });
     }
   }
+
 };
 
 module.exports = fotoTextController;

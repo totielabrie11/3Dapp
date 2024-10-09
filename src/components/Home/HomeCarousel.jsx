@@ -49,22 +49,28 @@ const HomeCarousel = () => {
 
       {/* Elementos del carrusel */}
       <div className="carousel-inner">
-        {carouselImages.map((image, index) => {
-          // Buscar la descripción correspondiente en los datos adicionales obtenidos de la API
-          const matchingDescription = additionalDescriptions.find(desc => desc.name === image.name)?.description || '';
+      {carouselImages.map((image, index) => {
+        // Buscar la descripción correspondiente en los datos adicionales obtenidos de la API
+        const matchingData = additionalDescriptions.find(desc => desc.name === image.name) || {};
 
-          return (
-            <div
-              key={index}
-              className={`carousel-item ${index === 0 ? 'active' : ''}`}
-              style={styles.carouselItem(image.url)}
-            >
-              <div style={styles.textOverlay}>
-                <h2>{matchingDescription}</h2>
-              </div>
+        // Asegurarte de manejar los valores predeterminados correctamente
+        const matchingDescription = matchingData.description || 'Descripción no disponible';
+        const matchingFontFamily = matchingData.fontFamily || 'Arial, sans-serif';
+        const matchingFontColor = matchingData.fontColor || '#ffffff'; // Color predeterminado
+        const matchingTextTransform = matchingData.textTransform || 'none'; // Transformación de texto predeterminada
+
+        return (
+          <div
+            key={index}
+            className={`carousel-item ${index === 0 ? 'active' : ''}`}
+            style={{ ...styles.carouselItem(image.url), fontFamily: matchingFontFamily, color: matchingFontColor }}
+          >
+            <div style={{ ...styles.textOverlay, fontFamily: matchingFontFamily, color: matchingFontColor, textTransform: matchingTextTransform }}>
+              <h2 style={{ fontFamily: matchingFontFamily }}>{matchingDescription}</h2>
             </div>
-          );
-        })}
+          </div>
+        );
+      })}
       </div>
 
       {/* Controles de navegación */}
@@ -86,7 +92,7 @@ const styles = {
     backgroundSize: 'cover',
     height: '100vh',
     backgroundPosition: 'center',
-    position: 'relative',
+    position: 'relative'
   }),
   textOverlay: {
     position: 'absolute',
@@ -99,9 +105,8 @@ const styles = {
     borderRadius: '10px',
     zIndex: 10,
     textAlign: 'center',
-    fontFamily: 'Arial, sans-serif',
     fontSize: '24px',
-    boxShadow: '0px 4px 15px rgba(0, 0, 0, 0.4)'
+    boxShadow: '0px 0px 0px rgba(0, 0, 0, 0)'
   },
 };
 

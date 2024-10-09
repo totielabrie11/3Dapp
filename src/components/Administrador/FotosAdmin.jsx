@@ -157,16 +157,19 @@ function FotosAdmin() {
     setSelectedPhoto(null);
   };
 
-  const handleSaveDescription = async (description) => {
+  const handleSaveDescription = async ({ description, fontFamily, fontColor, textTransform }) => {
     if (!selectedPhoto) return;
-
+  
     try {
       const endpoint = '/api/fotoText/save';
       const data = {
         name: selectedPhoto.name,
         description,
+        fontFamily,
+        fontColor,
+        textTransform,
       };
-
+  
       await axios.post(endpoint, data);
       console.log('Descripción guardada correctamente');
     } catch (error) {
@@ -174,6 +177,7 @@ function FotosAdmin() {
     }
     handleDescriptionModalClose();
   };
+  
 
   return (
     <div className="container my-5">

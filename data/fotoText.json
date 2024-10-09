@@ -1,19 +1,29 @@
 [
   {
     "name": "campo.png",
-    "description": "en un auto nuevo"
+    "description": "venite que la vas a pasar genial",
+    "fontFamily": "Georgia, serif",
+    "fontColor": "#ce0909",
+    "textTransform": "uppercase"
   },
   {
     "name": "fondo.png",
-    "description": "arido seco"
+    "description": "hace mucho frio hermano pero mal un equipo solar en cualquier condicion",
+    "fontFamily": "Helvetica, sans-serif",
+    "fontColor": "#77a324",
+    "textTransform": "uppercase"
   },
   {
     "name": "nieve.png",
-    "description": "me cago de friio"
+    "description": "hace mucho frio hermano pero mal un equipo solar en cualquier condicion",
+    "fontFamily": "Arial, sans-serif",
+    "fontColor": "#2f2db9",
+    "textTransform": "uppercase"
   },
   {
     "name": "noche.png",
-    "description": "hace mucho frio hermano"
+    "description": "hace mucho frio hermano",
+    "fontFamily": "Georgia, serif"
   },
   {
     "name": "puestanoche.png.png",
