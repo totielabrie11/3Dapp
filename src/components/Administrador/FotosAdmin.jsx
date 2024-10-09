@@ -113,7 +113,7 @@ function FotosAdmin() {
     setSelectedPhoto(null);
   };
 
-  const handleSaveDescription = async ({ description, fontFamily, fontColor, textTransform }) => {
+  const handleSaveDescription = async ({ description, fontFamily, fontColor, textTransform, backgroundColor }) => {
     if (!selectedPhoto) return;
   
     try {
@@ -124,6 +124,7 @@ function FotosAdmin() {
         fontFamily,
         fontColor,
         textTransform,
+        backgroundColor
       };
   
       await axios.post(endpoint, data);

@@ -58,14 +58,15 @@ const HomeCarousel = () => {
         const matchingFontFamily = matchingData.fontFamily || 'Arial, sans-serif';
         const matchingFontColor = matchingData.fontColor || '#ffffff'; // Color predeterminado
         const matchingTextTransform = matchingData.textTransform || 'none'; // Transformación de texto predeterminada
+        const matchingBackgroundColor = matchingData.backgroundColor || 'rgba(0, 0, 0, 0.7)'; // Color de fondo predeterminado
 
         return (
           <div
             key={index}
             className={`carousel-item ${index === 0 ? 'active' : ''}`}
-            style={{ ...styles.carouselItem(image.url), fontFamily: matchingFontFamily, color: matchingFontColor }}
+            style={{ ...styles.carouselItem(image.url), fontFamily: matchingFontFamily, color: matchingFontColor, backgroundColor: matchingBackgroundColor }}
           >
-            <div style={{ ...styles.textOverlay, fontFamily: matchingFontFamily, color: matchingFontColor, textTransform: matchingTextTransform }}>
+            <div style={{ ...styles.textOverlay, fontFamily: matchingFontFamily, color: matchingFontColor, textTransform: matchingTextTransform, backgroundColor: matchingBackgroundColor }}>
               <h2 style={{ fontFamily: matchingFontFamily }}>{matchingDescription}</h2>
             </div>
           </div>

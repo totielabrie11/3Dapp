@@ -1,24 +1,27 @@
 [
   {
     "name": "campo.png",
-    "description": "venite que la vas a pasar genial",
-    "fontFamily": "Georgia, serif",
-    "fontColor": "#ffffff",
-    "textTransform": "uppercase"
+    "description": "Venite Que La Vas a Pasar Genial",
+    "fontFamily": "Times New Roman, serif",
+    "fontColor": "#fbfe4d",
+    "textTransform": "uppercase",
+    "backgroundColor": "rgba(0, 0, 0, 0.7)"
   },
   {
     "name": "fondo.png",
     "description": "hace mucho frio hermano pero mal un equipo solar en cualquier condicion",
     "fontFamily": "Helvetica, sans-serif",
     "fontColor": "#77a324",
-    "textTransform": "uppercase"
+    "textTransform": "uppercase",
+    "backgroundColor": "rgba(0, 0, 0, 0.6)"
   },
   {
     "name": "nieve.png",
     "description": "hace mucho frio hermano pero mal un equipo solar en cualquier condicion",
-    "fontFamily": "Arial, sans-serif",
-    "fontColor": "#2f2db9",
-    "textTransform": "uppercase"
+    "fontFamily": "Comic Sans MS, cursive",
+    "fontColor": "#ffffff",
+    "textTransform": "uppercase",
+    "backgroundColor": "rgba(0, 0, 0, 0.7)"
   },
   {
     "name": "noche.png",
@@ -33,7 +36,8 @@
     "name": "selvafuerte.webp",
     "description": "Foto Que Representa lo Verde Ecologico",
     "fontFamily": "Helvetica, sans-serif",
-    "fontColor": "#6cc6c4",
-    "textTransform": "none"
+    "fontColor": "#26cdd9",
+    "textTransform": "none",
+    "backgroundColor": "rgba(13, 13, 13, 0.5)"
   }
 ]
