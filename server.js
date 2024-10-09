@@ -9,7 +9,7 @@ const fondoController = require('./controllers/fondosController');
 const pageController = require('./controllers/pageController');
 const videoController = require('./controllers/videoController');  
 const fotosController = require('./controllers/fotosController');
-const fotoTextController = require('./controllers/fotoTextController');
+const fotoTextController = require('./controllers/fotoTextController'); 
 
 const app = express();
 const port = process.env.PORT || 5000;
@@ -51,7 +51,9 @@ app.delete('/api/images/:filename', fotosController.deleteImage);
 app.put('/api/images/:filename', fotosController.uploadImages.single('image'), fotosController.replaceImage);
 
 // Endpoint para el manejo de descripciones de fotos
-app.post('/api/descriptions', fotoTextController);
+// Rutas para el manejo de foto y texto
+app.post('/api/fotoText/save', fotoTextController.save); // Ruta POST para guardar
+app.get('/api/fotoText', fotoTextController.getAll);  
 
 // Directorios y archivos de datos
 const dataDir = path.join(__dirname, 'data');

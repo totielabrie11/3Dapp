@@ -161,7 +161,7 @@ function FotosAdmin() {
     if (!selectedPhoto) return;
 
     try {
-      const endpoint = '/api/descriptions';
+      const endpoint = '/api/fotoText/save';
       const data = {
         name: selectedPhoto.name,
         description,
