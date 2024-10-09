@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import FotosAdminAsignador from './FotosAdminAsignador';
+import TextFotoEditor from './TextFotoEditor';
+import { Modal, Button } from 'react-bootstrap';
 
 function FotosAdmin() {
   const [selectedSection, setSelectedSection] = useState('homeCarousel');
@@ -9,7 +11,8 @@ function FotosAdmin() {
   const [editingPhoto, setEditingPhoto] = useState(null);
   const [error, setError] = useState(null);  // Estado para manejar errores
   const [showAssignModal, setShowAssignModal] = useState(false);  // Para controlar la visualización del modal
-  const [selectedPhoto, setSelectedPhoto] = useState(null);  // Para la foto seleccionada para asignar
+  const [showDescriptionModal, setShowDescriptionModal] = useState(false);
+  const [selectedPhoto, setSelectedPhoto] = useState(null);  // Para la foto seleccionada para asignar o descripción
 
   useEffect(() => {
     const fetchPhotos = async () => {
@@ -144,6 +147,34 @@ function FotosAdmin() {
     setSelectedPhoto(null);
   };
 
+  const handleDescription = (photo) => {
+    setSelectedPhoto(photo);
+    setShowDescriptionModal(true);
+  };
+
+  const handleDescriptionModalClose = () => {
+    setShowDescriptionModal(false);
+    setSelectedPhoto(null);
+  };
+
+  const handleSaveDescription = async (description) => {
+    if (!selectedPhoto) return;
+
+    try {
+      const endpoint = '/api/descriptions';
+      const data = {
+        name: selectedPhoto.name,
+        description,
+      };
+
+      await axios.post(endpoint, data);
+      console.log('Descripción guardada correctamente');
+    } catch (error) {
+      console.error('Error al guardar la descripción:', error);
+    }
+    handleDescriptionModalClose();
+  };
+
   return (
     <div className="container my-5">
       <h2>Administrar Fotografías</h2>
@@ -195,10 +226,16 @@ function FotosAdmin() {
                   Eliminar
                 </button>
                 <button
-                  className="btn btn-info btn-sm"
+                  className="btn btn-info btn-sm me-2"
                   onClick={() => handleAssign(photo)}
                 >
                   Asignar
+                </button>
+                <button
+                  className="btn btn-secondary btn-sm"
+                  onClick={() => handleDescription(photo)}
+                >
+                  Descripción
                 </button>
               </div>
             </li>
@@ -208,53 +245,22 @@ function FotosAdmin() {
         )}
       </ul>
 
-      {/* Formulario para agregar o editar una foto */}
-      <h3>{editingPhoto ? 'Editar Foto' : 'Agregar Nueva Foto'}</h3>
-      <form onSubmit={e => e.preventDefault()}>
-        <div className="mb-3">
-          <label htmlFor="photoName" className="form-label">Nombre de la Foto:</label>
-          <input
-            id="photoName"
-            type="text"
-            className="form-control"
-            name="name"
-            value={newPhoto.name}
-            onChange={handleInputChange}
-            placeholder="Ej. Fondo de Pantalla"
-          />
-        </div>
-        <div className="mb-3">
-          <label htmlFor="photoFile" className="form-label">Subir Imagen:</label>
-          <input
-            id="photoFile"
-            type="file"
-            className="form-control"
-            name="image"
-            onChange={handleInputChange}
-          />
-        </div>
-        {editingPhoto ? (
-          <button type="button" className="btn btn-success" onClick={handleSaveEdit}>
-            Guardar Cambios
-          </button>
-        ) : (
-          <button type="button" className="btn btn-primary" onClick={handleAddPhoto}>
-            Agregar Foto
-          </button>
-        )}
-        {editingPhoto && (
-          <button type="button" className="btn btn-secondary ms-2" onClick={() => setEditingPhoto(null)}>
-            Cancelar
-          </button>
-        )}
-      </form>
-
       {/* Modal de asignación */}
       {selectedPhoto && (
         <FotosAdminAsignador
           show={showAssignModal}
           handleClose={handleAssignModalClose}
           selectedPhoto={selectedPhoto}
+        />
+      )}
+
+      {/* Modal de descripción */}
+      {selectedPhoto && (
+        <TextFotoEditor
+          show={showDescriptionModal}
+          handleClose={handleDescriptionModalClose}
+          selectedPhoto={selectedPhoto}
+          handleSave={handleSaveDescription}
         />
       )}
     </div>

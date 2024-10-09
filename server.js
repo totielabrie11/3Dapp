@@ -9,6 +9,7 @@ const fondoController = require('./controllers/fondosController');
 const pageController = require('./controllers/pageController');
 const videoController = require('./controllers/videoController');  
 const fotosController = require('./controllers/fotosController');
+const fotoTextController = require('./controllers/fotoTextController');
 
 const app = express();
 const port = process.env.PORT || 5000;
@@ -36,24 +37,33 @@ app.use(fondoController);
 // Usar pageController para manejar la asignación de fondos de pantalla 
 app.use(pageController);
 
-//endpoint para el manejo de videos
+// Endpoint para el manejo de videos
 app.post('/api/videos/upload', videoController.upload);
 app.get('/api/videos', videoController.getAll);
 app.delete('/api/videos/:id', videoController.deleteById);
 app.put('/api/videos/:id', videoController.updateById);
 app.put('/api/videos/set-principal/:id', videoController.setPrincipal);
 
-//endpoint para el manejo de imagenes
+// Endpoint para el manejo de imágenes
 app.get('/api/images', fotosController.getAllImages);
 app.post('/api/images/upload', fotosController.uploadImages.single('image'), fotosController.uploadImage);
 app.delete('/api/images/:filename', fotosController.deleteImage);
 app.put('/api/images/:filename', fotosController.uploadImages.single('image'), fotosController.replaceImage);
 
+// Endpoint para el manejo de descripciones de fotos
+app.post('/api/descriptions', fotoTextController);
 
 // Directorios y archivos de datos
 const dataDir = path.join(__dirname, 'data');
 if (!fs.existsSync(dataDir)) {
   fs.mkdirSync(dataDir);
+}
+
+// Verificar si el archivo JSON existe, si no, crearlo
+const dataPath = path.join(__dirname, 'data/fotoText.json');
+if (!fs.existsSync(dataPath)) {
+  fs.mkdirSync(path.dirname(dataPath), { recursive: true });
+  fs.writeFileSync(dataPath, JSON.stringify([], null, 2));
 }
 
 const mailsPath = path.join(dataDir, 'mails.json');
