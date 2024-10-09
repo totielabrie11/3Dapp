@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import { Modal, Button, Form } from 'react-bootstrap';
 
 function TextFotoEditor({ show, handleClose, selectedPhoto, handleSave }) {
@@ -6,6 +7,28 @@ function TextFotoEditor({ show, handleClose, selectedPhoto, handleSave }) {
   const [fontFamily, setFontFamily] = useState('Arial, sans-serif');
   const [fontColor, setFontColor] = useState('#000000');
   const [textTransform, setTextTransform] = useState('none');
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    const fetchPhotoTextDetails = async () => {
+      if (selectedPhoto) {
+        try {
+          const response = await axios.get('/api/fotoText');
+          const photoData = response.data.find(photo => photo.name === selectedPhoto.name);
+          if (photoData) {
+            setDescription(photoData.description);
+            setFontFamily(photoData.fontFamily);
+            setFontColor(photoData.fontColor);
+            setTextTransform(photoData.textTransform);
+          }
+        } catch (error) {
+          console.error('Error al obtener los detalles de la foto:', error);
+          setError('Error al obtener los detalles de la foto.');
+        }
+      }
+    };
+    fetchPhotoTextDetails();
+  }, [selectedPhoto]);
 
   const handleSaveClick = () => {
     if (selectedPhoto) {
@@ -19,6 +42,7 @@ function TextFotoEditor({ show, handleClose, selectedPhoto, handleSave }) {
         <Modal.Title>Agregar Descripción a {selectedPhoto.name}</Modal.Title>
       </Modal.Header>
       <Modal.Body>
+        {error && <div className="alert alert-danger" role="alert">{error}</div>}
         <div className="mb-3">
           <label htmlFor="photoDescription" className="form-label">Descripción:</label>
           <input

@@ -3,7 +3,7 @@
     "name": "campo.png",
     "description": "venite que la vas a pasar genial",
     "fontFamily": "Georgia, serif",
-    "fontColor": "#ce0909",
+    "fontColor": "#ffffff",
     "textTransform": "uppercase"
   },
   {
@@ -28,5 +28,12 @@
   {
     "name": "puestanoche.png.png",
     "description": "tinieblas"
+  },
+  {
+    "name": "selvafuerte.webp",
+    "description": "Foto Que Representa lo Verde Ecologico",
+    "fontFamily": "Helvetica, sans-serif",
+    "fontColor": "#6cc6c4",
+    "textTransform": "none"
   }
 ]
