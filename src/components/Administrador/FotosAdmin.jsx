@@ -2,17 +2,18 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import FotosAdminAsignador from './FotosAdminAsignador';
 import TextFotoEditor from './TextFotoEditor';
+import EditorFotografico from './EditorFotografico';
 import { Modal, Button } from 'react-bootstrap';
 
 function FotosAdmin() {
   const [selectedSection, setSelectedSection] = useState('homeCarousel');
   const [photos, setPhotos] = useState([]);
   const [newPhoto, setNewPhoto] = useState({ name: '', image: null });
-  const [editingPhoto, setEditingPhoto] = useState(null);
   const [error, setError] = useState(null);  // Estado para manejar errores
   const [showAssignModal, setShowAssignModal] = useState(false);  // Para controlar la visualización del modal
   const [showDescriptionModal, setShowDescriptionModal] = useState(false);
-  const [selectedPhoto, setSelectedPhoto] = useState(null);  // Para la foto seleccionada para asignar o descripción
+  const [showEditModal, setShowEditModal] = useState(false);
+  const [selectedPhoto, setSelectedPhoto] = useState(null);  // Para la foto seleccionada para asignar, descripción o edición
 
   useEffect(() => {
     const fetchPhotos = async () => {
@@ -36,7 +37,6 @@ function FotosAdmin() {
 
   const handleSectionChange = (e) => {
     setSelectedSection(e.target.value);
-    setEditingPhoto(null);
   };
 
   const handleInputChange = (e) => {
@@ -74,50 +74,6 @@ function FotosAdmin() {
     } catch (error) {
       console.error('Error al agregar la foto:', error);
       setError('Error al agregar la foto.');
-    }
-  };
-
-  const handleEditPhoto = (photo) => {
-    setEditingPhoto(photo);
-    setNewPhoto({ name: photo.name, image: null });
-  };
-
-  const handleSaveEdit = async () => {
-    if (!newPhoto.name) {
-      setError('Debes proporcionar un nombre.');
-      return;
-    }
-
-    try {
-      const formData = new FormData();
-      formData.append('name', newPhoto.name);
-
-      // Solo agregar la imagen si se ha seleccionado una nueva imagen
-      if (newPhoto.image) {
-        formData.append('image', newPhoto.image);
-      }
-
-      const endpoint = selectedSection === 'fondos'
-        ? `/api/fondos/${editingPhoto.name}`
-        : `/api/images/${editingPhoto.name}`;
-
-      const response = await axios.put(endpoint, formData, {
-        headers: { 'Content-Type': 'multipart/form-data' }
-      });
-
-      const updatedPhotos = photos.map((photo) =>
-        photo.name === editingPhoto.name
-          ? { ...photo, name: newPhoto.name, url: response.data.url }
-          : photo
-      );
-
-      setPhotos(updatedPhotos);
-      setEditingPhoto(null);  // Salir del modo de edición
-      setNewPhoto({ name: '', image: null });  // Limpiar el formulario
-      setError(null);  // Limpiar cualquier error previo
-    } catch (error) {
-      console.error('Error al guardar los cambios:', error);
-      setError('Error al guardar los cambios.');
     }
   };
 
@@ -177,7 +133,24 @@ function FotosAdmin() {
     }
     handleDescriptionModalClose();
   };
-  
+
+  const handleEditPhoto = (photo) => {
+    setSelectedPhoto(photo);
+    setShowEditModal(true);
+  };
+
+  const handleEditModalClose = () => {
+    setShowEditModal(false);
+    setSelectedPhoto(null);
+  };
+
+  const handleSaveEdit = (updatedPhoto) => {
+    const updatedPhotos = photos.map((photo) =>
+      photo.name === selectedPhoto.name ? updatedPhoto : photo
+    );
+    setPhotos(updatedPhotos);
+    handleEditModalClose();
+  };
 
   return (
     <div className="container my-5">
@@ -218,12 +191,6 @@ function FotosAdmin() {
               </div>
               <div>
                 <button
-                  className="btn btn-warning btn-sm me-2"
-                  onClick={() => handleEditPhoto(photo)}
-                >
-                  Editar
-                </button>
-                <button
                   className="btn btn-danger btn-sm me-2"
                   onClick={() => handleDeletePhoto(photo.name)}
                 >
@@ -236,10 +203,16 @@ function FotosAdmin() {
                   Asignar
                 </button>
                 <button
-                  className="btn btn-secondary btn-sm"
+                  className="btn btn-secondary btn-sm me-2"
                   onClick={() => handleDescription(photo)}
                 >
                   Descripción
+                </button>
+                <button
+                  className="btn btn-warning btn-sm"
+                  onClick={() => handleEditPhoto(photo)}
+                >
+                  Editar
                 </button>
               </div>
             </li>
@@ -248,6 +221,33 @@ function FotosAdmin() {
           <li className="list-group-item">No se encontraron fotos en esta sección.</li>
         )}
       </ul>
+
+      {/* Formulario para agregar nueva foto */}
+      <div className="mb-4">
+        <h4>Agregar nueva foto</h4>
+        <div className="mb-3">
+          <label htmlFor="photoName" className="form-label">Nombre de la foto:</label>
+          <input
+            type="text"
+            id="photoName"
+            name="name"
+            className="form-control"
+            value={newPhoto.name}
+            onChange={handleInputChange}
+          />
+        </div>
+        <div className="mb-3">
+          <label htmlFor="photoImage" className="form-label">Seleccionar imagen:</label>
+          <input
+            type="file"
+            id="photoImage"
+            name="image"
+            className="form-control"
+            onChange={handleInputChange}
+          />
+        </div>
+        <button className="btn btn-primary" onClick={handleAddPhoto}>Agregar Foto</button>
+      </div>
 
       {/* Modal de asignación */}
       {selectedPhoto && (
@@ -265,6 +265,16 @@ function FotosAdmin() {
           handleClose={handleDescriptionModalClose}
           selectedPhoto={selectedPhoto}
           handleSave={handleSaveDescription}
+        />
+      )}
+
+      {/* Modal de edición */}
+      {selectedPhoto && (
+        <EditorFotografico
+          show={showEditModal}
+          handleClose={handleEditModalClose}
+          selectedPhoto={selectedPhoto}
+          onSave={handleSaveEdit}
         />
       )}
     </div>
