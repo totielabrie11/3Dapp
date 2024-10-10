@@ -5,7 +5,7 @@
     "fontFamily": "Times New Roman, serif",
     "fontColor": "#fbfe4d",
     "textTransform": "uppercase",
-    "backgroundColor": "rgba(0, 0, 0, 0.7)"
+    "backgroundColor": "rgba(0, 0, 0, 1)"
   },
   {
     "name": "fondo.png",
@@ -29,15 +29,19 @@
     "fontFamily": "Georgia, serif"
   },
   {
-    "name": "puestanoche.png.png",
-    "description": "tinieblas"
-  },
-  {
     "name": "selvafuerte.webp",
     "description": "Foto Que Representa lo Verde Ecologico",
     "fontFamily": "Helvetica, sans-serif",
-    "fontColor": "#26cdd9",
+    "fontColor": "#000000",
+    "textTransform": "uppercase",
+    "backgroundColor": "rgba(251, 253, 88, 0.8)"
+  },
+  {
+    "name": "puestanoche.png.png",
+    "description": "Tenebroso y maldito y morboso",
+    "fontFamily": "Courier New, monospace",
+    "fontColor": "#ffffff",
     "textTransform": "none",
-    "backgroundColor": "rgba(13, 13, 13, 0.5)"
+    "backgroundColor": "rgba(0, 0, 0, 0.7)"
   }
 ]

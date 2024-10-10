@@ -10,6 +10,7 @@ function TextFotoEditor({ show, handleClose, selectedPhoto, handleSave }) {
   const [backgroundColor, setBackgroundColor] = useState('#000000');
   const [backgroundOpacity, setBackgroundOpacity] = useState(0.7);
   const [error, setError] = useState(null);
+  const [successMessage, setSuccessMessage] = useState('');
 
   useEffect(() => {
     const fetchPhotoTextDetails = async () => {
@@ -23,15 +24,9 @@ function TextFotoEditor({ show, handleClose, selectedPhoto, handleSave }) {
             setFontColor(photoData.fontColor);
             setTextTransform(photoData.textTransform);
             if (photoData.backgroundColor) {
-              const rgbaMatch = photoData.backgroundColor.match(/rgba?\((\d+),\s*(\d+),\s*(\d+),\s*([\d.]+)\)/);
-              if (rgbaMatch) {
-                const [, r, g, b, a] = rgbaMatch;
-                setBackgroundColor(`rgb(${r}, ${g}, ${b})`);
-                setBackgroundOpacity(parseFloat(a));
-              } else {
-                setBackgroundColor('#000000');
-                setBackgroundOpacity(0.7);
-              }
+              const { r, g, b, a } = photoData.backgroundColor;
+              setBackgroundColor(`rgb(${r}, ${g}, ${b})`);
+              setBackgroundOpacity(a);
             }
           }
         } catch (error) {
@@ -43,25 +38,42 @@ function TextFotoEditor({ show, handleClose, selectedPhoto, handleSave }) {
     fetchPhotoTextDetails();
   }, [selectedPhoto]);
 
-  const handleSaveClick = () => {
+  const handleSaveClick = async () => {
     if (selectedPhoto) {
-      // Parsear el valor de backgroundColor para crear una cadena de color rgba
-      const r = parseInt(backgroundColor.slice(1, 3), 16) || 0;
-      const g = parseInt(backgroundColor.slice(3, 5), 16) || 0;
-      const b = parseInt(backgroundColor.slice(5, 7), 16) || 0;
-      const rgbaColor = `rgba(${r}, ${g}, ${b}, ${backgroundOpacity})`;
-
-      handleSave({ description, fontFamily, fontColor, textTransform, backgroundColor: rgbaColor });
+      const rgbaColor = `rgba(${parseInt(backgroundColor.slice(1, 3), 16)}, ${parseInt(backgroundColor.slice(3, 5), 16)}, ${parseInt(backgroundColor.slice(5, 7), 16)}, ${backgroundOpacity})`;
+      try {
+        const response = await axios.post('/api/fotoText/save', {
+          name: selectedPhoto.name,
+          description,
+          fontFamily,
+          fontColor,
+          textTransform,
+          backgroundColor: rgbaColor,
+        });
+        if (response.status === 201) {
+          setSuccessMessage('Descripción guardada correctamente.');
+          setTimeout(() => {
+            handleSave(response.data); // Llama la función de guardar en el padre
+            handleClose();
+          }, 2000);
+        }
+      } catch (error) {
+        setError('Error al guardar la descripción.');
+        setTimeout(() => {
+          setError(null);
+        }, 2000);
+      }
     }
   };
 
   return (
     <Modal show={show} onHide={handleClose} centered>
       <Modal.Header closeButton>
-        <Modal.Title>Agregar Descripción a {selectedPhoto.name}</Modal.Title>
+        <Modal.Title>Agregar Descripción a {selectedPhoto?.name}</Modal.Title>
       </Modal.Header>
       <Modal.Body>
         {error && <div className="alert alert-danger" role="alert">{error}</div>}
+        {successMessage && <div className="alert alert-success" role="alert">{successMessage}</div>}
         <div className="mb-3">
           <label htmlFor="photoDescription" className="form-label">Descripción:</label>
           <input
@@ -142,7 +154,7 @@ function TextFotoEditor({ show, handleClose, selectedPhoto, handleSave }) {
             onChange={(e) => setBackgroundOpacity(parseFloat(e.target.value))}
           />
         </div>
-        <div style={{ marginTop: '10px', fontFamily: fontFamily, color: fontColor, textTransform: textTransform, backgroundColor: `rgba(${parseInt(backgroundColor.slice(1, 3), 16) || 0}, ${parseInt(backgroundColor.slice(3, 5), 16) || 0}, ${parseInt(backgroundColor.slice(5, 7), 16) || 0}, ${backgroundOpacity})` }}>
+        <div style={{ marginTop: '10px', fontFamily: fontFamily, color: fontColor, textTransform: textTransform, backgroundColor: `rgba(${parseInt(backgroundColor.slice(1, 3), 16)}, ${parseInt(backgroundColor.slice(3, 5), 16)}, ${parseInt(backgroundColor.slice(5, 7), 16)}, ${backgroundOpacity})` }}>
           Ejemplo de texto con la fuente, color, fondo y transformación seleccionados
         </div>
       </Modal.Body>

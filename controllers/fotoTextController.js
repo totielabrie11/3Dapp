@@ -9,6 +9,7 @@ const fotoTextController = {
     const { name, description, fontFamily, fontColor, textTransform, backgroundColor } = req.body;
 
     if (!name || !description || !fontFamily || !fontColor || !textTransform || !backgroundColor) {
+      console.log('Error: Faltan datos requeridos para guardar la descripción.', req.body);
       return res.status(400).json({ error: 'El nombre, la descripción, el tipo de letra, el color de letra, la transformación del texto y el color de fondo son requeridos.' });
     }
 
@@ -29,17 +30,20 @@ const fotoTextController = {
       const sanitizedBackgroundColor = backgroundColor.includes('NaN') || backgroundColor.includes('undefined') ? 'rgba(0, 0, 0, 0)' : backgroundColor;
 
       if (existingIndex !== -1) {
+        console.log('Actualizando descripción existente:', { name, description, fontFamily, fontColor, textTransform, backgroundColor: sanitizedBackgroundColor });
         jsonData[existingIndex].description = description;
         jsonData[existingIndex].fontFamily = fontFamily;
         jsonData[existingIndex].fontColor = fontColor;
         jsonData[existingIndex].textTransform = textTransform;
         jsonData[existingIndex].backgroundColor = sanitizedBackgroundColor;
       } else {
+        console.log('Guardando nueva descripción:', { name, description, fontFamily, fontColor, textTransform, backgroundColor: sanitizedBackgroundColor });
         jsonData.push({ name, description, fontFamily, fontColor, textTransform, backgroundColor: sanitizedBackgroundColor });
       }
 
       // Guardar los cambios en el archivo JSON
       fs.writeFileSync(dataPath, JSON.stringify(jsonData, null, 2));
+      console.log('Descripción guardada correctamente.');
       return res.status(201).json({ message: 'Descripción guardada correctamente.' });
     } catch (error) {
       console.error('Error al guardar la descripción:', error);
@@ -65,6 +69,7 @@ const fotoTextController = {
         console.log('Datos enviados:', sanitizedData); // <-- Asegúrate de ver estos datos
         return res.status(200).json(sanitizedData); // Devolver todo el contenido del archivo JSON
       } else {
+        console.log('Archivo JSON no encontrado. No hay datos disponibles.');
         return res.status(404).json({ message: 'No se encontraron descripciones.' });
       }
     } catch (error) {
