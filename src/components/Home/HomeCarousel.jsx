@@ -49,29 +49,33 @@ const HomeCarousel = () => {
 
       {/* Elementos del carrusel */}
       <div className="carousel-inner">
-      {carouselImages.map((image, index) => {
-        // Buscar la descripción correspondiente en los datos adicionales obtenidos de la API
-        const matchingData = additionalDescriptions.find(desc => desc.name === image.name) || {};
+        {carouselImages.map((image, index) => {
+          // Buscar la descripción correspondiente en los datos adicionales obtenidos de la API
+          const matchingData = additionalDescriptions.find(desc => desc.name === image.name) || {};
 
-        // Asegurarte de manejar los valores predeterminados correctamente
-        const matchingDescription = matchingData.description || 'Descripción no disponible';
-        const matchingFontFamily = matchingData.fontFamily || 'Arial, sans-serif';
-        const matchingFontColor = matchingData.fontColor || '#ffffff'; // Color predeterminado
-        const matchingTextTransform = matchingData.textTransform || 'none'; // Transformación de texto predeterminada
-        const matchingBackgroundColor = matchingData.backgroundColor || 'rgba(0, 0, 0, 0.7)'; // Color de fondo predeterminado
+          // Asegurarte de manejar los valores predeterminados correctamente
+          const matchingDescription = matchingData.description || 'Descripción no disponible';
+          const matchingFontFamily = matchingData.fontFamily || 'Arial, sans-serif';
+          const matchingFontColor = matchingData.fontColor || '#ffffff'; // Color predeterminado
+          const matchingTextTransform = matchingData.textTransform || 'none'; // Transformación de texto predeterminada
+          const matchingBackgroundColor = matchingData.backgroundColor || 'rgba(0, 0, 0, 0.7)'; // Color de fondo predeterminado
+          const matchingPageUrl = matchingData.pageName ? `http://localhost:3000/${matchingData.pageName.toLowerCase()}` : '#'; // URL de la página
 
-        return (
-          <div
-            key={index}
-            className={`carousel-item ${index === 0 ? 'active' : ''}`}
-            style={{ ...styles.carouselItem(image.url), fontFamily: matchingFontFamily, color: matchingFontColor, backgroundColor: matchingBackgroundColor }}
-          >
-            <div style={{ ...styles.textOverlay, fontFamily: matchingFontFamily, color: matchingFontColor, textTransform: matchingTextTransform, backgroundColor: matchingBackgroundColor }}>
-              <h2 style={{ fontFamily: matchingFontFamily }}>{matchingDescription}</h2>
+          return (
+            <div
+              key={index}
+              className={`carousel-item ${index === 0 ? 'active' : ''}`}
+              style={{ ...styles.carouselItem(image.url), fontFamily: matchingFontFamily, color: matchingFontColor, backgroundColor: matchingBackgroundColor }}
+            >
+              <div style={{ ...styles.textOverlay, fontFamily: matchingFontFamily, color: matchingFontColor, textTransform: matchingTextTransform, backgroundColor: matchingBackgroundColor }}>
+                <h2 style={{ fontFamily: matchingFontFamily }}>{matchingDescription}</h2>
+              </div>
+              <a href={matchingPageUrl} target="_blank" rel="noopener noreferrer">
+                <button style={styles.learnMoreButton}>Saber más</button>
+              </a>
             </div>
-          </div>
-        );
-      })}
+          );
+        })}
       </div>
 
       {/* Controles de navegación */}
@@ -109,6 +113,20 @@ const styles = {
     fontSize: '24px',
     boxShadow: '0px 0px 0px rgba(0, 0, 0, 0)'
   },
+  learnMoreButton: {
+    position: 'absolute',
+    bottom: '10%',
+    left: '50%',
+    transform: 'translateX(-50%)',
+    padding: '10px 20px',
+    fontSize: '16px',
+    color: '#ffffff',
+    backgroundColor: '#007bff',
+    border: 'none',
+    borderRadius: '5px',
+    cursor: 'pointer',
+    textDecoration: 'none'
+  }
 };
 
 export default HomeCarousel;

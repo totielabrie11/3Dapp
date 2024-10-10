@@ -9,6 +9,8 @@ function TextFotoEditor({ show, handleClose, selectedPhoto, handleSave }) {
   const [textTransform, setTextTransform] = useState('none');
   const [backgroundColor, setBackgroundColor] = useState('#000000');
   const [backgroundOpacity, setBackgroundOpacity] = useState(0.7);
+  const [selectedPage, setSelectedPage] = useState('');
+  const [pages, setPages] = useState([]);
   const [error, setError] = useState(null);
   const [successMessage, setSuccessMessage] = useState('');
 
@@ -23,6 +25,7 @@ function TextFotoEditor({ show, handleClose, selectedPhoto, handleSave }) {
             setFontFamily(photoData.fontFamily);
             setFontColor(photoData.fontColor);
             setTextTransform(photoData.textTransform);
+            setSelectedPage(photoData.pageName || '');
             if (photoData.backgroundColor) {
               const { r, g, b, a } = photoData.backgroundColor;
               setBackgroundColor(`rgb(${r}, ${g}, ${b})`);
@@ -38,6 +41,20 @@ function TextFotoEditor({ show, handleClose, selectedPhoto, handleSave }) {
     fetchPhotoTextDetails();
   }, [selectedPhoto]);
 
+  useEffect(() => {
+    // Detectar automáticamente las páginas disponibles
+    const fetchPages = async () => {
+      try {
+        const response = await axios.get('/api/pages');
+        setPages(response.data.pages); // Asume que devuelve un array de nombres de páginas
+      } catch (error) {
+        console.error('Error al cargar las páginas:', error);
+      }
+    };
+
+    fetchPages();
+  }, []);
+
   const handleSaveClick = async () => {
     if (selectedPhoto) {
       const rgbaColor = `rgba(${parseInt(backgroundColor.slice(1, 3), 16)}, ${parseInt(backgroundColor.slice(3, 5), 16)}, ${parseInt(backgroundColor.slice(5, 7), 16)}, ${backgroundOpacity})`;
@@ -49,11 +66,15 @@ function TextFotoEditor({ show, handleClose, selectedPhoto, handleSave }) {
           fontColor,
           textTransform,
           backgroundColor: rgbaColor,
+          pageName: selectedPage
         });
         if (response.status === 201) {
           setSuccessMessage('Descripción guardada correctamente.');
           setTimeout(() => {
-            handleSave(response.data); // Llama la función de guardar en el padre
+            handleSave({
+              ...response.data,
+              pageName: selectedPage
+            }); // Llama la función de guardar en el padre con la página seleccionada
             handleClose();
           }, 2000);
         }
@@ -153,6 +174,19 @@ function TextFotoEditor({ show, handleClose, selectedPhoto, handleSave }) {
             value={backgroundOpacity}
             onChange={(e) => setBackgroundOpacity(parseFloat(e.target.value))}
           />
+        </div>
+        <div className="mb-3">
+          <label htmlFor="pageSelect" className="form-label">Seleccionar página para "Saber más":</label>
+          <Form.Select
+            id="pageSelect"
+            value={selectedPage}
+            onChange={(e) => setSelectedPage(e.target.value)}
+          >
+            <option value="">-- Selecciona una página --</option>
+            {pages.map((page) => (
+              <option key={page} value={page}>{page}</option>
+            ))}
+          </Form.Select>
         </div>
         <div style={{ marginTop: '10px', fontFamily: fontFamily, color: fontColor, textTransform: textTransform, backgroundColor: `rgba(${parseInt(backgroundColor.slice(1, 3), 16)}, ${parseInt(backgroundColor.slice(3, 5), 16)}, ${parseInt(backgroundColor.slice(5, 7), 16)}, ${backgroundOpacity})` }}>
           Ejemplo de texto con la fuente, color, fondo y transformación seleccionados

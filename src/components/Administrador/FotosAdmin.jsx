@@ -3,7 +3,6 @@ import axios from 'axios';
 import FotosAdminAsignador from './FotosAdminAsignador';
 import TextFotoEditor from './TextFotoEditor';
 import EditorFotografico from './EditorFotografico';
-import { Modal, Button } from 'react-bootstrap';
 
 function FotosAdmin() {
   const [selectedSection, setSelectedSection] = useState('homeCarousel');
@@ -113,7 +112,7 @@ function FotosAdmin() {
     setSelectedPhoto(null);
   };
 
-  const handleSaveDescription = async ({ description, fontFamily, fontColor, textTransform, backgroundColor }) => {
+  const handleSaveDescription = async ({ description, fontFamily, fontColor, textTransform, backgroundColor, pageName }) => {
     if (!selectedPhoto) return;
   
     try {
@@ -124,7 +123,8 @@ function FotosAdmin() {
         fontFamily,
         fontColor,
         textTransform,
-        backgroundColor
+        backgroundColor,
+        pageName
       };
   
       await axios.post(endpoint, data);

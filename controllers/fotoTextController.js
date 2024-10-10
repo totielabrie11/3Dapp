@@ -6,11 +6,11 @@ const fotoTextController = {
   // Método POST para guardar o actualizar las descripciones
   save: (req, res) => {
     const dataPath = path.join(__dirname, '../data/fotoText.json');
-    const { name, description, fontFamily, fontColor, textTransform, backgroundColor } = req.body;
+    const { name, description, fontFamily, fontColor, textTransform, backgroundColor, pageName } = req.body;
 
-    if (!name || !description || !fontFamily || !fontColor || !textTransform || !backgroundColor) {
+    if (!name || !fontFamily || !fontColor || !textTransform || !backgroundColor) {
       console.log('Error: Faltan datos requeridos para guardar la descripción.', req.body);
-      return res.status(400).json({ error: 'El nombre, la descripción, el tipo de letra, el color de letra, la transformación del texto y el color de fondo son requeridos.' });
+      return res.status(400).json({ error: 'El nombre, el tipo de letra, el color de letra, la transformación del texto y el color de fondo son requeridos.' });
     }
 
     try {
@@ -30,15 +30,16 @@ const fotoTextController = {
       const sanitizedBackgroundColor = backgroundColor.includes('NaN') || backgroundColor.includes('undefined') ? 'rgba(0, 0, 0, 0)' : backgroundColor;
 
       if (existingIndex !== -1) {
-        console.log('Actualizando descripción existente:', { name, description, fontFamily, fontColor, textTransform, backgroundColor: sanitizedBackgroundColor });
+        console.log('Actualizando descripción existente:', { name, description, fontFamily, fontColor, textTransform, backgroundColor: sanitizedBackgroundColor, pageName });
         jsonData[existingIndex].description = description;
         jsonData[existingIndex].fontFamily = fontFamily;
         jsonData[existingIndex].fontColor = fontColor;
         jsonData[existingIndex].textTransform = textTransform;
         jsonData[existingIndex].backgroundColor = sanitizedBackgroundColor;
+        jsonData[existingIndex].pageName = pageName;
       } else {
-        console.log('Guardando nueva descripción:', { name, description, fontFamily, fontColor, textTransform, backgroundColor: sanitizedBackgroundColor });
-        jsonData.push({ name, description, fontFamily, fontColor, textTransform, backgroundColor: sanitizedBackgroundColor });
+        console.log('Guardando nueva descripción:', { name, description, fontFamily, fontColor, textTransform, backgroundColor: sanitizedBackgroundColor, pageName });
+        jsonData.push({ name, description, fontFamily, fontColor, textTransform, backgroundColor: sanitizedBackgroundColor, pageName });
       }
 
       // Guardar los cambios en el archivo JSON
