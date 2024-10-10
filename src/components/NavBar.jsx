@@ -81,7 +81,7 @@ function NavBar({ isAdmin, user, handleLogout, activeSection }) {
 
               {/* Otras secciones de la navegación */}
               <Nav.Link onClick={() => handleNavClick('about')} className={`nav-link text-uppercase ${activeSection === 'about' ? 'active' : ''}`}>
-                Nosotros
+                Empresa
               </Nav.Link>
               <Nav.Link onClick={() => handleNavClick('team')} className={`nav-link text-uppercase ${activeSection === 'team' ? 'active' : ''}`}>
                 Equipo

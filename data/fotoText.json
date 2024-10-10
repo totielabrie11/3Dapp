@@ -14,7 +14,7 @@
     "fontFamily": "Helvetica, sans-serif",
     "fontColor": "#77a324",
     "textTransform": "uppercase",
-    "backgroundColor": "rgba(0, 0, 0, 0)",
+    "backgroundColor": "rgba(0, 0, 0, 0.7)",
     "pageName": "Petroleo"
   },
   {
