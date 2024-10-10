@@ -226,24 +226,6 @@
     "path-image": "/models/periferica.jpg"
   },
   {
-    "name": "1",
-    "description": "Revista informativa",
-    "path": "",
-    "path-image": "/models/1.png",
-    "caracteristicas": [
-      "Tipo de Producto: Revista",
-      "Aplicación: Educativo"
-    ]
-  },
-  {
-    "name": "portada",
-    "description": "portada a nuestra revista compra suscripción.",
-    "caracteristicas": [
-      "Tipo de Producto: Revista",
-      "Aplicación: Educativo"
-    ]
-  },
-  {
     "name": "recuperadora de gases",
     "description": "Recuperadora de Gases ",
     "path": "",
@@ -289,9 +271,11 @@
   },
   {
     "name": "tele",
-    "description": "",
+    "description": "Tele",
     "path": "/models/tele.jpg",
-    "caracteristicas": [],
+    "caracteristicas": [
+      "Tipo de Producto: Educativo"
+    ],
     "path-image": "/models/tele.jpg"
   }
 ]
