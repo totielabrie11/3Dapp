@@ -1,9 +1,9 @@
 #footer-wrapper {
     background-color: #333; /* Fondo gris oscuro */
     background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.5)); /* Efecto de degradado */
-    position: relative;
-    padding: 7em 0 7em 0;
+    padding: 3em 0; /* Ajustar la altura del fondo */
     color: #fff;
+    text-align: left; /* Alinear todo el contenido a la izquierda */
 }
 
 #footer {
@@ -14,10 +14,7 @@
 #footer h2 {
     font-size: 1.35em;
     color: #fff;
-}
-
-#footer strong {
-    color: #fff;
+    text-align: left; /* Alinear los títulos a la izquierda */
 }
 
 #footer a {
@@ -26,19 +23,17 @@
 }
 
 #footer a:hover {
-    color: #fff; /* Cambiar color al pasar el mouse */
+    color: #fff;
     text-decoration: underline;
 }
 
-#footer ul.divided li, #footer ul.menu li {
-    border-color: #444;
-    border-color: rgba(255, 255, 255, 0.075);
-}
-
-#footer ul.menu {
-    margin: 0;
+#footer ul {
     list-style: none;
     padding-left: 0;
+}
+
+#footer ul li {
+    margin-bottom: 10px; /* Espacio entre los elementos de la lista */
 }
 
 #footer ul.menu li {
@@ -55,5 +50,95 @@
     text-align: center;
     margin-top: 2em;
     padding: 3em 0 4em 0;
-    color: inherit;
+}
+
+.certificaciones,
+.social-icons {
+    display: flex;
+    gap: 15px;
+    justify-content: flex-start; /* Alinear las imágenes y los íconos a la izquierda */
+    align-items: center;
+}
+
+.certificaciones img,
+.empresa-info img {
+    width: 100px; /* Tamaño fijo para las imágenes */
+    height: auto; /* Mantén la proporción de las imágenes */
+}
+
+.empresa-info {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.social-icons a {
+    font-size: 1.5em;
+    color: #acb2bf;
+}
+
+.social-icons a:hover {
+    color: #fff;
+}
+
+/* Responsive CSS */
+@media (max-width: 1024px) {
+    #footer-wrapper {
+        padding: 2.5em 1em;
+    }
+
+    .row {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .col-3 {
+        width: 100%;
+        margin-bottom: 2em;
+    }
+}
+
+@media (max-width: 768px) {
+    #footer-wrapper {
+        padding: 2em 1em;
+    }
+
+    .certificaciones {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .empresa-info {
+        margin: 0 auto;
+        text-align: left;
+    }
+
+    .social-icons {
+        justify-content: center;
+    }
+}
+
+@media (max-width: 480px) {
+    #footer-wrapper {
+        padding: 1.5em 0.5em;
+    }
+
+    .social-icons {
+        flex-direction: column;
+        gap: 5px;
+        align-items: center;
+    }
+
+    .empresa-info {
+        align-items: center;
+        text-align: center;
+    }
+
+    .empresa-info img {
+        width: 60px;
+    }
+
+    .col-3 {
+        text-align: center;
+    }
 }

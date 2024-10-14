@@ -1,4 +1,3 @@
-import React from 'react';
 import './Footer.css'; // Asegúrate de enlazar el CSS correcto para los estilos
 
 const Footer = () => {
@@ -6,80 +5,59 @@ const Footer = () => {
     <div id="footer-wrapper">
       <footer id="footer" className="container">
         <div className="row">
+          {/* Certificaciones */}
           <div className="col-3 col-6-medium col-12-small">
             <section>
-              <h2>Enlaces Importantes</h2>
-              <ul className="divided">
-                <li><a href="/" onClick={(e) => e.preventDefault()}>Política de privacidad</a></li>
-                <li><a href="/" onClick={(e) => e.preventDefault()}>Términos y condiciones</a></li>
-                <li><a href="/" onClick={(e) => e.preventDefault()}>Sobre nosotros</a></li>
-                <li><a href="/" onClick={(e) => e.preventDefault()}>Contacta con nosotros</a></li>
-                <li><a href="/" onClick={(e) => e.preventDefault()}>Ayuda y soporte</a></li>
-                <li><a href="/" onClick={(e) => e.preventDefault()}>Carreras</a></li>
-                <li><a href="/" onClick={(e) => e.preventDefault()}>Blog</a></li>
-              </ul>
-            </section>
-          </div>
-          <div className="col-3 col-6-medium col-12-small">
-            <section>
-              <h2>Más Enlaces</h2>
-              <ul className="divided">
-                <li><a href="/" onClick={(e) => e.preventDefault()}>FAQs</a></li>
-                <li><a href="/" onClick={(e) => e.preventDefault()}>Documentación técnica</a></li>
-                <li><a href="/" onClick={(e) => e.preventDefault()}>Casos de estudio</a></li>
-                <li><a href="/" onClick={(e) => e.preventDefault()}>API</a></li>
-                <li><a href="/" onClick={(e) => e.preventDefault()}>Foro de la comunidad</a></li>
-              </ul>
-            </section>
-            <section>
-              <h2>Aún Más Enlaces</h2>
-              <ul className="divided">
-                <li><a href="/" onClick={(e) => e.preventDefault()}>Noticias y eventos</a></li>
-                <li><a href="/" onClick={(e) => e.preventDefault()}>Inversores</a></li>
-                <li><a href="/" onClick={(e) => e.preventDefault()}>Prensa</a></li>
-                <li><a href="/" onClick={(e) => e.preventDefault()}>Mapa del sitio</a></li>
-              </ul>
-            </section>
-          </div>
-          <div className="col-6 col-12-medium imp-medium">
-            <section>
-              <h2><strong>ZeroCuatro</strong> por HTML5 UP</h2>
-              <p>¡Hola! Esto es <strong>ZeroCuatro</strong>, una plantilla HTML5 totalmente receptiva y gratuita.</p>
-              <a href="/" onClick={(e) => e.preventDefault()} className="button alt icon solid fa-arrow-circle-right">Aprender más</a>
-            </section>
-            <section>
-              <h2>Contáctanos</h2>
-              <div className="row">
-                <div className="col-6 col-12-small">
-                  <dl className="contact">
-                    <dt>Twitter</dt>
-                    <dd><a href="/" onClick={(e) => e.preventDefault()}>@untitled-corp</a></dd>
-                    <dt>Facebook</dt>
-                    <dd><a href="/" onClick={(e) => e.preventDefault()}>facebook.com/untitled</a></dd>
-                    <dt>WWW</dt>
-                    <dd><a href="/" onClick={(e) => e.preventDefault()}>untitled.tld</a></dd>
-                    <dt>Email</dt>
-                    <dd><a href="/" onClick={(e) => e.preventDefault()}>user@untitled.tld</a></dd>
-                  </dl>
-                </div>
-                <div className="col-6 col-12-small">
-                  <dl className="contact">
-                    <dt>Dirección</dt>
-                    <dd>1234 Calle Ficticia<br />Nashville, TN 00000-0000<br />USA</dd>
-                    <dt>Teléfono</dt>
-                    <dd>(000) 000-0000</dd>
-                  </dl>
-                </div>
+              <h2>Certificaciones</h2>
+              <div className="certificaciones">
+                <img src="assets/img/logos/iso 9001.png" alt="ISO 9001" />
+                <img src="assets/img/logos/iso 14001.png" alt="ISO 14001" />
               </div>
             </section>
           </div>
-          <div className="col-12">
-            <div id="copyright">
-              <ul className="menu">
-                <li>&copy; Sin título. Todos los derechos reservados</li>
-                <li>Diseño: <a href="http://html5up.net">Charly - Malu</a></li>
+
+          {/* Enlaces rápidos */}
+          <div className="col-3 col-6-medium col-12-small">
+            <section>
+              <h2>Enlaces rápidos</h2>
+              <ul className="divided">
+                <li><a href="/" onClick={(e) => e.preventDefault()}>Soporte técnico</a></li>
+                <li><a href="/" onClick={(e) => e.preventDefault()}>Sustentabilidad</a></li>
+                <li><a href="/" onClick={(e) => e.preventDefault()}>Manuales</a></li>
+                <li><a href="/" onClick={(e) => e.preventDefault()}>Capacitación</a></li>
+                <li><a href="/" onClick={(e) => e.preventDefault()}>Distribuidores</a></li>
               </ul>
-            </div>
+            </section>
+          </div>
+
+          {/* Contacto */}
+          <div className="col-3 col-6-medium col-12-small">
+            <section>
+              <h2>Contacto</h2>
+              <p>Dirección: Rivadavia 5945, Loma Hermosa, Provincia de Buenos Aires</p>
+              <p>Teléfono: 011 2143-2864</p>
+              <h3>Redes sociales</h3>
+              <div className="social-icons">
+                <a href="/" onClick={(e) => e.preventDefault()}><i className="icon-instagram"></i></a>
+                <a href="/" onClick={(e) => e.preventDefault()}><i className="icon-youtube"></i></a>
+                <a href="/" onClick={(e) => e.preventDefault()}><i className="icon-whatsapp"></i></a>
+                <a href="/" onClick={(e) => e.preventDefault()}><i className="icon-linkedin"></i></a>
+              </div>
+            </section>
+          </div>
+
+          {/* Nuestra empresa */}
+          <div className="col-3 col-6-medium col-12-small">
+            <section>
+              <h2>Nuestra empresa</h2>
+              <div className="empresa-info">
+                <img src="assets/img/logos/Logoazul.png" alt="Logo Dosivac" />
+                <p>Filiales</p>
+                <img src="assets/img/logos/Logo.Dosisur.png" alt="Logo Dosisur" />
+                <p>Dirección: Mar del Plata 675, Q8300 Neuquén</p>
+                <p>Teléfono: 0299 441-3800</p>
+              </div>
+            </section>
           </div>
         </div>
       </footer>
@@ -88,4 +66,3 @@ const Footer = () => {
 };
 
 export default Footer;
-
