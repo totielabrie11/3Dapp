@@ -17,6 +17,13 @@
     text-align: left; /* Alinear los títulos a la izquierda */
 }
 
+#footer h3 {
+    font-size: 1.15em;
+    color: #fff;
+    text-align: left; /* Alinear los títulos a la izquierda */
+    margin-top: 6px;
+}
+
 #footer a {
     color: #acb2bf;
     text-decoration: none;

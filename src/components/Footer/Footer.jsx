@@ -1,4 +1,5 @@
-import './Footer.css'; // Asegúrate de enlazar el CSS correcto para los estilos
+import './Footer.css'; // Enlaza tu CSS personalizado
+import { FaFacebook, FaTwitter, FaLinkedin, FaInstagram, FaYoutube, FaWhatsapp } from 'react-icons/fa'; // Importa los iconos de Font Awesome desde react-icons
 
 const Footer = () => {
   return (
@@ -38,10 +39,10 @@ const Footer = () => {
               <p>Teléfono: 011 2143-2864</p>
               <h3>Redes sociales</h3>
               <div className="social-icons">
-                <a href="/" onClick={(e) => e.preventDefault()}><i className="icon-instagram"></i></a>
-                <a href="/" onClick={(e) => e.preventDefault()}><i className="icon-youtube"></i></a>
-                <a href="/" onClick={(e) => e.preventDefault()}><i className="icon-whatsapp"></i></a>
-                <a href="/" onClick={(e) => e.preventDefault()}><i className="icon-linkedin"></i></a>
+                <a href="/" onClick={(e) => e.preventDefault()}><FaInstagram /></a>
+                <a href="/" onClick={(e) => e.preventDefault()}><FaYoutube /></a>
+                <a href="/" onClick={(e) => e.preventDefault()}><FaWhatsapp /></a>
+                <a href="/" onClick={(e) => e.preventDefault()}><FaLinkedin /></a>
               </div>
             </section>
           </div>
@@ -52,12 +53,21 @@ const Footer = () => {
               <h2>Nuestra empresa</h2>
               <div className="empresa-info">
                 <img src="assets/img/logos/Logoazul.png" alt="Logo Dosivac" />
-                <p>Filiales</p>
+                <h3>Filiales</h3>
                 <img src="assets/img/logos/Logo.Dosisur.png" alt="Logo Dosisur" />
                 <p>Dirección: Mar del Plata 675, Q8300 Neuquén</p>
                 <p>Teléfono: 0299 441-3800</p>
               </div>
             </section>
+          </div>
+        </div>
+        {/* Sección de redes sociales alineada al final del footer */}
+        <div id="footer-social">
+          <div className="social-icons">
+            <a href="/" onClick={(e) => e.preventDefault()}><FaFacebook /></a>
+            <a href="/" onClick={(e) => e.preventDefault()}><FaTwitter /></a>
+            <a href="/" onClick={(e) => e.preventDefault()}><FaLinkedin /></a>
+            <a href="/" onClick={(e) => e.preventDefault()}><FaInstagram /></a>
           </div>
         </div>
       </footer>
