@@ -35,7 +35,7 @@
   {
     "name": "Mi-Emd",
     "description": "Bomba Dosificadora MI-EMD",
-    "path": "/models/Mi-Emd.glb",
+    "path": "/models/Mi-Emd.png",
     "caracteristicas": [
       "Tipo de Producto: Dosificadora",
       "Aplicación: Tratamiento de aguas",
@@ -50,7 +50,7 @@
   {
     "name": "EMD-PLUS",
     "description": "Bomba Dosificadora EMD-PLUS",
-    "path": "/models/EMD-PLUS.glb",
+    "path": "/models/EMD-PLUS.png",
     "caracteristicas": [
       "Tipo de Producto: Dosificadora",
       "Aplicación: Tratamiento de aguas",

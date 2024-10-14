@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import ThreeDCanvas from '../ThreeDCanvas/ThreeDCanvas';
 import Loading from '../Productos/Loading';
+import ProductBarraInfo from './ProductBarraInfo';
 import './ProductoDetalle.css';
 
 function ProductoDetalle() {
@@ -67,6 +68,7 @@ function ProductoDetalle() {
 
   return (
     <div className="productos-container">
+      <ProductBarraInfo productName={product.name} />
       <div className="product-description">
         <h2>{product.name}</h2>
         <p>{product.description}</p>
