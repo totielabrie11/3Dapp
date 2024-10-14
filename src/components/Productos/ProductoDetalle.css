@@ -161,3 +161,32 @@
 .product-3d:hover canvas {
   transform: rotate(3deg) scale(1.01);
 }
+
+/* CSS */
+.back-button {
+  background-color: #f0f0f0;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 5px 10px;
+  font-size: 0.8em;
+  cursor: pointer;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  margin-top: 15px;
+  display: inline-block;
+}
+
+.back-button:hover {
+  background-color: #e0e0e0;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+}
+
+.back-button:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(100, 150, 255, 0.5);
+}
+
+.back-button:active {
+  background-color: #d0d0d0;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+}

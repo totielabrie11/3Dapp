@@ -6,6 +6,7 @@
     "caracteristicas": [
       "Tipo de Producto: Bomba de vacío",
       "Aplicación: Refrigeración",
+      "Rango de Caudal: 170 lts.",
       "Etapas: 2 etapas",
       "Motor: Tipo brusheless",
       "Tipo de gases: R22 - R132 otros",
@@ -149,7 +150,8 @@
       "Tipo de Producto: Dosificadora",
       "Aplicación: sistemas de alta presión",
       "Tipo de industria: Petroleo",
-      "Tipo de accionamiento: A Palanca"
+      "Tipo de accionamiento: A Palanca",
+      "Rango de Caudal:"
     ],
     "path-image": "/models/DEPP.png"
   },

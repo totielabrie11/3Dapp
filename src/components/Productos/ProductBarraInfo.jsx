@@ -3,6 +3,7 @@ import './ProductBarraInfo.css';
 
 function ProductBarraInfo({ productName }) {
   const [links, setLinks] = useState({ brochure: '', manual: '' });
+  const [flowRange, setFlowRange] = useState('');
 
   useEffect(() => {
     if (!productName) {
@@ -33,6 +34,13 @@ function ProductBarraInfo({ productName }) {
           } else {
             console.warn('Rutas no encontradas para el producto:', productName);
           }
+          // Establecer el rango de caudal si está disponible
+          const caudalFeature = product.caracteristicas.find(caracteristica => caracteristica.toLowerCase().includes('rango de caudal'));
+          if (caudalFeature) {
+            setFlowRange(caudalFeature.split(':')[1].trim());
+          } else {
+            console.warn('Rango de caudal no encontrado para el producto:', productName);
+          }
         } else {
           console.warn('Producto no encontrado o datos no válidos:', productName);
         }
@@ -58,6 +66,11 @@ function ProductBarraInfo({ productName }) {
 
   return (
     <div className="product-barra-info">
+      {flowRange && (
+        <div className="flow-range">
+          <strong>Rango de Caudal:</strong> {flowRange}
+        </div>
+      )}
       <button className="btn-download" onClick={() => handleDownload(links.brochure, 'Folleto')}>
         Descargar Folleto
       </button>

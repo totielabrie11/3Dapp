@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom'; // Importa useNavigate
 import ThreeDCanvas from '../ThreeDCanvas/ThreeDCanvas';
 import Loading from '../Productos/Loading';
 import ProductBarraInfo from './ProductBarraInfo';
@@ -7,6 +7,7 @@ import './ProductoDetalle.css';
 
 function ProductoDetalle() {
   const { name } = useParams();
+  const navigate = useNavigate(); // Inicializa useNavigate
   const [product, setProduct] = useState(null);
   const [settings, setSettings] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -53,6 +54,7 @@ function ProductoDetalle() {
       await fetchProduct();
       await fetchSettings();
       setLoading(false);
+      window.scrollTo(0, 0); // Desplazarse al principio de la pantalla
     };
 
     fetchData();
@@ -95,6 +97,10 @@ function ProductoDetalle() {
           />
         )}
       </div>
+      {/* Botón para volver a la vista de todos los productos */}
+      <button className="back-button" onClick={() => navigate('/productos')}>
+        ← Volver
+      </button>
     </div>
   );
 }
