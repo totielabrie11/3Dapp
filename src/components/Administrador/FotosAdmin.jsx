@@ -3,6 +3,7 @@ import axios from 'axios';
 import FotosAdminAsignador from './FotosAdminAsignador';
 import TextFotoEditor from './TextFotoEditor';
 import EditorFotografico from './EditorFotografico';
+import FotosAdminEncabezados from './FotosAdminEncabezados';
 
 function FotosAdmin() {
   const [selectedSection, setSelectedSection] = useState('homeCarousel');
@@ -15,23 +16,27 @@ function FotosAdmin() {
   const [selectedPhoto, setSelectedPhoto] = useState(null);  // Para la foto seleccionada para asignar, descripción o edición
 
   useEffect(() => {
-    const fetchPhotos = async () => {
-      try {
-        const endpoint = selectedSection === 'fondos'
-          ? '/api/fondos'
-          : '/api/images';
+    if (selectedSection !== 'encabezados' && selectedSection !== 'gallery') {
+      const fetchPhotos = async () => {
+        try {
+          const endpoint = selectedSection === 'fondos'
+            ? '/api/fondos'
+            : '/api/images';
 
-        const response = await axios.get(endpoint);
-        const fetchedPhotos = response.data.fondos || response.data.images || [];
-        setPhotos(fetchedPhotos);
-        setError(null);  // Limpiar cualquier error previo
-      } catch (error) {
-        console.error('Error al obtener las imágenes:', error);
-        setError('Error al cargar las imágenes.');
-        setPhotos([]);  // Limpiar fotos en caso de error
-      }
-    };
-    fetchPhotos();
+          const response = await axios.get(endpoint);
+          const fetchedPhotos = response.data.fondos || response.data.images || [];
+          setPhotos(fetchedPhotos);
+          setError(null);  // Limpiar cualquier error previo
+        } catch (error) {
+          console.error('Error al obtener las imágenes:', error);
+          setError('Error al cargar las imágenes.');
+          setPhotos([]);  // Limpiar fotos en caso de error
+        }
+      };
+      fetchPhotos();
+    } else {
+      setPhotos([]);
+    }
   }, [selectedSection]);
 
   const handleSectionChange = (e) => {
@@ -60,6 +65,8 @@ function FotosAdmin() {
 
       const endpoint = selectedSection === 'fondos'
         ? '/api/fondos/upload'
+        : selectedSection === 'encabezados'
+        ? '/api/encabezados/upload'
         : '/api/images/upload';
 
       const response = await axios.post(endpoint, formData, {
@@ -80,6 +87,8 @@ function FotosAdmin() {
     try {
       const endpoint = selectedSection === 'fondos'
         ? `/api/fondos/${filename}`
+        : selectedSection === 'encabezados'
+        ? `/api/encabezados/${filename}`
         : `/api/images/${filename}`;
 
       await axios.delete(endpoint);
@@ -153,6 +162,10 @@ function FotosAdmin() {
     handleEditModalClose();
   };
 
+  const handleEncabezadosLoaded = (headers) => {
+    setPhotos(headers);
+  };
+
   return (
     <div className="container my-5">
       <h2>Administrar Fotografías</h2>
@@ -172,56 +185,65 @@ function FotosAdmin() {
           <option value="homeCarousel">Carrusel de Inicio</option>
           <option value="gallery">Galería</option>
           <option value="fondos">Fondos de Pantalla</option>
+          <option value="encabezados">Fotos de Encabezados</option>
         </select>
       </div>
 
-      {/* Lista de fotos existentes en la sección seleccionada */}
-      <h3>Fotos en {selectedSection === 'homeCarousel' ? 'Carrusel de Inicio' : selectedSection === 'gallery' ? 'Galería' : 'Fondos de Pantalla'}:</h3>
-      <ul className="list-group mb-4">
-        {photos.length > 0 ? (
-          photos.map(photo => (
-            <li key={photo.name} className="list-group-item d-flex justify-content-between align-items-center">
-              <div>
-                <strong>{photo.name}</strong>
-                <img
-                  src={photo.url}
-                  alt={photo.name}
-                  className="img-thumbnail ms-3"
-                  style={{ maxWidth: '100px' }}
-                />
-              </div>
-              <div>
-                <button
-                  className="btn btn-danger btn-sm me-2"
-                  onClick={() => handleDeletePhoto(photo.name)}
-                >
-                  Eliminar
-                </button>
-                <button
-                  className="btn btn-info btn-sm me-2"
-                  onClick={() => handleAssign(photo)}
-                >
-                  Asignar
-                </button>
-                <button
-                  className="btn btn-secondary btn-sm me-2"
-                  onClick={() => handleDescription(photo)}
-                >
-                  Descripción
-                </button>
-                <button
-                  className="btn btn-warning btn-sm"
-                  onClick={() => handleEditPhoto(photo)}
-                >
-                  Editar
-                </button>
-              </div>
-            </li>
-          ))
-        ) : (
-          <li className="list-group-item">No se encontraron fotos en esta sección.</li>
-        )}
-      </ul>
+      {/* Vista condicional de fotos */}
+      {selectedSection === 'gallery' ? (
+        <div className="list-group-item">No se encontraron fotos en esta sección.</div>
+      ) : selectedSection !== 'encabezados' ? (
+        <>
+          <h3>Fotos en {selectedSection === 'homeCarousel' ? 'Carrusel de Inicio' : 'Fondos de Pantalla'}:</h3>
+          <ul className="list-group mb-4">
+            {photos.length > 0 ? (
+              photos.map(photo => (
+                <li key={photo.name} className="list-group-item d-flex justify-content-between align-items-center">
+                  <div>
+                    <strong>{photo.name}</strong>
+                    <img
+                      src={photo.url}
+                      alt={photo.name}
+                      className="img-thumbnail ms-3"
+                      style={{ maxWidth: '100px' }}
+                    />
+                  </div>
+                  <div>
+                    <button
+                      className="btn btn-danger btn-sm me-2"
+                      onClick={() => handleDeletePhoto(photo.name)}
+                    >
+                      Eliminar
+                    </button>
+                    <button
+                      className="btn btn-info btn-sm me-2"
+                      onClick={() => handleAssign(photo)}
+                    >
+                      Asignar
+                    </button>
+                    <button
+                      className="btn btn-secondary btn-sm me-2"
+                      onClick={() => handleDescription(photo)}
+                    >
+                      Descripción
+                    </button>
+                    <button
+                      className="btn btn-warning btn-sm"
+                      onClick={() => handleEditPhoto(photo)}
+                    >
+                      Editar
+                    </button>
+                  </div>
+                </li>
+              ))
+            ) : (
+              <li className="list-group-item">No se encontraron fotos en esta sección.</li>
+            )}
+          </ul>
+        </>
+      ) : (
+        <FotosAdminEncabezados onPhotosLoaded={handleEncabezadosLoaded} />
+      )}
 
       {/* Formulario para agregar nueva foto */}
       <div className="mb-4">

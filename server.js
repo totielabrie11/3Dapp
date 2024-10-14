@@ -10,6 +10,7 @@ const pageController = require('./controllers/pageController');
 const videoController = require('./controllers/videoController');  
 const fotosController = require('./controllers/fotosController');
 const fotoTextController = require('./controllers/fotoTextController'); 
+const header_fondo_controller = require('./controllers/header_fondo_controller');
 
 const app = express();
 const port = process.env.PORT || 5000;
@@ -36,6 +37,8 @@ app.use(fondoController);
 
 // Usar pageController para manejar la asignación de fondos de pantalla 
 app.use(pageController);
+
+app.use(header_fondo_controller);
 
 // Endpoint para el manejo de videos
 app.post('/api/videos/upload', videoController.upload);
