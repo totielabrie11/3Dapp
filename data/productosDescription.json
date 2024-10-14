@@ -208,7 +208,7 @@
   {
     "name": "Supervac",
     "description": "Bomba de vacío Supervac",
-    "path": "/models/supervac.glb",
+    "path": "/models/Supervac.png",
     "caracteristicas": [
       "Tipo de Producto: Bomba de vacío",
       "Aplicación: Refrigeración",
