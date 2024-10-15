@@ -3,20 +3,20 @@
     "Aguas": [
       {
         "section": "encabezado",
-        "photoName": "fondoloco.webp"
-      },
-      {
-        "section": "otra-seccion",
-        "photoName": "vuela libre.webp"
+        "photoName": "tele.jpg"
       }
     ],
     "Petroleo": [
       {
+        "section": "encabezado",
+        "photoName": "entrevistas.webp"
+      },
+      {
         "section": "otra-seccion",
-        "photoName": "volando.webp"
+        "photoName": "tele.jpg"
       }
     ]
   },
-  "Aguas": "fondoloco.webp",
-  "Petroleo": "volando.webp"
+  "Aguas": "tele.jpg",
+  "Petroleo": "tele.jpg"
 }
