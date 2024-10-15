@@ -3,9 +3,9 @@
     "name": "campo.png",
     "description": "Venite Que La Vas a Pasar Genial",
     "fontFamily": "Times New Roman, serif",
-    "fontColor": "#fbfe4d",
+    "fontColor": "#04ff00",
     "textTransform": "uppercase",
-    "backgroundColor": "rgba(0, 0, 0, 0.8)",
+    "backgroundColor": "rgba(0, 0, 0, 0.4)",
     "pageName": "Aguas"
   },
   {

@@ -9,6 +9,9 @@ function Productos() {
   const [order, setOrder] = useState([]);
 
   useEffect(() => {
+    // Scroll to top when component mounts
+    window.scrollTo(0, 0);
+
     const fetchProducts = async () => {
       try {
         const response = await fetch('/api/product-descriptions');
@@ -117,7 +120,7 @@ function Productos() {
 
   return (
     <div className="productos-container">
-      <div className="left-column">
+      <div className="left-column sticky-filter">
         <ProductFilter onFilter={handleFilter} />
       </div>
       <div className="center-column">
