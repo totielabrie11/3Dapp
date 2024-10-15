@@ -6,6 +6,7 @@ import HomeCarousel from './HomeCarousel';
 import Contacto from './Contacto/Contacto'; // Importamos el componente de Contacto
 import Mercados from './Mercados/Mercados'; // Importamos el nuevo componente de Mercados
 import Empresa from './Empresa/Empresa'; 
+import Historia from './Historia/Historia'; 
 
 const Home = () => {
 
@@ -40,7 +41,7 @@ const Home = () => {
             <Mercados />
             
             <Empresa />
-            
+            <Historia />
             <Equipo />
 
             <Distribuidores />
