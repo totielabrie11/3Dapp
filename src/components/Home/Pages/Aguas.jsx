@@ -77,7 +77,7 @@ function Aguas() {
 
       {/* Secciones de contenido */}
       <div className="container">
-        <section className="my-5">
+        <section id="sistemas-portatiles" className="my-5">
           <h2>Sistemas Portátiles de Dosificación</h2>
           <p>
             Nuestros sistemas portátiles están diseñados para ofrecer soluciones rápidas y eficientes en el tratamiento de agua,
@@ -85,7 +85,7 @@ function Aguas() {
           </p>
         </section>
 
-        <section className="my-5">
+        <section id="sistemas-robustos" className="my-5">
           <h2>Sistemas Robustos con Bombas Dosivac</h2>
           <p>
             Las bombas Dosivac proporcionan una dosificación precisa y segura, asegurando que el tratamiento de agua sea eficaz incluso en las condiciones más desafiantes.
@@ -93,7 +93,7 @@ function Aguas() {
           </p>
         </section>
 
-        <section className="my-5">
+        <section id="beneficios-dosificacion" className="my-5">
           <h2>Beneficios de la Dosificación Eficiente</h2>
           <p>
             La dosificación eficiente de productos químicos en el agua no solo asegura la pureza del agua potable, sino que también optimiza los costos operativos
@@ -101,24 +101,24 @@ function Aguas() {
           </p>
         </section>
 
-        <section className="my-5">
-          <h2>Impacto Ambiental del Tratamiento de Agua</h2>
-          <p>
-            El tratamiento de agua no solo tiene un impacto positivo en la salud pública, sino que también juega un rol clave en la preservación del medio ambiente.
-            Nuestras tecnologías avanzadas reducen la contaminación y promueven la sostenibilidad.
-          </p>
-        </section>
-
-        <section className="my-5">
-          <h2>El Futuro del Agua Pura</h2>
-          <p>
-            A medida que las tecnologías avanzan, el futuro del tratamiento de agua apunta hacia soluciones aún más eficientes y sostenibles, con sistemas automatizados
-            que garantizarán agua pura y limpia para las generaciones futuras.
-          </p>
-        </section>
+        <section id="impacto-ambiental" className="my-5">
+            <h2>Impacto Ambiental del Tratamiento de Agua</h2>
+            <p>
+              El tratamiento de agua no solo tiene un impacto positivo en la salud pública, sino que también juega un rol clave en la preservación del medio ambiente.
+              Nuestras tecnologías avanzadas reducen la contaminación y promueven la sostenibilidad.
+            </p>
+          </section>
+  
+          <section id="futuro-agua-pura" className="my-5">
+            <h2>El Futuro del Agua Pura</h2>
+            <p>
+              A medida que las tecnologías avanzan, el futuro del tratamiento de agua apunta hacia soluciones aún más eficientes y sostenibles, con sistemas automatizados
+              que garantizarán agua pura y limpia para las generaciones futuras.
+            </p>
+          </section>
+        </div>
       </div>
-    </div>
-  );
-}
-
-export default Aguas;
+    );
+  }
+  
+  export default Aguas;

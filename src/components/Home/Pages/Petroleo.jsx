@@ -67,7 +67,7 @@ function Petroleo() {
         </div>
 
         {/* Encabezado debajo del fondo */}
-        <div className="container text-center" style={{ position: 'relative', zIndex: 1, paddingTop: '70px' }}>
+        <div id="encabezado" className="container text-center" style={{ position: 'relative', zIndex: 1, paddingTop: '70px' }}>
           <h1 className="mb-4" style={{ color: '#fff' }}>Sección de Petróleo en Argentina</h1>
           <p className="mb-5" style={{ color: '#fff' }}>
             Explora las últimas noticias y desarrollos sobre la industria petrolera en Argentina.
@@ -86,7 +86,7 @@ function Petroleo() {
         }}
       >
         <div className="container">
-          <section className="my-5">
+          <section id="historia-petroleo" className="my-5">
             <h2>Historia del Petróleo en Argentina</h2>
             <p>
               La industria petrolera en Argentina ha sido una parte importante de su desarrollo económico desde principios del siglo XX.
@@ -94,7 +94,7 @@ function Petroleo() {
             </p>
           </section>
 
-          <section className="my-5">
+          <section id="principales-yacimientos" className="my-5">
             <h2>Principales Yacimientos de Petróleo</h2>
             <p>
               Argentina cuenta con importantes yacimientos de petróleo y gas, entre los más conocidos están Vaca Muerta, Cerro Dragón y Chubut,
@@ -102,7 +102,7 @@ function Petroleo() {
             </p>
           </section>
 
-          <section className="my-5">
+          <section id="impacto-economico" className="my-5">
             <h2>Impacto Económico</h2>
             <p>
               El petróleo es un recurso clave para la economía argentina. Las inversiones en este sector generan empleo, infraestructura
@@ -110,7 +110,7 @@ function Petroleo() {
             </p>
           </section>
 
-          <section className="my-5">
+          <section id="futuro-industria" className="my-5">
             <h2>Futuro de la Industria Petrolera</h2>
             <p>
               Con el avance de las energías renovables, el futuro de la industria petrolera enfrenta desafíos, pero sigue siendo crucial
