@@ -5,6 +5,7 @@ import Distribuidores from './Distribuidores/Distribuidores';
 import HomeCarousel from './HomeCarousel';
 import Contacto from './Contacto/Contacto'; // Importamos el componente de Contacto
 import Mercados from './Mercados/Mercados'; // Importamos el nuevo componente de Mercados
+import Empresa from './Empresa/Empresa'; 
 
 const Home = () => {
 
@@ -38,18 +39,7 @@ const Home = () => {
             {/* Sección de Explora Nuestros Mercados */}
             <Mercados />
             
-            {/* Sección de About */}
-            <section className="page-section" id="about">
-                <div className="container">
-                    <div className="text-center">
-                        <h2 className="section-heading text-uppercase">Empresa</h2>
-                        <h3 className="section-subheading text-muted">Lorem ipsum dolor sit amet consectetur.</h3>
-                    </div>
-                    <ul className="timeline">
-                        {/* Timeline items */}
-                    </ul>
-                </div>
-            </section>
+            <Empresa />
             
             <Equipo />
 
