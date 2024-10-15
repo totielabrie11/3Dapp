@@ -1,4 +1,12 @@
 {
-  "Petroleo": "petroleofondo.webp",
-  "Aguas": "equipoloco.jpg"
+  "aplicarPaginas": {
+    "Aguas": [
+      {
+        "section": "encabezado",
+        "photoName": "volando.webp"
+      }
+    ]
+  },
+  "Aguas": "volando.webp",
+  "Petroleo": "volando.webp"
 }

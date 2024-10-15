@@ -1,10 +1,15 @@
-// FotosAdminEncabezados.jsx
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import FotosAdminAsignadorPaginas from './FotosAdminAsign/FotosAdminAsignadorPaginas';
+import FotosAdminAsignadorSeccion from './FotosAdminAsign/FotosAdminAsignadorSeccion';
 
-function FotosAdminEncabezados({ onPhotosLoaded }) {
+function FotosAdminEncabezados({ onPhotosLoaded, onAssign }) {
   const [headers, setHeaders] = useState([]);
   const [error, setError] = useState(null);
+  const [showAssignPageModal, setShowAssignPageModal] = useState(false);  // Primer modal
+  const [showAssignSectionModal, setShowAssignSectionModal] = useState(false);  // Segundo modal
+  const [selectedHeader, setSelectedHeader] = useState(null);
+  const [selectedPage, setSelectedPage] = useState(null);  // Almacena la página seleccionada
 
   useEffect(() => {
     const fetchHeaders = async () => {
@@ -38,6 +43,47 @@ function FotosAdminEncabezados({ onPhotosLoaded }) {
     }
   };
 
+  // Al abrir el primer modal (selección de página)
+  const handleAssignHeader = (header) => {
+    setSelectedHeader(header);
+    setShowAssignPageModal(true);  // Muestra el modal para seleccionar página
+  };
+
+  // Cerrar los modales
+  const handleAssignModalClose = () => {
+    setShowAssignPageModal(false);
+    setShowAssignSectionModal(false);
+    setSelectedHeader(null);
+    setSelectedPage(null);
+  };
+
+  // Manejo de guardar la página seleccionada y abrir el siguiente modal
+  const handlePageSelected = (pageName) => {
+    setSelectedPage(pageName);
+    setShowAssignPageModal(false);
+    setShowAssignSectionModal(true);  // Abre el segundo modal para seleccionar sección
+  };
+
+  // Guardar la asignación (página + sección + foto)
+  const handleSaveAssignment = async (section) => {
+    if (!selectedHeader || !selectedPage || !section) return;
+    try {
+      const endpoint = '/api/pages/assign-multiple';
+      const data = {
+        photoName: selectedHeader.name,
+        pageName: selectedPage,
+        section: section // Sección seleccionada en el segundo modal
+      };
+
+      await axios.post(endpoint, data);
+      console.log(`Fondo ${selectedHeader.name} asignado a la página ${selectedPage} en la sección ${section}.`);
+      handleAssignModalClose();
+    } catch (error) {
+      console.error('Error al guardar la asignación:', error);
+      setError('Error al guardar la asignación.');
+    }
+  };
+
   return (
     <div>
       <h3>Administrar Fotos de Encabezados</h3>
@@ -55,18 +101,44 @@ function FotosAdminEncabezados({ onPhotosLoaded }) {
                   style={{ maxWidth: '100px' }}
                 />
               </div>
-              <button
-                className="btn btn-danger btn-sm"
-                onClick={() => handleDeleteHeader(header.name)}
-              >
-                Eliminar
-              </button>
+              <div>
+                <button
+                  className="btn btn-danger btn-sm me-2"
+                  onClick={() => handleDeleteHeader(header.name)}
+                >
+                  Eliminar
+                </button>
+                <button
+                  className="btn btn-info btn-sm"
+                  onClick={() => handleAssignHeader(header)}
+                >
+                  Asignar
+                </button>
+              </div>
             </li>
           ))
         ) : (
           <li className="list-group-item">No se encontraron fotos de encabezados.</li>
         )}
       </ul>
+
+      {/* Modal de selección de página */}
+      {selectedHeader && (
+        <FotosAdminAsignadorPaginas
+          show={showAssignPageModal}
+          handleClose={handleAssignModalClose}
+          onSave={handlePageSelected}  // Enviar página seleccionada
+        />
+      )}
+
+      {/* Modal de selección de sección */}
+      {selectedPage && selectedHeader && (
+        <FotosAdminAsignadorSeccion
+          show={showAssignSectionModal}
+          handleClose={handleAssignModalClose}
+          onSave={handleSaveAssignment}  // Guardar página + sección + foto
+        />
+      )}
     </div>
   );
 }
