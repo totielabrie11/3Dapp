@@ -11,6 +11,7 @@ const videoController = require('./controllers/videoController');
 const fotosController = require('./controllers/fotosController');
 const fotoTextController = require('./controllers/fotoTextController'); 
 const header_fondo_controller = require('./controllers/header_fondo_controller');
+const buscadorSeccionPages = require('./controllers/buscadorSeccionPages');
 
 const app = express();
 const port = process.env.PORT || 5000;
@@ -39,6 +40,8 @@ app.use(fondoController);
 app.use(pageController);
 
 app.use(header_fondo_controller);
+
+app.use(buscadorSeccionPages);
 
 // Endpoint para el manejo de videos
 app.post('/api/videos/upload', videoController.upload);
