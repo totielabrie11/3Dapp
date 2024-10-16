@@ -65,7 +65,7 @@ function Petroleo() {
             width: '100%',
             height: '100%',
             zIndex: -1,
-            opacity: 0.5,
+            opacity: 0.9,
             overflow: 'hidden',
           }}
         >
@@ -273,10 +273,31 @@ function Petroleo() {
       style={{
         backgroundColor: '#0E0A0A',
         color: '#ffffff',
-        padding: '50px 20px',
+        padding: '100px 20px',
+        minHeight: '600px',
       }}
     >
       <div className="content-wrapper">
+        {/* Contenedor de las Imágenes */}
+        <div className="images-content">
+          <div className="image-wrapper">
+            <div className="main-image">
+              <img
+                src="assets/img/portfolio/7.png"
+                alt="Sistema de dosificación"
+                className="supervision-image"
+              />
+            </div>
+            <div className="secondary-image">
+              <img
+                src="assets/img/portfolio/8.png"
+                alt="Controlador TCMR-1"
+                className="control-module-image"
+              />
+            </div>
+          </div>
+        </div>
+
         {/* Contenedor del Título y Texto */}
         <div className="text-content">
           <h2 className="section-title">CONTROL Y SUPERVISIÓN</h2>
@@ -288,26 +309,44 @@ function Petroleo() {
             <strong>TCMR (Módulo de Tele-supervisión y Control)</strong>: Permite el control local o remoto, monitoreando parámetros críticos como el nivel de tanque, caudal y presión.
           </p>
         </div>
-
-        {/* Contenedor de las Imágenes */}
-        <div className="images-content">
-          <div className="main-image">
-            <img
-              src="assets/img/portfolio/7.png"
-              alt="Sistema de dosificación"
-              className="supervision-image"
-            />
-          </div>
-          <div className="secondary-image">
-            <img
-              src="assets/img/portfolio/8.png"
-              alt="Controlador TCMR-1"
-              className="control-module-image"
-            />
-          </div>
-        </div>
       </div>
     </section>
+
+    <section id="equipos-inteligentes" className="equipos-inteligentes-section text-white" style={{
+  backgroundImage: backgroundImages['equipos inteligentes']
+    ? `url(/images/fondos/headeres/${backgroundImages['equipos inteligentes']})`
+    : 'none',
+  backgroundSize: 'cover',
+  backgroundPosition: 'center',
+  backgroundColor: backgroundImages['equipos inteligentes']
+    ? 'transparent'
+    : '#0E0A0A',
+  padding: '100px 20px',
+  position: 'relative',
+}}>
+  <div className="container d-flex align-items-center justify-content-between equipos-inteligentes-container">
+    {/* Contenedor de Texto */}
+    <div className="text-content" style={{ flex: '1', maxWidth: '50%' }}>
+      <h2 className="section-title">EQUIPOS INTELIGENTES</h2>
+      <p className="section-description mb-4">
+        Nuestros equipos inteligentes están diseñados para mantenerte conectado y en control, equipados con conectividad WiFi y opciones de comunicación como Modbus RTU 485 y radio, garantizando una integración perfecta con tus sistemas existentes.
+      </p>
+      <button className="btn btn-outline-light btn-lg">CONOCER MÁS</button>
+    </div>
+
+    {/* Contenedor de Imágenes */}
+    <div className="image-content d-flex justify-content-center align-items-center" style={{ flex: '1' }}>
+      <article className="equipo-item mx-3">
+        <img src="assets/img/portfolio/inteligentes.png" alt="Equipos Inteligentes" />
+      </article>
+      <article className="equipo-item mx-3">
+        <img src="assets/img/portfolio/tcmr1.png" alt="TCMR-1" />
+      </article>
+    </div>
+  </div>
+</section>
+
+
 
     </div>
   );

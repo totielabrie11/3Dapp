@@ -210,19 +210,62 @@
   .control-supervision-section {
     background-color: #0E0A0A;
     color: #ffffff;
-    padding: 50px 20px;
+    padding: 100px 20px;
+    min-height: 600px;
+    position: relative;
+    overflow: hidden; /* Evita que cualquier parte del contenido se salga del contenedor */
   }
   
   .content-wrapper {
     display: flex;
-    flex-direction: column;
-    gap: 30px;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: 100px; /* Aumenta el espacio entre el texto y las imágenes */
+    flex-wrap: wrap;
+  }
+  
+  .images-content {
+    flex: 1;
+    max-width: 40%;
+    position: relative;
+    left: -50px; /* Ajusta este valor para mover el conjunto de imágenes hacia la izquierda */
+  }
+  
+  .image-wrapper {
+    position: relative; /* Contenedor relativo para que la secundaria se posicione respecto de la principal */
+    width: 100%;
+  }
+  
+  .main-image {
+    position: relative; /* La imagen principal como punto de referencia */
+    width: 100%;
+    z-index: 1;
+  }
+  
+  .secondary-image {
+    position: absolute; /* Posicionamiento absoluto respecto del contenedor image-wrapper */
+    top: 150px; /* Ajusta la posición vertical según necesites */
+    left: 300px; /* Ajusta la posición horizontal para controlar la superposición */
+    z-index: 2;
+    width: 150px; /* Tamaño de la imagen secundaria */
+  }
+  
+  .supervision-image {
+    width: 120%;
+    height: auto;
+    border-radius: 8px;
+  }
+  
+  .control-module-image {
+    width: 80%;
+    height: auto;
+    border-radius: 8px;
   }
   
   .text-content {
-    max-width: 600px;
-    margin: 0 auto;
-    text-align: center;
+    flex: 1;
+    max-width: 55%;
   }
   
   .section-title {
@@ -234,7 +277,6 @@
   .features-list {
     list-style-type: disc;
     padding-left: 20px;
-    text-align: left;
     margin-bottom: 20px;
   }
   
@@ -243,62 +285,68 @@
     line-height: 1.6;
   }
   
-  .images-content {
+  .equipos-inteligentes-section {
+    position: relative;
+    padding: 100px 20px;
+    background-position: center;
+    background-size: cover;
+  }
+  
+  .equipos-inteligentes-container {
     display: flex;
-    flex-direction: column;
-    align-items: center;
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+  
+  .text-content {
+    flex: 1;
+    max-width: 50%;
+  }
+  
+  .image-content {
+    flex: 1;
+    display: flex;
+    justify-content: center;
     gap: 20px;
   }
   
-  .main-image {
-    width: 90%;
-    max-width: 800px;
+  .equipos-inteligentes-section .section-title {
+    font-size: 2.5rem;
+    font-weight: bold;
+    margin-bottom: 20px;
   }
   
-  .secondary-image {
-    width: 50%;
-    max-width: 200px;
+  .equipos-inteligentes-section .section-description {
+    max-width: 600px;
+    font-size: 1.2rem;
+    line-height: 1.8;
   }
   
-  .supervision-image, .control-module-image {
+  .equipos-inteligentes-section .btn {
+    padding: 12px 35px;
+    font-size: 1.2rem;
+    border: 2px solid white;
+    font-weight: bold;
+    transition: all 0.3s ease;
+  }
+  
+  .equipos-inteligentes-section .btn:hover {
+    background-color: white;
+    color: #0E0A0A;
+  }
+  
+  .equipo-item {
+    max-width: 300px;
+    transition: transform 0.3s ease;
+  }
+  
+  .equipo-item img {
     width: 100%;
     height: auto;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    object-fit: contain;
   }
   
-  /* Estilos Responsivos */
-  @media (min-width: 768px) {
-    .content-wrapper {
-      flex-direction: row;
-      justify-content: space-between;
-      align-items: center;
-    }
-  
-    .text-content {
-      width: 45%;
-      text-align: left;
-    }
-  
-    .images-content {
-      width: 50%;
-      flex-direction: row;
-      gap: 20px;
-    }
-  
-    .main-image, .secondary-image {
-      width: 100%;
-    }
-  
-    .secondary-image {
-      width: 30%;
-      max-width: 150px;
-    }
-  }
-  
-  @media (min-width: 1024px) {
-    .text-content {
-      max-width: 600px;
-    }
+  .equipo-item:hover {
+    transform: scale(1.05);
   }
   

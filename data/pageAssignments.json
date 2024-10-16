@@ -78,5 +78,10 @@
     "photoName": "equipo.png",
     "pageName": "Refrigeracion",
     "section": "Eficiencia de los Sistemas de Vacío"
+  },
+  {
+    "photoName": "fondoParaPetroleo.jpg",
+    "pageName": "Petroleo",
+    "section": "EQUIPOS INTELIGENTES"
   }
 ]
