@@ -551,3 +551,146 @@
     transform: translateY(0);
   }
 }
+
+/* Estilos adicionales para mejorar el responsive de la sección 'control-supervision' */
+
+.control-supervision-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 50px 20px;
+  min-height: 600px;
+}
+
+.content-wrapper {
+  display: flex;
+  flex-direction: row;
+  gap: 40px;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.images-content {
+  flex: 1;
+  max-width: 40%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+
+.image-wrapper {
+  position: relative; /* Contenedor relativo para que la secundaria se posicione respecto de la principal */
+  width: 100%;
+}
+
+.main-image {
+  position: relative; /* La imagen principal como punto de referencia */
+  width: 100%;
+  z-index: 1;
+}
+
+.secondary-image {
+  position: absolute; /* Posicionamiento absoluto respecto del contenedor image-wrapper */
+  top: 150px; /* Ajusta la posición vertical según necesites */
+  left: 300px; /* Ajusta la posición horizontal para controlar la superposición */
+  z-index: 2;
+  width: 150px; /* Tamaño de la imagen secundaria */
+  transition: transform 0.3s ease;
+}
+
+.secondary-image:hover {
+  transform: scale(1.4);
+}
+
+.supervision-image {
+  width: 120%;
+  height: auto;
+  border-radius: 8px;
+}
+
+.control-module-image {
+  width: 80%;
+  height: auto;
+  border-radius: 8px;
+}
+
+.text-content {
+  flex: 1;
+  max-width: 55%;
+  text-align: center;
+}
+
+/* Estilos para ajustar el diseño a pantallas más pequeñas */
+@media (max-width: 992px) {
+  .content-wrapper {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .images-content,
+  .text-content {
+    max-width: 100%;
+  }
+
+  .secondary-image:hover {
+    transform: none;
+  }
+}
+
+/* A partir de pantallas pequeñas, los elementos se separan y ocupan su propio lugar con un peso específico */
+@media (max-width: 768px) {
+  .control-supervision-section {
+    padding: 30px 15px;
+  }
+
+  .content-wrapper {
+    gap: 20px;
+  }
+
+  .images-content,
+  .text-content {
+    width: 100%;
+    margin-bottom: 20px;
+  }
+
+  .images-content {
+    order: 1;
+    justify-content: center;
+  }
+
+  .text-content {
+    order: 2;
+  }
+
+  .main-image,
+  .secondary-image {
+    position: static;
+    width: 80%;
+    margin-bottom: 20px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
+@media (max-width: 576px) {
+  .images-content .main-image,
+  .images-content .secondary-image {
+    width: 80%;
+    margin: 0 auto;
+  }
+
+  .control-supervision-section {
+    padding: 20px 10px;
+  }
+
+  .section-title {
+    font-size: 1.8rem;
+  }
+
+  .features-list {
+    font-size: 0.9rem;
+  }
+}
