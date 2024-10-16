@@ -1,10 +1,5 @@
 [
   {
-    "photoName": "petroleo.webp",
-    "pageName": "Petroleo",
-    "section": "Impacto Económico"
-  },
-  {
     "photoName": "cara.webp",
     "pageName": "Aguas",
     "section": "Sistemas Robustos con Bombas Dosivac"
@@ -36,11 +31,6 @@
   },
   {
     "photoName": "argentina.png",
-    "pageName": "Petroleo",
-    "section": "Encabezado"
-  },
-  {
-    "photoName": "argentina.png",
     "pageName": "Aguas",
     "section": "Encabezado"
   },
@@ -63,5 +53,30 @@
     "photoName": "argentina.png",
     "pageName": "Refrigeracion",
     "section": "Sistemas Industriales de Vacío"
+  },
+  {
+    "photoName": "petroleoFondo.png",
+    "pageName": "Petroleo",
+    "section": "Encabezado"
+  },
+  {
+    "photoName": "fondoPetroleoEspecificas.png",
+    "pageName": "Petroleo",
+    "section": "TIPO DE BOMBAS"
+  },
+  {
+    "photoName": "equipo de aire.jpg",
+    "pageName": "Refrigeracion",
+    "section": "Mantenimiento Preventivo de Sistemas de Vacío"
+  },
+  {
+    "photoName": "cara.webp",
+    "pageName": "Refrigeracion",
+    "section": "Nuevas Tecnologías en Sistemas de Vacío"
+  },
+  {
+    "photoName": "equipo.png",
+    "pageName": "Refrigeracion",
+    "section": "Eficiencia de los Sistemas de Vacío"
   }
 ]

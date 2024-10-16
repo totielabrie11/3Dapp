@@ -3,22 +3,31 @@ import axios from 'axios';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 function Refrigeracion() {
-  const [backgroundImages, setBackgroundImages] = useState({}); // Estado para las imágenes de fondo por sección
+  const [backgroundImages, setBackgroundImages] = useState({});
+
+  // Función para normalizar el texto: convertir a minúsculas y quitar acentos
+  const normalizeString = (str) => {
+    return str
+      .toLowerCase()
+      .normalize('NFD')
+      .replace(/[\u0300-\u036f]/g, ''); // Elimina acentos
+  };
 
   // Función para obtener las asignaciones de contenido desde el backend
   const fetchAssignments = useCallback(async () => {
     try {
       const response = await axios.get('/api/pages/assignments');
       const assignments = response.data;
-      console.log('Asignaciones obtenidas del backend:', assignments); // Log de la respuesta obtenida
+      console.log('Asignaciones obtenidas del backend:', assignments);
 
       // Separar las asignaciones por página de forma dinámica
       const assignmentsByPage = assignments.reduce((acc, assignment) => {
         const { pageName } = assignment;
-        if (!acc[pageName]) {
-          acc[pageName] = [];
+        const normalizedPageName = normalizeString(pageName); // Normalizar el nombre de la página
+        if (!acc[normalizedPageName]) {
+          acc[normalizedPageName] = [];
         }
-        acc[pageName].push(assignment);
+        acc[normalizedPageName].push(assignment);
         return acc;
       }, {});
 
@@ -28,15 +37,15 @@ function Refrigeracion() {
       });
 
       // Identificar y trabajar con el array de la página "Refrigeracion"
-      if (assignmentsByPage.Refrigeracion) {
-        console.log('Trabajando con el array de la página Refrigeracion:', assignmentsByPage.Refrigeracion);
+      if (assignmentsByPage.refrigeracion) {
+        console.log('Trabajando con el array de la página Refrigeracion:', assignmentsByPage.refrigeracion);
 
-        // Crear un objeto para almacenar las imágenes de fondo por sección utilizando un map
+        // Crear un objeto para almacenar las imágenes de fondo por sección
         const sectionImages = {};
-        assignmentsByPage.Refrigeracion.forEach((assignment) => {
-          const section = assignment.section.toLowerCase(); // Convertir a minúsculas para evitar discrepancias
+        assignmentsByPage.refrigeracion.forEach((assignment) => {
+          const normalizedSection = normalizeString(assignment.section); // Normalizar la sección
           const photoName = assignment.photoName;
-          sectionImages[section] = photoName;
+          sectionImages[normalizedSection] = photoName;
         });
 
         setBackgroundImages(sectionImages);
@@ -46,13 +55,11 @@ function Refrigeracion() {
     }
   }, []);
 
-  // Cargar las asignaciones cuando se monte el componente
   useEffect(() => {
     fetchAssignments();
   }, [fetchAssignments]);
 
   useEffect(() => {
-    // Log para verificar si el valor de 'encabezado' está presente
     console.log('Imagen de encabezado:', backgroundImages.encabezado);
   }, [backgroundImages]);
 
@@ -96,7 +103,6 @@ function Refrigeracion() {
           )}
         </div>
 
-        {/* Texto del encabezado */}
         <div id="encabezado" className="container text-center" style={{ position: 'relative', zIndex: 1, paddingTop: '70px' }}>
           <h1 className="mb-4" style={{ color: '#fff' }}>La Industria de Bombas de Vacío para Uso en Refrigeración</h1>
           <p className="mb-5" style={{ color: '#fff' }}>
@@ -107,8 +113,9 @@ function Refrigeracion() {
 
       {/* Secciones de contenido */}
       <div className="container">
+        {/* Sección: Sistemas Industriales de Vacío */}
         <section id="sistemas-industriales" className="my-5" style={{
-          backgroundImage: backgroundImages['sistemas industriales de vacío'] ? `url(/images/fondos/headeres/${backgroundImages['sistemas industriales de vacío']})` : 'none',
+          backgroundImage: backgroundImages[normalizeString('Sistemas Industriales de Vacío')] ? `url(/images/fondos/headeres/${backgroundImages[normalizeString('Sistemas Industriales de Vacío')]})` : 'none',
           backgroundSize: 'cover',
           backgroundPosition: 'center',
         }}>
@@ -118,8 +125,9 @@ function Refrigeracion() {
           </p>
         </section>
 
+        {/* Sección: Aplicaciones en Refrigeración */}
         <section id="aplicaciones-refrigeracion" className="my-5" style={{
-          backgroundImage: backgroundImages['aplicaciones en refrigeración'] ? `url(/images/fondos/headeres/${backgroundImages['aplicaciones en refrigeración']})` : 'none',
+          backgroundImage: backgroundImages[normalizeString('Aplicaciones en Refrigeración')] ? `url(/images/fondos/headeres/${backgroundImages[normalizeString('Aplicaciones en Refrigeración')]})` : 'none',
           backgroundSize: 'cover',
           backgroundPosition: 'center',
         }}>
@@ -129,8 +137,9 @@ function Refrigeracion() {
           </p>
         </section>
 
+        {/* Sección: Eficiencia de los Sistemas de Vacío */}
         <section id="eficiencia-sistemas" className="my-5" style={{
-          backgroundImage: backgroundImages['eficiencia de los sistemas de vacío'] ? `url(/images/fondos/headeres/${backgroundImages['eficiencia de los sistemas de vacío']})` : 'none',
+          backgroundImage: backgroundImages[normalizeString('Eficiencia de los Sistemas de Vacío')] ? `url(/images/fondos/headeres/${backgroundImages[normalizeString('Eficiencia de los Sistemas de Vacío')]})` : 'none',
           backgroundSize: 'cover',
           backgroundPosition: 'center',
         }}>
@@ -140,8 +149,9 @@ function Refrigeracion() {
           </p>
         </section>
 
+        {/* Sección: Mantenimiento Preventivo de Sistemas de Vacío */}
         <section id="mantenimiento-preventivo" className="my-5" style={{
-          backgroundImage: backgroundImages['mantenimiento preventivo de sistemas de vacío'] ? `url(/images/fondos/headeres/${backgroundImages['mantenimiento preventivo de sistemas de vacío']})` : 'none',
+          backgroundImage: backgroundImages[normalizeString('Mantenimiento Preventivo de Sistemas de Vacío')] ? `url(/images/fondos/headeres/${backgroundImages[normalizeString('Mantenimiento Preventivo de Sistemas de Vacío')]})` : 'none',
           backgroundSize: 'cover',
           backgroundPosition: 'center',
         }}>
@@ -151,8 +161,9 @@ function Refrigeracion() {
           </p>
         </section>
 
+        {/* Sección: Nuevas Tecnologías en Sistemas de Vacío */}
         <section id="nuevas-tecnologias" className="my-5" style={{
-          backgroundImage: backgroundImages['nuevas tecnologías en sistemas de vacío'] ? `url(/images/fondos/headeres/${backgroundImages['nuevas tecnologías en sistemas de vacío']})` : 'none',
+          backgroundImage: backgroundImages[normalizeString('Nuevas Tecnologías en Sistemas de Vacío')] ? `url(/images/fondos/headeres/${backgroundImages[normalizeString('Nuevas Tecnologías en Sistemas de Vacío')]})` : 'none',
           backgroundSize: 'cover',
           backgroundPosition: 'center',
         }}>

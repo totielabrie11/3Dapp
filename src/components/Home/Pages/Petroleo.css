@@ -1,0 +1,304 @@
+/* Petroleo.css */
+
+#especializacion-sistemas {
+    text-align: center;
+    padding: 40px;
+  }
+  
+  .equipo-container {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    flex-wrap: wrap;
+    padding-top: 20px;
+  }
+  
+  .equipo {
+    width: 300px;
+    text-align: left;
+    background-color: #1c1c1c;
+    padding: 20px;
+    border-radius: 10px;
+  }
+  
+  .equipo img {
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+    margin-bottom: 15px;
+  }
+  
+  .equipo h3 {
+    color: #ffffff;
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+    text-align: center;
+  }
+  
+  .equipo p {
+    color: #ffffff;
+    font-size: 1rem;
+    line-height: 1.5;
+    margin: 10px 0;
+  }
+  
+  .equipo p + p {
+    border-top: 1px solid #ffffff;
+    padding-top: 10px;
+  }
+  
+  .contizar-btn {
+    display: inline-block;
+    padding: 12px 25px;
+    color: #ffffff;
+    background-color: #ff6200;
+    border: none;
+    border-radius: 50px;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 1rem;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    margin-top: 15px;
+    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.2);
+  }
+  
+  .contizar-btn:hover {
+    background-color: #e55a00;
+    transform: translateY(-2px);
+  }
+  
+
+  #tipo-de-bombas {
+    padding: 60px 20px;
+  }
+  
+  .content-wrapper {
+    max-width: 800px;
+    margin: 0 auto;
+  }
+  
+  .section-title {
+    font-size: 28px;
+    font-weight: bold;
+    margin-bottom: 20px;
+  }
+  
+  .section-description {
+    font-size: 16px;
+    line-height: 1.6;
+    margin-bottom: 15px;
+  }
+  
+  .sub-title {
+    font-size: 22px;
+    font-weight: bold;
+    margin-top: 40px;
+    margin-bottom: 20px;
+  }
+  
+  .btn-ver-bombas {
+    display: inline-block;
+    margin-top: 30px;
+    padding: 15px 30px;
+    background-color: #ffffff;
+    color: #000000;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    text-transform: uppercase;
+    transition: background-color 0.3s;
+  }
+  
+  .btn-ver-bombas:hover {
+    background-color: #e0e0e0;
+  }
+  
+  .componentes-dosificacion-section {
+    background-color: #0E0A0A;
+    color: #ffffff;
+    padding: 50px 20px;
+  }
+  
+  .content-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  
+  .columns {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    gap: 40px;
+    margin-bottom: 30px;
+  }
+  
+  .column {
+    width: 48%;
+  }
+  
+  .section-title {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 20px;
+  }
+  
+  ul {
+    margin-top: 10px;
+    margin-bottom: 20px;
+  }
+  
+  .image-container-centered {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+  }
+  
+  .dosificacion-image {
+    width: 100%;
+    max-width: 600px;
+    height: auto;
+    border-radius: 5px;
+  }
+  
+  /* Estilos Responsivos */
+  @media (max-width: 1024px) {
+    .columns {
+      flex-direction: column;
+      gap: 20px;
+    }
+  
+    .column {
+      width: 100%;
+    }
+  
+    .section-title {
+      font-size: 22px;
+    }
+  }
+  
+  @media (max-width: 768px) {
+    .componentes-dosificacion-section {
+      padding: 30px 15px;
+    }
+  
+    .section-title {
+      font-size: 20px;
+    }
+  
+    .dosificacion-image {
+      max-width: 100%;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .section-title {
+      font-size: 18px;
+    }
+  
+    ul {
+      font-size: 14px;
+    }
+  
+    .dosificacion-image {
+      max-width: 90%;
+    }
+  }
+  
+  .control-supervision-section {
+    background-color: #0E0A0A;
+    color: #ffffff;
+    padding: 50px 20px;
+  }
+  
+  .content-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+  }
+  
+  .text-content {
+    max-width: 600px;
+    margin: 0 auto;
+    text-align: center;
+  }
+  
+  .section-title {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 20px;
+  }
+  
+  .features-list {
+    list-style-type: disc;
+    padding-left: 20px;
+    text-align: left;
+    margin-bottom: 20px;
+  }
+  
+  .description {
+    font-size: 16px;
+    line-height: 1.6;
+  }
+  
+  .images-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+  }
+  
+  .main-image {
+    width: 90%;
+    max-width: 800px;
+  }
+  
+  .secondary-image {
+    width: 50%;
+    max-width: 200px;
+  }
+  
+  .supervision-image, .control-module-image {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  }
+  
+  /* Estilos Responsivos */
+  @media (min-width: 768px) {
+    .content-wrapper {
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+    }
+  
+    .text-content {
+      width: 45%;
+      text-align: left;
+    }
+  
+    .images-content {
+      width: 50%;
+      flex-direction: row;
+      gap: 20px;
+    }
+  
+    .main-image, .secondary-image {
+      width: 100%;
+    }
+  
+    .secondary-image {
+      width: 30%;
+      max-width: 150px;
+    }
+  }
+  
+  @media (min-width: 1024px) {
+    .text-content {
+      max-width: 600px;
+    }
+  }
+  
