@@ -324,28 +324,27 @@ function Petroleo() {
   padding: '100px 20px',
   position: 'relative',
 }}>
-  <div className="container d-flex align-items-center justify-content-between equipos-inteligentes-container">
+  <h2 id="equipos-inteligentes-section-title">EQUIPOS INTELIGENTES</h2>
+  <div id="equipos-inteligentes-container" className="container d-flex align-items-center justify-content-between">
     {/* Contenedor de Texto */}
-    <div className="text-content" style={{ flex: '1', maxWidth: '50%' }}>
-      <h2 className="section-title">EQUIPOS INTELIGENTES</h2>
-      <p className="section-description mb-4">
+    <div id="text-content" className="text-content" style={{ flex: '1', maxWidth: '50%' }}>
+      <p id="equipos-inteligentes-section-description" className="section-description mb-4">
         Nuestros equipos inteligentes están diseñados para mantenerte conectado y en control, equipados con conectividad WiFi y opciones de comunicación como Modbus RTU 485 y radio, garantizando una integración perfecta con tus sistemas existentes.
       </p>
-      <button className="btn btn-outline-light btn-lg">CONOCER MÁS</button>
+      <button id="equipos-inteligentes-section-btn" className="btn btn-outline-light btn-lg">CONOCER MÁS</button>
     </div>
 
     {/* Contenedor de Imágenes */}
-    <div className="image-content d-flex justify-content-center align-items-center" style={{ flex: '1' }}>
+    <div id="image-content" className="image-content d-flex justify-content-center align-items-center" style={{ flex: '1' }}>
       <article className="equipo-item mx-3">
-        <img src="assets/img/portfolio/inteligentes.png" alt="Equipos Inteligentes" />
+        <img src="assets/img/portfolio/9(1).png" alt="Equipos Inteligentes" />
       </article>
       <article className="equipo-item mx-3">
-        <img src="assets/img/portfolio/tcmr1.png" alt="TCMR-1" />
+        <img src="assets/img/portfolio/8 (1).png" alt="TCMR-1" />
       </article>
     </div>
   </div>
 </section>
-
 
 
     </div>

@@ -285,68 +285,149 @@
     line-height: 1.6;
   }
   
-  .equipos-inteligentes-section {
+
+/* Sección Equipos Inteligentes */
+#equipos-inteligentes-section {
+  position: relative;
+  padding: 100px 20px;
+  background-position: center;
+  background-size: cover;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+#equipos-inteligentes-section-title {
+  font-size: 2.5rem;
+  font-weight: bold;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+#equipos-inteligentes-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  width: 100%;
+  margin-top: 40px;
+}
+
+#text-content {
+  flex: 1;
+  max-width: 45%;
+  text-align: center;
+  position: relative;
+}
+
+#image-content {
+  flex: 1;
+  max-width: 45%;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  flex-direction: column;
+}
+
+#equipos-inteligentes-section-description {
+  max-width: 600px;
+  font-size: 1.6rem;
+  font-weight: 900;
+  line-height: 1.8;
+  margin: 0 auto;
+ 
+}
+
+#equipos-inteligentes-section-btn {
+  padding: 12px 35px;
+  font-size: 1.2rem;
+  border: 2px solid white;
+  font-weight: bold;
+  transition: all 0.3s ease;
+  margin-top: 20px;
+}
+
+#equipos-inteligentes-section-btn:hover {
+  background-color: white;
+  color: #0E0A0A;
+}
+
+.equipo-item {
+  width: 300px;
+  max-width: 100%;
+  transition: transform 0.3s ease;
+}
+
+.equipo-item img {
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+}
+
+/* Posicionamiento de Imágenes */
+#image-content .equipo-item:first-of-type {
+  position: relative;
+  z-index: 1;
+  
+}
+
+#image-content .equipo-item:last-of-type {
+  position: absolute;
+  top: 28%;
+  left: 53%;
+  transform: translateY(-50%);
+  z-index: 0;
+  width: 40% !important;
+}
+
+.equipo-item:hover {
+  transform: scale(1.05);
+}
+
+/* Ajustes Responsivos */
+@media (max-width: 992px) {
+  #equipos-inteligentes-container {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  #text-content, #image-content {
+    max-width: 100%;
+  }
+
+  #image-content {
     position: relative;
-    padding: 100px 20px;
-    background-position: center;
-    background-size: cover;
+    margin-top: 40px;
   }
-  
-  .equipos-inteligentes-container {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
+
+  #image-content .equipo-item:last-of-type {
+    position: relative;
+    top: auto;
+    left: auto;
+    transform: none;
+    margin-top: 20px;
   }
-  
-  .text-content {
-    flex: 1;
-    max-width: 50%;
+
+  #equipos-inteligentes-section-description {
+    text-align: center;
   }
-  
-  .image-content {
-    flex: 1;
-    display: flex;
-    justify-content: center;
-    gap: 20px;
+}
+
+@media (max-width: 576px) {
+  #equipos-inteligentes-section {
+    padding: 50px 10px;
   }
-  
-  .equipos-inteligentes-section .section-title {
-    font-size: 2.5rem;
-    font-weight: bold;
-    margin-bottom: 20px;
+
+  #equipos-inteligentes-section-title {
+    font-size: 2rem;
   }
-  
-  .equipos-inteligentes-section .section-description {
-    max-width: 600px;
-    font-size: 1.2rem;
-    line-height: 1.8;
+
+  #equipos-inteligentes-section-btn {
+    font-size: 1rem;
+    padding: 10px 30px;
   }
-  
-  .equipos-inteligentes-section .btn {
-    padding: 12px 35px;
-    font-size: 1.2rem;
-    border: 2px solid white;
-    font-weight: bold;
-    transition: all 0.3s ease;
-  }
-  
-  .equipos-inteligentes-section .btn:hover {
-    background-color: white;
-    color: #0E0A0A;
-  }
-  
-  .equipo-item {
-    max-width: 300px;
-    transition: transform 0.3s ease;
-  }
-  
-  .equipo-item img {
-    width: 100%;
-    height: auto;
-    object-fit: contain;
-  }
-  
-  .equipo-item:hover {
-    transform: scale(1.05);
-  }
-  
+}
