@@ -115,18 +115,6 @@
     background-color: #e0e0e0;
   }
   
-  .componentes-dosificacion-section {
-    background-color: #0E0A0A;
-    color: #ffffff;
-    padding: 50px 20px;
-  }
-  
-  .content-wrapper {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-  }
-  
   .columns {
     display: flex;
     flex-direction: row;
@@ -377,7 +365,7 @@
 #image-content .equipo-item:last-of-type {
   position: absolute;
   top: 28%;
-  left: 53%;
+  left: 50%;
   transform: translateY(-50%);
   z-index: 0;
   width: 40% !important;
@@ -429,5 +417,137 @@
   #equipos-inteligentes-section-btn {
     font-size: 1rem;
     padding: 10px 30px;
+  }
+}
+
+/* Estilos para la sección 'tipo-de-bombas' */
+/* Estilos para la sección 'tipo-de-bombas' */
+#tipo-de-bombas {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 50px 20px;
+  color: #ffffff;
+  background-size: cover;
+  background-position: center;
+  position: relative;
+  overflow: hidden;
+  flex-direction: column;
+}
+
+#tipo-de-bombas::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.6);
+  z-index: 1;
+}
+
+#tipo-de-bombas .content-wrapper {
+  position: relative;
+  z-index: 2;
+  max-width: 800px;
+  margin: auto;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#tipo-de-bombas .section-title {
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin-bottom: 10px;
+  text-transform: uppercase;
+  color: #ffcc00;
+  text-align: center;
+}
+
+#tipo-de-bombas .section-description {
+  font-size: 1.1rem;
+  line-height: 1.4;
+  margin-bottom: 10px;
+  color: #e0e0e0;
+  text-align: center;
+}
+
+#tipo-de-bombas .sub-title {
+  font-size: 2rem;
+  font-weight: 600;
+  margin-top: 20px;
+  margin-bottom: 10px;
+  color: #ffcc00;
+  text-align: center;
+}
+
+#tipo-de-bombas .btn-ver-bombas {
+  display: inline-block;
+  margin-top: 20px;
+  padding: 15px 30px;
+  font-size: 1rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  color: #ffffff;
+  background-color: #ff5722;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.3s;
+}
+
+#tipo-de-bombas .btn-ver-bombas:hover {
+  background-color: #e64a19;
+  transform: translateY(-3px);
+}
+
+#tipo-de-bombas .btn-ver-bombas:active {
+  transform: translateY(0);
+}
+
+/* Animaciones adicionales para dar un tono moderno */
+#tipo-de-bombas .section-title, 
+#tipo-de-bombas .sub-title {
+  animation: fadeInDown 1s ease-in-out;
+}
+
+#tipo-de-bombas .section-description {
+  animation: fadeIn 1.5s ease-in-out;
+}
+
+#tipo-de-bombas .btn-ver-bombas {
+  animation: fadeInUp 2s ease-in-out;
+}
+
+@keyframes fadeInDown {
+  0% {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeInUp {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
   }
 }
