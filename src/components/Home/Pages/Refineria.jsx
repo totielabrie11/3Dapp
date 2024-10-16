@@ -2,7 +2,7 @@ import React, { useState, useEffect, useCallback } from 'react';
 import axios from 'axios';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-function Aguas() {
+function Refineria() {
   const [backgroundImages, setBackgroundImages] = useState({}); // Estado para las imágenes de fondo por sección
 
   // Función para obtener las asignaciones de contenido desde el backend
@@ -27,13 +27,13 @@ function Aguas() {
         console.log(`Asignaciones para la página ${pageName}:`, assignmentsByPage[pageName]);
       });
 
-      // Identificar y trabajar con el array de la página "Aguas"
-      if (assignmentsByPage.Aguas) {
-        console.log('Trabajando con el array de la página Aguas:', assignmentsByPage.Aguas);
+      // Identificar y trabajar con el array de la página "Refineria"
+      if (assignmentsByPage.Refineria) {
+        console.log('Trabajando con el array de la página Refineria:', assignmentsByPage.Refineria);
 
         // Crear un objeto para almacenar las imágenes de fondo por sección utilizando un map
         const sectionImages = {};
-        assignmentsByPage.Aguas.forEach((assignment) => {
+        assignmentsByPage.Refineria.forEach((assignment) => {
           const section = assignment.section.toLowerCase(); // Convertir a minúsculas para evitar discrepancias
           const photoName = assignment.photoName;
           sectionImages[section] = photoName;
@@ -82,7 +82,7 @@ function Aguas() {
           {backgroundImages.encabezado ? (
             <img
               src={`/images/fondos/headeres/${backgroundImages.encabezado}`}
-              alt="Fondo Aguas"
+              alt="Fondo Refineria"
               style={{
                 width: '100%',
                 height: '100%',
@@ -98,72 +98,56 @@ function Aguas() {
 
         {/* Texto del encabezado */}
         <div id="encabezado" className="container text-center" style={{ position: 'relative', zIndex: 1, paddingTop: '70px' }}>
-          <h1 className="mb-4" style={{ color: '#fff' }}>Tratamiento de Agua Pura y Limpia</h1>
+          <h1 className="mb-4" style={{ color: '#fff' }}>Soluciones Robustas y Confiables para Minería y Refinería</h1>
           <p className="mb-5" style={{ color: '#fff' }}>
-            Soluciones eficientes de dosificación para el tratamiento de agua potable en todo el país.
+            Dosivac ofrece equipos de vacío que soportan ambientes rigurosos, mejorando la eficiencia y seguridad en las operaciones mineras.
           </p>
         </div>
       </div>
 
       {/* Secciones de contenido */}
       <div className="container">
-        <section id="sistemas-portatiles" className="my-5" style={{
-          backgroundImage: backgroundImages['sistemas portátiles de dosificación'] ? `url(/images/fondos/headeres/${backgroundImages['sistemas portátiles de dosificación']})` : 'none',
+        <section id="bombas-vacio" className="my-5" style={{
+          backgroundImage: backgroundImages['bombas de vacío'] ? `url(/images/fondos/headeres/${backgroundImages['bombas de vacío']})` : 'none',
           backgroundSize: 'cover',
           backgroundPosition: 'center',
         }}>
-          <h2>Sistemas Portátiles de Dosificación</h2>
+          <h2>Bombas de Vacío</h2>
           <p>
-            Nuestros sistemas portátiles están diseñados para ofrecer soluciones rápidas y eficientes en el tratamiento de agua,
-            adaptándose a diferentes necesidades, desde comunidades pequeñas hasta grandes centros urbanos.
+            Nuestras bombas de vacío están diseñadas para soportar las duras condiciones de la minería y refinería, asegurando un rendimiento constante y confiable.
           </p>
         </section>
 
-        <section id="sistemas-robustos" className="my-5" style={{
-          backgroundImage: backgroundImages['sistemas robustos con bombas dosivac'] ? `url(/images/fondos/headeres/${backgroundImages['sistemas robustos con bombas dosivac']})` : 'none',
+        <section id="equipos-mineria" className="my-5" style={{
+          backgroundImage: backgroundImages['equipos para minería'] ? `url(/images/fondos/headeres/${backgroundImages['equipos para minería']})` : 'none',
           backgroundSize: 'cover',
           backgroundPosition: 'center',
         }}>
-          <h2>Sistemas Robustos con Bombas Dosivac</h2>
+          <h2>Equipos para Minería</h2>
           <p>
-            Las bombas Dosivac proporcionan una dosificación precisa y segura, asegurando que el tratamiento de agua sea eficaz incluso en las condiciones más desafiantes.
-            Estos sistemas robustos están preparados para plantas de tratamiento de gran escala.
+            Los equipos Dosivac están diseñados para mejorar la eficiencia operativa en las minas, aumentando la productividad y garantizando la seguridad de los trabajadores.
           </p>
         </section>
 
-        <section id="beneficios-dosificacion" className="my-5" style={{
-          backgroundImage: backgroundImages['beneficios de la dosificación eficiente'] ? `url(/images/fondos/headeres/${backgroundImages['beneficios de la dosificación eficiente']})` : 'none',
+        <section id="eficiencia-seguridad" className="my-5" style={{
+          backgroundImage: backgroundImages['eficiencia y seguridad'] ? `url(/images/fondos/headeres/${backgroundImages['eficiencia y seguridad']})` : 'none',
           backgroundSize: 'cover',
           backgroundPosition: 'center',
         }}>
-          <h2>Beneficios de la Dosificación Eficiente</h2>
+          <h2>Eficiencia y Seguridad</h2>
           <p>
-            La dosificación eficiente de productos químicos en el agua no solo asegura la pureza del agua potable, sino que también optimiza los costos operativos
-            y reduce el desperdicio, lo que garantiza agua limpia y segura para todos.
+            Mejoramos la eficiencia de las operaciones mineras y refineras a través de nuestras soluciones robustas que garantizan un entorno de trabajo seguro y confiable.
           </p>
         </section>
 
-        <section id="impacto-ambiental" className="my-5" style={{
-          backgroundImage: backgroundImages['impacto ambiental del tratamiento de agua'] ? `url(/images/fondos/headeres/${backgroundImages['impacto ambiental del tratamiento de agua']})` : 'none',
+        <section id="nuevas-tecnologias" className="my-5" style={{
+          backgroundImage: backgroundImages['nuevas tecnologías en equipos de vacío'] ? `url(/images/fondos/headeres/${backgroundImages['nuevas tecnologías en equipos de vacío']})` : 'none',
           backgroundSize: 'cover',
           backgroundPosition: 'center',
         }}>
-          <h2>Impacto Ambiental del Tratamiento de Agua</h2>
+          <h2>Nuevas Tecnologías en Equipos de Vacío</h2>
           <p>
-            El tratamiento de agua no solo tiene un impacto positivo en la salud pública, sino que también juega un rol clave en la preservación del medio ambiente.
-            Nuestras tecnologías avanzadas reducen la contaminación y promueven la sostenibilidad.
-          </p>
-        </section>
-  
-        <section id="futuro-agua-pura" className="my-5" style={{
-          backgroundImage: backgroundImages['el futuro del agua pura'] ? `url(/images/fondos/headeres/${backgroundImages['el futuro del agua pura']})` : 'none',
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
-        }}>
-          <h2>El Futuro del Agua Pura</h2>
-          <p>
-            A medida que las tecnologías avanzan, el futuro del tratamiento de agua apunta hacia soluciones aún más eficientes y sostenibles, con sistemas automatizados
-            que garantizarán agua pura y limpia para las generaciones futuras.
+            Descubre las últimas tecnologías que están revolucionando el uso de equipos de vacío en minería y refinería, mejorando la eficiencia y reduciendo el impacto ambiental.
           </p>
         </section>
       </div>
@@ -171,4 +155,4 @@ function Aguas() {
   );
 }
 
-export default Aguas;
+export default Refineria;

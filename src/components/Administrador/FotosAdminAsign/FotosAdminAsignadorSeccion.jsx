@@ -3,27 +3,44 @@ import { Modal, Button, Form } from 'react-bootstrap';
 import axios from 'axios';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-function FotosAdminAsignadorSeccion({ show, handleClose, onSave }) {
-  const [selectedSection, setSelectedSection] = useState('encabezado'); // Valor por defecto
+function FotosAdminAsignadorSeccion({ show, handleClose, onSave, selectedPage }) {
+  const [selectedSection, setSelectedSection] = useState(''); // Mantener vacío para forzar la selección
   const [sections, setSections] = useState([]);
 
   // Función para obtener las secciones de las páginas desde el backend
   const fetchSections = useCallback(async () => {
     try {
-      const response = await axios.get('/api/pages/sections'); // Suponiendo que este endpoint devuelve las secciones disponibles
-      setSections(response.data.sections);
+      const response = await axios.get('/api/pages/sections');
+      const allSections = response.data.sections;
+
+      // Filtrar secciones de acuerdo con la página seleccionada
+      const filteredSections = allSections.filter(section => section.page === selectedPage);
+      setSections(filteredSections);
+
+      if (filteredSections.length > 0) {
+        setSelectedSection(filteredSections[0].id); // Seleccionar la primera sección por defecto
+      }
     } catch (error) {
       console.error('Error al obtener las secciones:', error);
     }
-  }, []);
+  }, [selectedPage]);
 
-  // Cargar las secciones cuando se monte el componente
+  // Cargar las secciones cuando se monta el componente o cuando cambia la página seleccionada
   useEffect(() => {
-    fetchSections();
-  }, [fetchSections]);
+    if (show && selectedPage) {
+      fetchSections();
+    }
+  }, [show, selectedPage, fetchSections]);
 
   const handleSave = () => {
-    onSave(selectedSection); // Enviar la sección seleccionada al componente padre
+    if (selectedSection === 'header/encabezado') {
+      onSave({ id: 'header/encabezado', name: 'Encabezado', page: selectedPage });
+    } else {
+      const selectedSectionData = sections.find(section => section.id === selectedSection);
+      if (selectedSectionData) {
+        onSave(selectedSectionData); // Enviar el objeto completo de la sección seleccionada al componente padre
+      }
+    }
   };
 
   return (
@@ -34,15 +51,22 @@ function FotosAdminAsignadorSeccion({ show, handleClose, onSave }) {
       <Modal.Body>
         <Form>
           <Form.Group controlId="formSectionSelect">
-            <Form.Label>Secciones disponibles</Form.Label>
+            <Form.Label>Secciones disponibles para la página: {selectedPage}</Form.Label>
             <Form.Control
               as="select"
               value={selectedSection}
               onChange={(e) => setSelectedSection(e.target.value)}
             >
-              {sections.map((section) => (
-                <option key={section.id} value={section.id}>{section.name}</option>
-              ))}
+              <option value="header/encabezado">Encabezado</option> {/* Opción estática para encabezado */}
+              {sections.length > 0 ? (
+                sections.map((section) => (
+                  <option key={section.id} value={section.id}>
+                    {`${section.name} - Página: ${section.page}`}
+                  </option>
+                ))
+              ) : (
+                <option>No secciones disponibles</option>
+              )}
             </Form.Control>
           </Form.Group>
         </Form>
@@ -51,7 +75,7 @@ function FotosAdminAsignadorSeccion({ show, handleClose, onSave }) {
         <Button variant="secondary" onClick={handleClose}>
           Cancelar
         </Button>
-        <Button variant="primary" onClick={handleSave}>
+        <Button variant="primary" onClick={handleSave} disabled={!selectedSection}>
           Seleccionar Sección
         </Button>
       </Modal.Footer>

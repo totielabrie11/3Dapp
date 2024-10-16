@@ -113,4 +113,5 @@ router.put('/api/encabezados/:filename', uploadHeaders.single('image'), (req, re
   }
 });
 
+
 module.exports = router;

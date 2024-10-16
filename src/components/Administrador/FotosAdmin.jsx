@@ -185,7 +185,7 @@ function FotosAdmin() {
           <option value="homeCarousel">Carrusel de Inicio</option>
           <option value="gallery">Galería</option>
           <option value="fondos">Fondos de Pantalla</option>
-          <option value="encabezados">Fotos de Encabezados</option>
+          <option value="encabezados">Fotos para Fondos</option>
         </select>
       </div>
 

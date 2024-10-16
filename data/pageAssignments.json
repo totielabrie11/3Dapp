@@ -1,22 +1,67 @@
-{
-  "aplicarPaginas": {
-    "Aguas": [
-      {
-        "section": "encabezado",
-        "photoName": "tele.jpg"
-      }
-    ],
-    "Petroleo": [
-      {
-        "section": "encabezado",
-        "photoName": "entrevistas.webp"
-      },
-      {
-        "section": "otra-seccion",
-        "photoName": "tele.jpg"
-      }
-    ]
+[
+  {
+    "photoName": "petroleo.webp",
+    "pageName": "Petroleo",
+    "section": "Impacto Económico"
   },
-  "Aguas": "tele.jpg",
-  "Petroleo": "tele.jpg"
-}
+  {
+    "photoName": "cara.webp",
+    "pageName": "Aguas",
+    "section": "Sistemas Robustos con Bombas Dosivac"
+  },
+  {
+    "photoName": "petroleo.webp",
+    "pageName": "Aguas",
+    "section": "Impacto Ambiental del Tratamiento de Agua"
+  },
+  {
+    "photoName": "verde.webp",
+    "pageName": "Aguas",
+    "section": "El Futuro del Agua Pura"
+  },
+  {
+    "photoName": "argentina.png",
+    "pageName": "Aguas",
+    "section": "Beneficios de la Dosificación Eficiente"
+  },
+  {
+    "photoName": "avion.webp",
+    "pageName": "Aguas",
+    "section": "Encabezado"
+  },
+  {
+    "photoName": "argentina.png",
+    "pageName": "Aguas",
+    "section": "Encabezado"
+  },
+  {
+    "photoName": "argentina.png",
+    "pageName": "Petroleo",
+    "section": "Encabezado"
+  },
+  {
+    "photoName": "argentina.png",
+    "pageName": "Aguas",
+    "section": "Encabezado"
+  },
+  {
+    "photoName": "cara.webp",
+    "pageName": "Aguas",
+    "section": "Encabezado"
+  },
+  {
+    "photoName": "avion.webp",
+    "pageName": "Aguas",
+    "section": "Sistemas Portátiles de Dosificación"
+  },
+  {
+    "photoName": "sistema refri pc.webp",
+    "pageName": "Refrigeracion",
+    "section": "Encabezado"
+  },
+  {
+    "photoName": "argentina.png",
+    "pageName": "Refrigeracion",
+    "section": "Sistemas Industriales de Vacío"
+  }
+]

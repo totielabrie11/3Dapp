@@ -76,6 +76,8 @@ function NavBar({ isAdmin, user, handleLogout, activeSection }) {
               <NavDropdown title="Home" id="home-dropdown" className="text-uppercase">
                 <NavDropdown.Item onClick={() => handleNavClick('home')}>Principal</NavDropdown.Item>
                 <NavDropdown.Item onClick={() => navigate('/petroleo')}>Petróleo</NavDropdown.Item>
+                <NavDropdown.Item onClick={() => navigate('/refrigeracion')}>Refrigeración</NavDropdown.Item> {/* Nuevo item para Refrigeración */}
+                <NavDropdown.Item onClick={() => navigate('/refineria')}>Refinería</NavDropdown.Item> {/* Nuevo item para Refineria */}
                 <NavDropdown.Item onClick={() => navigate('/aguas')}>Aguas</NavDropdown.Item> {/* Nuevo item para Aguas */}
               </NavDropdown>
 

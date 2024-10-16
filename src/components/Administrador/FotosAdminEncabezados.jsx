@@ -2,14 +2,17 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import FotosAdminAsignadorPaginas from './FotosAdminAsign/FotosAdminAsignadorPaginas';
 import FotosAdminAsignadorSeccion from './FotosAdminAsign/FotosAdminAsignadorSeccion';
+import FotosAdminAsignadorEnviar from './FotosAdminAsign/FotosAdminAsignadorEnviar';
 
 function FotosAdminEncabezados({ onPhotosLoaded, onAssign }) {
   const [headers, setHeaders] = useState([]);
   const [error, setError] = useState(null);
   const [showAssignPageModal, setShowAssignPageModal] = useState(false);  // Primer modal
   const [showAssignSectionModal, setShowAssignSectionModal] = useState(false);  // Segundo modal
+  const [showConfirmModal, setShowConfirmModal] = useState(false);  // Modal para confirmar y enviar
   const [selectedHeader, setSelectedHeader] = useState(null);
   const [selectedPage, setSelectedPage] = useState(null);  // Almacena la página seleccionada
+  const [selectedSection, setSelectedSection] = useState(null);  // Almacena la sección seleccionada
 
   useEffect(() => {
     const fetchHeaders = async () => {
@@ -53,8 +56,10 @@ function FotosAdminEncabezados({ onPhotosLoaded, onAssign }) {
   const handleAssignModalClose = () => {
     setShowAssignPageModal(false);
     setShowAssignSectionModal(false);
+    setShowConfirmModal(false);
     setSelectedHeader(null);
     setSelectedPage(null);
+    setSelectedSection(null);
   };
 
   // Manejo de guardar la página seleccionada y abrir el siguiente modal
@@ -64,24 +69,11 @@ function FotosAdminEncabezados({ onPhotosLoaded, onAssign }) {
     setShowAssignSectionModal(true);  // Abre el segundo modal para seleccionar sección
   };
 
-  // Guardar la asignación (página + sección + foto)
-  const handleSaveAssignment = async (section) => {
-    if (!selectedHeader || !selectedPage || !section) return;
-    try {
-      const endpoint = '/api/pages/assign-multiple';
-      const data = {
-        photoName: selectedHeader.name,
-        pageName: selectedPage,
-        section: section // Sección seleccionada en el segundo modal
-      };
-
-      await axios.post(endpoint, data);
-      console.log(`Fondo ${selectedHeader.name} asignado a la página ${selectedPage} en la sección ${section}.`);
-      handleAssignModalClose();
-    } catch (error) {
-      console.error('Error al guardar la asignación:', error);
-      setError('Error al guardar la asignación.');
-    }
+  // Guardar la sección seleccionada y abrir el modal de confirmación
+  const handleSaveSection = (section) => {
+    setSelectedSection(section);
+    setShowAssignSectionModal(false);
+    setShowConfirmModal(true); // Abre el modal de confirmación
   };
 
   return (
@@ -136,7 +128,19 @@ function FotosAdminEncabezados({ onPhotosLoaded, onAssign }) {
         <FotosAdminAsignadorSeccion
           show={showAssignSectionModal}
           handleClose={handleAssignModalClose}
-          onSave={handleSaveAssignment}  // Guardar página + sección + foto
+          onSave={handleSaveSection}  // Guardar página + sección + foto
+          selectedPage={selectedPage}  // Pasar la página seleccionada
+        />
+      )}
+
+      {/* Modal de confirmación y envío */}
+      {selectedPage && selectedHeader && selectedSection && (
+        <FotosAdminAsignadorEnviar
+          show={showConfirmModal}
+          handleClose={handleAssignModalClose}
+          selectedHeader={selectedHeader}
+          selectedPage={selectedPage}
+          selectedSection={selectedSection}
         />
       )}
     </div>

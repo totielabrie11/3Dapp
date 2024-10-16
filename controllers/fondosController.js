@@ -1,3 +1,4 @@
+// Backend actualizado con manejo de errores mejorado
 const express = require('express');
 const fs = require('fs').promises;
 const path = require('path');
@@ -12,7 +13,7 @@ const readAssignmentsFile = async () => {
     return JSON.parse(data);
   } catch (err) {
     if (err.code === 'ENOENT') {
-      return { aplicarPaginas: {} }; // Retornar objeto vacío si el archivo no existe
+      return { aplicarPaginas: [] }; // Retornar objeto vacío si el archivo no existe
     }
     throw err;
   }
@@ -38,7 +39,7 @@ router.get('/api/pages/assignments', async (req, res) => {
   }
 });
 
-// Código POST existente
+// Endpoint para asignar múltiples páginas
 router.post('/api/pages/assign-multiple', async (req, res) => {
   const { photoName, pageName, section } = req.body;
 
@@ -70,13 +71,45 @@ router.post('/api/pages/assign-multiple', async (req, res) => {
       assignments.aplicarPaginas[pageName].push({ section, photoName });
     }
 
-    assignments[pageName] = photoName;
-
     await writeAssignmentsFile(assignments);
     res.status(200).json({ message: 'Asignación realizada con éxito.' });
   } catch (err) {
     console.error('Error al procesar las asignaciones:', err);
     res.status(500).json({ message: 'Error al procesar las asignaciones.' });
+  }
+});
+
+// Endpoint para guardar la selección
+router.post('/api/save-selection', async (req, res) => {
+  const { photoName, pageName, section } = req.body;
+
+  console.log('Solicitud recibida:', req.body); // Log para verificar que la solicitud llega correctamente
+
+  if (!photoName || !pageName || !section) {
+    return res.status(400).json({ success: false, message: 'Faltan datos para guardar la selección.' });
+  }
+
+  try {
+    let selections = [];
+    try {
+      const data = await fs.readFile(ASSIGNMENTS_FILE, 'utf8');
+      selections = JSON.parse(data);
+    } catch (err) {
+      if (err.code !== 'ENOENT') {
+        console.error('Error al leer el archivo de asignaciones:', err);
+        throw err;
+      }
+    }
+
+    // Agregar la nueva selección
+    selections.push({ photoName, pageName, section });
+
+    // Guardar el archivo actualizado
+    await fs.writeFile(ASSIGNMENTS_FILE, JSON.stringify(selections, null, 2), 'utf8');
+    res.json({ success: true, message: 'Selección guardada exitosamente.' });
+  } catch (err) {
+    console.error('Error al guardar la selección:', err);
+    res.status(500).json({ success: false, message: 'Error al guardar la selección.', error: err.message });
   }
 });
 

@@ -2,7 +2,7 @@ import React, { useState, useEffect, useCallback } from 'react';
 import axios from 'axios';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-function Aguas() {
+function Refrigeracion() {
   const [backgroundImages, setBackgroundImages] = useState({}); // Estado para las imágenes de fondo por sección
 
   // Función para obtener las asignaciones de contenido desde el backend
@@ -27,13 +27,13 @@ function Aguas() {
         console.log(`Asignaciones para la página ${pageName}:`, assignmentsByPage[pageName]);
       });
 
-      // Identificar y trabajar con el array de la página "Aguas"
-      if (assignmentsByPage.Aguas) {
-        console.log('Trabajando con el array de la página Aguas:', assignmentsByPage.Aguas);
+      // Identificar y trabajar con el array de la página "Refrigeracion"
+      if (assignmentsByPage.Refrigeracion) {
+        console.log('Trabajando con el array de la página Refrigeracion:', assignmentsByPage.Refrigeracion);
 
         // Crear un objeto para almacenar las imágenes de fondo por sección utilizando un map
         const sectionImages = {};
-        assignmentsByPage.Aguas.forEach((assignment) => {
+        assignmentsByPage.Refrigeracion.forEach((assignment) => {
           const section = assignment.section.toLowerCase(); // Convertir a minúsculas para evitar discrepancias
           const photoName = assignment.photoName;
           sectionImages[section] = photoName;
@@ -82,7 +82,7 @@ function Aguas() {
           {backgroundImages.encabezado ? (
             <img
               src={`/images/fondos/headeres/${backgroundImages.encabezado}`}
-              alt="Fondo Aguas"
+              alt="Fondo Refrigeración"
               style={{
                 width: '100%',
                 height: '100%',
@@ -98,72 +98,67 @@ function Aguas() {
 
         {/* Texto del encabezado */}
         <div id="encabezado" className="container text-center" style={{ position: 'relative', zIndex: 1, paddingTop: '70px' }}>
-          <h1 className="mb-4" style={{ color: '#fff' }}>Tratamiento de Agua Pura y Limpia</h1>
+          <h1 className="mb-4" style={{ color: '#fff' }}>La Industria de Bombas de Vacío para Uso en Refrigeración</h1>
           <p className="mb-5" style={{ color: '#fff' }}>
-            Soluciones eficientes de dosificación para el tratamiento de agua potable en todo el país.
+            Orientada al mecánico en refrigeración, con soluciones eficientes para sistemas de refrigeración en todo tipo de instalaciones.
           </p>
         </div>
       </div>
 
       {/* Secciones de contenido */}
       <div className="container">
-        <section id="sistemas-portatiles" className="my-5" style={{
-          backgroundImage: backgroundImages['sistemas portátiles de dosificación'] ? `url(/images/fondos/headeres/${backgroundImages['sistemas portátiles de dosificación']})` : 'none',
+        <section id="sistemas-industriales" className="my-5" style={{
+          backgroundImage: backgroundImages['sistemas industriales de vacío'] ? `url(/images/fondos/headeres/${backgroundImages['sistemas industriales de vacío']})` : 'none',
           backgroundSize: 'cover',
           backgroundPosition: 'center',
         }}>
-          <h2>Sistemas Portátiles de Dosificación</h2>
+          <h2>Sistemas Industriales de Vacío</h2>
           <p>
-            Nuestros sistemas portátiles están diseñados para ofrecer soluciones rápidas y eficientes en el tratamiento de agua,
-            adaptándose a diferentes necesidades, desde comunidades pequeñas hasta grandes centros urbanos.
+            Los sistemas de vacío industriales están diseñados para satisfacer las demandas de la refrigeración comercial y doméstica, proporcionando alta eficiencia y rendimiento en diversas aplicaciones.
           </p>
         </section>
 
-        <section id="sistemas-robustos" className="my-5" style={{
-          backgroundImage: backgroundImages['sistemas robustos con bombas dosivac'] ? `url(/images/fondos/headeres/${backgroundImages['sistemas robustos con bombas dosivac']})` : 'none',
+        <section id="aplicaciones-refrigeracion" className="my-5" style={{
+          backgroundImage: backgroundImages['aplicaciones en refrigeración'] ? `url(/images/fondos/headeres/${backgroundImages['aplicaciones en refrigeración']})` : 'none',
           backgroundSize: 'cover',
           backgroundPosition: 'center',
         }}>
-          <h2>Sistemas Robustos con Bombas Dosivac</h2>
+          <h2>Aplicaciones en Refrigeración</h2>
           <p>
-            Las bombas Dosivac proporcionan una dosificación precisa y segura, asegurando que el tratamiento de agua sea eficaz incluso en las condiciones más desafiantes.
-            Estos sistemas robustos están preparados para plantas de tratamiento de gran escala.
+            Las bombas de vacío juegan un rol crucial en los sistemas de refrigeración, permitiendo una extracción eficiente de gases y asegurando un rendimiento óptimo en la transferencia de calor.
           </p>
         </section>
 
-        <section id="beneficios-dosificacion" className="my-5" style={{
-          backgroundImage: backgroundImages['beneficios de la dosificación eficiente'] ? `url(/images/fondos/headeres/${backgroundImages['beneficios de la dosificación eficiente']})` : 'none',
+        <section id="eficiencia-sistemas" className="my-5" style={{
+          backgroundImage: backgroundImages['eficiencia de los sistemas de vacío'] ? `url(/images/fondos/headeres/${backgroundImages['eficiencia de los sistemas de vacío']})` : 'none',
           backgroundSize: 'cover',
           backgroundPosition: 'center',
         }}>
-          <h2>Beneficios de la Dosificación Eficiente</h2>
+          <h2>Eficiencia de los Sistemas de Vacío</h2>
           <p>
-            La dosificación eficiente de productos químicos en el agua no solo asegura la pureza del agua potable, sino que también optimiza los costos operativos
-            y reduce el desperdicio, lo que garantiza agua limpia y segura para todos.
+            La eficiencia de los sistemas de vacío es fundamental para garantizar que el proceso de refrigeración sea económico y respetuoso con el medio ambiente, ayudando a reducir el consumo energético.
           </p>
         </section>
 
-        <section id="impacto-ambiental" className="my-5" style={{
-          backgroundImage: backgroundImages['impacto ambiental del tratamiento de agua'] ? `url(/images/fondos/headeres/${backgroundImages['impacto ambiental del tratamiento de agua']})` : 'none',
+        <section id="mantenimiento-preventivo" className="my-5" style={{
+          backgroundImage: backgroundImages['mantenimiento preventivo de sistemas de vacío'] ? `url(/images/fondos/headeres/${backgroundImages['mantenimiento preventivo de sistemas de vacío']})` : 'none',
           backgroundSize: 'cover',
           backgroundPosition: 'center',
         }}>
-          <h2>Impacto Ambiental del Tratamiento de Agua</h2>
+          <h2>Mantenimiento Preventivo de Sistemas de Vacío</h2>
           <p>
-            El tratamiento de agua no solo tiene un impacto positivo en la salud pública, sino que también juega un rol clave en la preservación del medio ambiente.
-            Nuestras tecnologías avanzadas reducen la contaminación y promueven la sostenibilidad.
+            El mantenimiento preventivo es esencial para prolongar la vida útil de los sistemas de vacío y garantizar un rendimiento óptimo. Descubre nuestras recomendaciones para el mantenimiento periódico.
           </p>
         </section>
-  
-        <section id="futuro-agua-pura" className="my-5" style={{
-          backgroundImage: backgroundImages['el futuro del agua pura'] ? `url(/images/fondos/headeres/${backgroundImages['el futuro del agua pura']})` : 'none',
+
+        <section id="nuevas-tecnologias" className="my-5" style={{
+          backgroundImage: backgroundImages['nuevas tecnologías en sistemas de vacío'] ? `url(/images/fondos/headeres/${backgroundImages['nuevas tecnologías en sistemas de vacío']})` : 'none',
           backgroundSize: 'cover',
           backgroundPosition: 'center',
         }}>
-          <h2>El Futuro del Agua Pura</h2>
+          <h2>Nuevas Tecnologías en Sistemas de Vacío</h2>
           <p>
-            A medida que las tecnologías avanzan, el futuro del tratamiento de agua apunta hacia soluciones aún más eficientes y sostenibles, con sistemas automatizados
-            que garantizarán agua pura y limpia para las generaciones futuras.
+            Conoce las nuevas tecnologías que están revolucionando los sistemas de vacío en la industria de la refrigeración, mejorando la eficiencia y reduciendo el impacto ambiental.
           </p>
         </section>
       </div>
@@ -171,4 +166,4 @@ function Aguas() {
   );
 }
 
-export default Aguas;
+export default Refrigeracion;

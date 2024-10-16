@@ -3,28 +3,53 @@ import axios from 'axios';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 function Petroleo() {
-  const [backgroundImage, setBackgroundImage] = useState(null); // Estado para el fondo condicional
+  const [backgroundImages, setBackgroundImages] = useState({}); // Estado para las imágenes de fondo por sección
 
-  // Función para obtener el fondo condicional desde el backend
-  const fetchBackgroundImage = useCallback(async () => {
+  // Función para obtener las asignaciones de contenido desde el backend
+  const fetchAssignments = useCallback(async () => {
     try {
       const response = await axios.get('/api/pages/assignments');
       const assignments = response.data;
-      if (assignments.aplicarPaginas && assignments.aplicarPaginas.Petroleo) {
-        const encabezadoAssignment = assignments.aplicarPaginas.Petroleo.find(assignment => assignment.section === 'encabezado');
-        if (encabezadoAssignment) {
-          setBackgroundImage(encabezadoAssignment.photoName);
+      console.log('Asignaciones obtenidas del backend:', assignments); // Log de la respuesta obtenida
+
+      // Separar las asignaciones por página de forma dinámica
+      const assignmentsByPage = assignments.reduce((acc, assignment) => {
+        const { pageName } = assignment;
+        if (!acc[pageName]) {
+          acc[pageName] = [];
         }
+        acc[pageName].push(assignment);
+        return acc;
+      }, {});
+
+      // Log de asignaciones separadas por página
+      Object.keys(assignmentsByPage).forEach(pageName => {
+        console.log(`Asignaciones para la página ${pageName}:`, assignmentsByPage[pageName]);
+      });
+
+      // Identificar y trabajar con el array de la página "Petroleo"
+      if (assignmentsByPage.Petroleo) {
+        console.log('Trabajando con el array de la página Petroleo:', assignmentsByPage.Petroleo);
+
+        // Crear un objeto para almacenar las imágenes de fondo por sección utilizando un map
+        const sectionImages = {};
+        assignmentsByPage.Petroleo.forEach((assignment) => {
+          const section = assignment.section;
+          const photoName = assignment.photoName;
+          sectionImages[section] = photoName;
+        });
+
+        setBackgroundImages(sectionImages);
       }
     } catch (error) {
-      console.error('Error al obtener el fondo:', error);
+      console.error('Error al obtener las asignaciones:', error);
     }
   }, []);
 
-  // Cargar el fondo cuando se monte el componente
+  // Cargar las asignaciones cuando se monte el componente
   useEffect(() => {
-    fetchBackgroundImage();
-  }, [fetchBackgroundImage]);
+    fetchAssignments();
+  }, [fetchAssignments]);
 
   return (
     <div>
@@ -49,9 +74,9 @@ function Petroleo() {
             overflow: 'hidden',
           }}
         >
-          {backgroundImage ? (
+          {backgroundImages.encabezado ? (
             <img
-              src={`/images/fondos/headeres/${backgroundImage}`}
+              src={`/images/fondos/headeres/${backgroundImages.encabezado}`}
               alt="Fondo Petroleo"
               style={{
                 width: '100%',
@@ -59,14 +84,14 @@ function Petroleo() {
                 objectFit: 'cover',
                 pointerEvents: 'none'
               }}
-              onError={() => console.error('Error al cargar la imagen desde:', backgroundImage)}
+              onError={() => console.error('Error al cargar la imagen desde:', backgroundImages.encabezado)}
             />
           ) : (
             <p>Cargando imagen...</p>
           )}
         </div>
 
-        {/* Encabezado debajo del fondo */}
+        {/* Texto del encabezado */}
         <div id="encabezado" className="container text-center" style={{ position: 'relative', zIndex: 1, paddingTop: '70px' }}>
           <h1 className="mb-4" style={{ color: '#fff' }}>Sección de Petróleo en Argentina</h1>
           <p className="mb-5" style={{ color: '#fff' }}>
@@ -75,49 +100,55 @@ function Petroleo() {
         </div>
       </div>
 
-      {/* Secciones adicionales con fondo condicional */}
-      <div
-        className="bg-container"
-        style={{
-          backgroundImage: backgroundImage ? `url('/images/fondos/${backgroundImage}')` : 'none',
+      {/* Secciones de contenido */}
+      <div className="container">
+        <section id="historia-petroleo" className="my-5" style={{
+          backgroundImage: backgroundImages['Historia del Petróleo en Argentina'] ? `url(/images/fondos/headeres/${backgroundImages['Historia del Petróleo en Argentina']})` : 'none',
           backgroundSize: 'cover',
           backgroundPosition: 'center',
-          padding: '40px 0',
-        }}
-      >
-        <div className="container">
-          <section id="historia-petroleo" className="my-5">
-            <h2>Historia del Petróleo en Argentina</h2>
-            <p>
-              La industria petrolera en Argentina ha sido una parte importante de su desarrollo económico desde principios del siglo XX.
-              Yacimientos como Vaca Muerta son conocidos a nivel mundial por su enorme potencial.
-            </p>
-          </section>
+        }}>
+          <h2>Historia del Petróleo en Argentina</h2>
+          <p>
+            La industria petrolera en Argentina ha sido una parte importante de su desarrollo económico desde principios del siglo XX.
+            Yacimientos como Vaca Muerta son conocidos a nivel mundial por su enorme potencial.
+          </p>
+        </section>
 
-          <section id="principales-yacimientos" className="my-5">
-            <h2>Principales Yacimientos de Petróleo</h2>
-            <p>
-              Argentina cuenta con importantes yacimientos de petróleo y gas, entre los más conocidos están Vaca Muerta, Cerro Dragón y Chubut,
-              que aportan una parte significativa de la producción nacional.
-            </p>
-          </section>
+        <section id="principales-yacimientos" className="my-5" style={{
+          backgroundImage: backgroundImages['Principales Yacimientos de Petróleo'] ? `url(/images/fondos/headeres/${backgroundImages['Principales Yacimientos de Petróleo']})` : 'none',
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+        }}>
+          <h2>Principales Yacimientos de Petróleo</h2>
+          <p>
+            Argentina cuenta con importantes yacimientos de petróleo y gas, entre los más conocidos están Vaca Muerta, Cerro Dragón y Chubut,
+            que aportan una parte significativa de la producción nacional.
+          </p>
+        </section>
 
-          <section id="impacto-economico" className="my-5">
-            <h2>Impacto Económico</h2>
-            <p>
-              El petróleo es un recurso clave para la economía argentina. Las inversiones en este sector generan empleo, infraestructura
-              y son un motor para el crecimiento económico del país.
-            </p>
-          </section>
+        <section id="impacto-economico" className="my-5" style={{
+          backgroundImage: backgroundImages['Impacto Económico'] ? `url(/images/fondos/headeres/${backgroundImages['Impacto Económico']})` : 'none',
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+        }}>
+          <h2>Impacto Económico</h2>
+          <p>
+            El petróleo es un recurso clave para la economía argentina. Las inversiones en este sector generan empleo, infraestructura
+            y son un motor para el crecimiento económico del país.
+          </p>
+        </section>
 
-          <section id="futuro-industria" className="my-5">
-            <h2>Futuro de la Industria Petrolera</h2>
-            <p>
-              Con el avance de las energías renovables, el futuro de la industria petrolera enfrenta desafíos, pero sigue siendo crucial
-              en la matriz energética global. Argentina continúa explorando nuevas oportunidades de crecimiento en este sector.
-            </p>
-          </section>
-        </div>
+        <section id="futuro-industria" className="my-5" style={{
+          backgroundImage: backgroundImages['Futuro de la Industria Petrolera'] ? `url(/images/fondos/headeres/${backgroundImages['Futuro de la Industria Petrolera']})` : 'none',
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+        }}>
+          <h2>Futuro de la Industria Petrolera</h2>
+          <p>
+            Con el avance de las energías renovables, el futuro de la industria petrolera enfrenta desafíos, pero sigue siendo crucial
+            en la matriz energética global. Argentina continúa explorando nuevas oportunidades de crecimiento en este sector.
+          </p>
+        </section>
       </div>
     </div>
   );

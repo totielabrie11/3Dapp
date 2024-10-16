@@ -13,8 +13,10 @@ import Distribuidores from './components/Home/Distribuidores/Distribuidores';
 import DistribuidorAdmin from './components/Administrador/DistribuidorAdmin';
 import Footer from './components/Footer/Footer';
 import FotosAdmin from './components/Administrador/FotosAdmin';
-import Petroleo from './components/Home/Pages/Petroleo'; 
-import Aguas from './components/Home/Pages/Aguas';  // Importamos Aguas.jsx
+import Petroleo from './components/Home/Pages/Petroleo';
+import Aguas from './components/Home/Pages/Aguas';
+import Refrigeracion from './components/Home/Pages/Refrigeracion';
+import Refineria from './components/Home/Pages/Refineria';
 import VideoAdmin from './components/Administrador/VideoAdmin';
 
 function App() {
@@ -45,7 +47,9 @@ function App() {
           <Route path="/productos/:name" element={<ProductoDetalle />} />
           <Route path="/distribuidores" element={<Distribuidores />} />
           <Route path="/petroleo" element={<Petroleo />} />  {/* Ruta para Petroleo */}
-          <Route path="/aguas" element={<Aguas />} />  {/* Nueva ruta para Aguas */}
+          <Route path="/aguas" element={<Aguas />} />  {/* Ruta para Aguas */}
+          <Route path="/refrigeracion" element={<Refrigeracion />} />  {/* Ruta para Refrigeracion */}
+          <Route path="/refineria" element={<Refineria />} />  {/* Nueva ruta para Refineria */}
           
           {/* Rutas del administrador */}
           {isAdmin && <Route path="/admin/productos" element={<ProductAdmin />} />}
