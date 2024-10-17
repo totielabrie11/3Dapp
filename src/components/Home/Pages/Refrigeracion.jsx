@@ -1,9 +1,11 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useRef } from 'react';
 import axios from 'axios';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import './Refrigeracion.css';
 
 function Refrigeracion() {
   const [backgroundImages, setBackgroundImages] = useState({});
+  const sectionRefs = useRef([]); // Mantiene las referencias de las secciones
 
   // Función para normalizar el texto: convertir a minúsculas y quitar acentos
   const normalizeString = (str) => {
@@ -63,6 +65,34 @@ function Refrigeracion() {
     console.log('Imagen de encabezado:', backgroundImages.encabezado);
   }, [backgroundImages]);
 
+  // Intersection Observer para las animaciones al hacer scroll
+  useEffect(() => {
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1 });
+
+    // Crear una copia de los refs actuales para evitar la advertencia de ESLint
+    const currentSectionRefs = sectionRefs.current;
+
+    currentSectionRefs.forEach(ref => {
+      if (ref) {
+        observer.observe(ref);
+      }
+    });
+
+    // Cleanup observer on component unmount
+    return () => {
+      currentSectionRefs.forEach(ref => {
+        if (ref) observer.unobserve(ref);
+      });
+    };
+  }, []); // Dependencia vacía, ya que no queremos que se dispare con cada cambio de ref
+
   return (
     <div>
       {/* Sección de encabezado con imagen de fondo */}
@@ -103,76 +133,147 @@ function Refrigeracion() {
           )}
         </div>
 
-        <div id="encabezado" className="container text-center" style={{ position: 'relative', zIndex: 1, paddingTop: '70px' }}>
-          <h1 className="mb-4" style={{ color: '#fff' }}>La Industria de Bombas de Vacío para Uso en Refrigeración</h1>
+        <div id="encabezado" className="container text-center" style={{ position: 'relative', zIndex: 1, paddingTop: '150px', marginTop: '70px' }}>
+          <h2 className="mb-3" style={{ color: '#fff' }}>SOLUCIONES AVANZADAS PARA EL SECTOR</h2>
+          <h1 className="mb-4" style={{ color: '#fff' }}>REFRIGERACIÓN Y VACÍO INDUSTRIA</h1>
           <p className="mb-5" style={{ color: '#fff' }}>
-            Orientada al mecánico en refrigeración, con soluciones eficientes para sistemas de refrigeración en todo tipo de instalaciones.
+            Dosivac se especializa en soluciones avanzadas de refrigeración y vacío industrial, ofreciendo una gama de bombas de alta eficiencia y rendimiento para diversas aplicaciones industriales.
+            Sus productos están diseñados para garantizar la fiabilidad y el ahorro energético, respondiendo a las necesidades más exigentes del mercado.
           </p>
         </div>
       </div>
 
-      {/* Secciones de contenido */}
-      <div className="container">
-        {/* Sección: Sistemas Industriales de Vacío */}
-        <section id="sistemas-industriales" className="my-5" style={{
-          backgroundImage: backgroundImages[normalizeString('Sistemas Industriales de Vacío')] ? `url(/images/fondos/headeres/${backgroundImages[normalizeString('Sistemas Industriales de Vacío')]})` : 'none',
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
-        }}>
-          <h2>Sistemas Industriales de Vacío</h2>
-          <p>
-            Los sistemas de vacío industriales están diseñados para satisfacer las demandas de la refrigeración comercial y doméstica, proporcionando alta eficiencia y rendimiento en diversas aplicaciones.
-          </p>
-        </section>
+      {/* Sección: Bombas de Vacío */}
+      <section id="bombas de vacío" className="my-5 bombas-vacio-section" style={{
+        backgroundImage: backgroundImages[normalizeString('bombas de vacío')] ? `url(/images/fondos/headeres/${backgroundImages[normalizeString('bombas de vacío')]})` : 'none',
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+      }}>
+        <h2 className="bombas-vacio-header">Bombas de Vacío</h2>
+        <p className="bombas-vacio-description">
+          LAS BOMBAS DE VACÍO DE DOSIVAC OFRECEN EFICIENCIA, DURABILIDAD Y ALTO RENDIMIENTO PARA APLICACIONES INDUSTRIALES EXIGENTES.
+        </p>
 
-        {/* Sección: Aplicaciones en Refrigeración */}
-        <section id="aplicaciones-refrigeracion" className="my-5" style={{
+        {/* Contenedor para productos */}
+        <div className="container mt-4">
+          <div className="row bombas-vacio-product-row">
+            {/* DVRII */}
+            <div className="col-md-4 mb-4 bombas-vacio-product-col">
+              <div className="card h-100 bombas-vacio-product-card">
+                <img src="assets/img/portfolio/DVRII.png" className="card-img-top bombas-vacio-product-img" alt="DVRII" />
+                <div className="card-body bombas-vacio-product-body">
+                  <h5 className="card-title bombas-vacio-product-title">DVRII</h5>
+                  <p className="card-text bombas-vacio-product-text">Bomba de Vacío Doble Etapa Legendaria. Conocida por su robustez y fiabilidad en aplicaciones de refrigeración industrial.</p>
+                  <ul className="bombas-vacio-product-list">
+                    <li>Modelos Disponibles: 1A, 2A, 3A, 4A</li>
+                  </ul>
+                  <button className="btn btn-primary bombas-vacio-btn">VER BOMBA</button>
+                </div>
+              </div>
+            </div>
+            {/* Supervac */}
+            <div className="col-md-4 mb-4 bombas-vacio-product-col">
+              <div className="card h-100 bombas-vacio-product-card">
+                <img src="assets/img/portfolio/supervac.webp" className="card-img-top bombas-vacio-product-img" alt="Supervac" />
+                <div className="card-body bombas-vacio-product-body">
+                  <h5 className="card-title bombas-vacio-product-title">Supervac</h5>
+                  <p className="card-text bombas-vacio-product-text">Bomba de Vacío para Refrigeración Inicial. Ideal para iniciar procesos de refrigeración de manera eficiente.</p>
+                  <ul className="bombas-vacio-product-list">
+                    <li>Modelos Disponibles: VP1, VP2</li>
+                  </ul>
+                  <button className="btn btn-primary bombas-vacio-btn">VER BOMBA</button>
+                </div>
+              </div>
+            </div>
+            
+            {/* DVR6 New Gen */}
+            <div className="col-md-4 mb-4 bombas-vacio-product-col">
+              <div className="card h-100 bombas-vacio-product-card">
+                <img src="assets/img/portfolio/DVR6.png" className="card-img-top bombas-vacio-product-img" alt="DVR6 New Gen" />
+                <div className="card-body bombas-vacio-product-body">
+                  <h5 className="card-title bombas-vacio-product-title">DVR6 New Gen</h5>
+                  <p className="card-text bombas-vacio-product-text">Bomba de Vacío de última generación. Ofrece un rendimiento superior con eficiencia energética optimizada para las aplicaciones más exigentes.</p>
+                  <ul className="bombas-vacio-product-list">
+                    <li>Modelos Disponibles: 6A, 6B</li>
+                  </ul>
+                  <button className="btn btn-primary bombas-vacio-btn">VER BOMBA</button>
+                </div>
+              </div>
+            </div>
+            {/* Recuperadora */}
+            <div className="col-md-4 mb-4 bombas-vacio-product-col">
+              <div className="card h-100 bombas-vacio-product-card">
+                <img src="assets/img/portfolio/recuperadoras.webp" className="card-img-top bombas-vacio-product-img" alt="Recuperadora" />
+                <div className="card-body bombas-vacio-product-body">
+                  <h5 className="card-title bombas-vacio-product-title">Recuperadora</h5>
+                  <p className="card-text bombas-vacio-product-text">Bomba Recuperadora de Gases. Diseñada para la recuperación eficiente de gases refrigerantes, contribuyendo a la sostenibilidad.</p>
+                  <ul className="bombas-vacio-product-list">
+                    <li>Modelo Disponible: RECUPERADORA</li>
+                  </ul>
+                  <button className="btn btn-primary bombas-vacio-btn">VER BOMBA</button>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+      {/* Sección: Aplicaciones en Refrigeración */}
+      <section
+        id="aplicaciones-refrigeracion"
+        className="my-5"
+        style={{
           backgroundImage: backgroundImages[normalizeString('Aplicaciones en Refrigeración')] ? `url(/images/fondos/headeres/${backgroundImages[normalizeString('Aplicaciones en Refrigeración')]})` : 'none',
           backgroundSize: 'cover',
           backgroundPosition: 'center',
-        }}>
+        }}
+      >
+        <div ref={el => sectionRefs.current[0] = el} className="aplicaciones-refrigeracion-container">
           <h2>Aplicaciones en Refrigeración</h2>
+        </div>
+        <div ref={el => sectionRefs.current[1] = el} className="aplicaciones-refrigeracion-container">
           <p>
             Las bombas de vacío juegan un rol crucial en los sistemas de refrigeración, permitiendo una extracción eficiente de gases y asegurando un rendimiento óptimo en la transferencia de calor.
           </p>
-        </section>
-
-        {/* Sección: Eficiencia de los Sistemas de Vacío */}
-        <section id="eficiencia-sistemas" className="my-5" style={{
-          backgroundImage: backgroundImages[normalizeString('Eficiencia de los Sistemas de Vacío')] ? `url(/images/fondos/headeres/${backgroundImages[normalizeString('Eficiencia de los Sistemas de Vacío')]})` : 'none',
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
-        }}>
-          <h2>Eficiencia de los Sistemas de Vacío</h2>
+        </div>
+        <div ref={el => sectionRefs.current[2] = el} className="aplicaciones-refrigeracion-container">
           <p>
-            La eficiencia de los sistemas de vacío es fundamental para garantizar que el proceso de refrigeración sea económico y respetuoso con el medio ambiente, ayudando a reducir el consumo energético.
+            El proceso de hacer vacío es fundamental para eliminar cualquier humedad presente dentro del circuito de refrigeración. La humedad puede causar problemas graves, como la formación de hielo en el sistema, lo cual compromete su eficiencia y puede llevar a fallas costosas.
           </p>
-        </section>
+        </div>
+        <div ref={el => sectionRefs.current[3] = el} className="aplicaciones-refrigeracion-container">
+          <p>
+            Además, durante la instalación o el mantenimiento de los sistemas de refrigeración, es posible que se produzcan pequeñas pinchaduras en los caños. Estas pinchaduras permiten la entrada de aire y humedad, lo cual debe ser eliminado mediante un proceso de vacío adecuado para asegurar un funcionamiento sin problemas.
+          </p>
+        </div>
+        <div ref={el => sectionRefs.current[4] = el} className="aplicaciones-refrigeracion-container">
+          <p>
+            La presencia de gases no condensables en el circuito también disminuye la eficiencia de la transferencia de calor, lo cual afecta directamente el rendimiento del sistema de refrigeración. Las bombas de vacío ayudan a asegurar que solo el refrigerante esté presente en el circuito, garantizando un rendimiento óptimo.
+          </p>
+        </div>
+        <div ref={el => sectionRefs.current[5] = el} className="aplicaciones-refrigeracion-container">
+          <p>
+            Finalmente, hacer un buen vacío ayuda a prevenir la corrosión interna del sistema. La humedad en combinación con ciertos refrigerantes puede crear ácidos que dañan las tuberías y los componentes internos, lo cual reduce la vida útil del sistema.
+          </p>
+        </div>
+      </section>
 
-        {/* Sección: Mantenimiento Preventivo de Sistemas de Vacío */}
-        <section id="mantenimiento-preventivo" className="my-5" style={{
+      {/* Sección: Mantenimiento Preventivo de Sistemas de Vacío */}
+      <section
+        id="mantenimiento-preventivo"
+        className="my-5"
+        style={{
           backgroundImage: backgroundImages[normalizeString('Mantenimiento Preventivo de Sistemas de Vacío')] ? `url(/images/fondos/headeres/${backgroundImages[normalizeString('Mantenimiento Preventivo de Sistemas de Vacío')]})` : 'none',
           backgroundSize: 'cover',
           backgroundPosition: 'center',
-        }}>
-          <h2>Mantenimiento Preventivo de Sistemas de Vacío</h2>
-          <p>
-            El mantenimiento preventivo es esencial para prolongar la vida útil de los sistemas de vacío y garantizar un rendimiento óptimo. Descubre nuestras recomendaciones para el mantenimiento periódico.
-          </p>
-        </section>
-
-        {/* Sección: Nuevas Tecnologías en Sistemas de Vacío */}
-        <section id="nuevas-tecnologias" className="my-5" style={{
-          backgroundImage: backgroundImages[normalizeString('Nuevas Tecnologías en Sistemas de Vacío')] ? `url(/images/fondos/headeres/${backgroundImages[normalizeString('Nuevas Tecnologías en Sistemas de Vacío')]})` : 'none',
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
-        }}>
-          <h2>Nuevas Tecnologías en Sistemas de Vacío</h2>
-          <p>
-            Conoce las nuevas tecnologías que están revolucionando los sistemas de vacío en la industria de la refrigeración, mejorando la eficiencia y reduciendo el impacto ambiental.
-          </p>
-        </section>
-      </div>
+        }}
+      >
+        <h2>Mantenimiento Preventivo de Sistemas de Vacío</h2>
+        <p>
+          El mantenimiento preventivo es esencial para prolongar la vida útil de los sistemas de vacío y garantizar un rendimiento óptimo. Descubre nuestras recomendaciones para el mantenimiento periódico.
+        </p>
+      </section>
     </div>
   );
 }

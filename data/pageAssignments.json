@@ -83,5 +83,25 @@
     "photoName": "fondoParaPetroleo.jpg",
     "pageName": "Petroleo",
     "section": "EQUIPOS INTELIGENTES"
+  },
+  {
+    "photoName": " fondo refri.jpg",
+    "pageName": "Refrigeracion",
+    "section": "Encabezado"
+  },
+  {
+    "photoName": "fondoRefri2.jpg",
+    "pageName": "Refrigeracion",
+    "section": "Bombas de Vacío"
+  },
+  {
+    "photoName": "sistemasvacio.webp",
+    "pageName": "Refrigeracion",
+    "section": "Aplicaciones en Refrigeración"
+  },
+  {
+    "photoName": "aplicandovacio.webp",
+    "pageName": "Refrigeracion",
+    "section": "Aplicaciones en Refrigeración"
   }
 ]
