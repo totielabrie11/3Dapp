@@ -108,5 +108,10 @@
     "photoName": "mantenimiento.webp",
     "pageName": "Refrigeracion",
     "section": "Mantenimiento Preventivo de Sistemas de Vacío"
+  },
+  {
+    "photoName": "fondoagua.jpg",
+    "pageName": "Aguas",
+    "section": "Encabezado"
   }
 ]

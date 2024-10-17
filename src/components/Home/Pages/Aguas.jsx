@@ -1,9 +1,17 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import axios from 'axios';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import './Aguas.css'
 
 function Aguas() {
   const [backgroundImages, setBackgroundImages] = useState({}); // Estado para las imágenes de fondo por sección
+  const [sectionColors, setSectionColors] = useState({ // Estado para los colores de fondo manuales
+    'sistemas-portatiles': '#FFFFFF', // Puedes agregar un color inicial aquí si es necesario
+    'sistemas-robustos': '#FFFFFF',
+    'beneficios-dosificacion': '',
+    'impacto-ambiental': '',
+    'futuro-agua-pura': ''
+  });
 
   // Función para obtener las asignaciones de contenido desde el backend
   const fetchAssignments = useCallback(async () => {
@@ -97,20 +105,66 @@ function Aguas() {
         </div>
 
         {/* Texto del encabezado */}
-        <div id="encabezado" className="container text-center" style={{ position: 'relative', zIndex: 1, paddingTop: '70px' }}>
-          <h1 className="mb-4" style={{ color: '#fff' }}>Tratamiento de Agua Pura y Limpia</h1>
-          <p className="mb-5" style={{ color: '#fff' }}>
-            Soluciones eficientes de dosificación para el tratamiento de agua potable en todo el país.
+        <div id="encabezado" className="container text-center" style={{ position: 'relative', zIndex: 1, paddingTop: '70px', backgroundSize: 'cover' }}>
+          <h1 className="mb-4 text-white">
+            Aguas, Industrias y Tratamiento de Efluentes
+          </h1>
+          <p className="mb-5 text-white">
+            En Dosivac, nos especializamos en proporcionar equipos que optimizan el manejo y la distribución de fluidos, contribuyendo a procesos más eficientes y sostenibles en la purificación, distribución y gestión del agua. Nuestro equipo está diseñado para ofrecer un sistema de dosificación completo con todos los accesorios y la estructura necesaria en el área de trabajo.
           </p>
         </div>
       </div>
 
       {/* Secciones de contenido */}
-      <div className="container">
+
+
+      {/* Sección para Sistemas Robustos con Bombas Dosivac */}
+      <section id="sistemas-robustos" class="my-5 sistemas-robustos">
+    <div class="container">
+        <h2 class="text-center">Sistemas de Dosificación de Alta Calidad</h2>
+        <p class="text-center">
+            En Dosivac, ofrecemos equipos de dosificación diseñados para garantizar la máxima eficiencia 
+            y seguridad en el manejo de fluidos. Nuestros sistemas están disponibles en capacidades de 1000 
+            y 200 litros, cada uno adaptado a diferentes requerimientos industriales y de tratamiento de agua.
+        </p>
+        
+        <div class="row text-center">
+            <div class="col-md-6">
+            
+                <div class="equipo-image" id="equipo-1000-img"></div>
+                <h3>Equipo de 1000 Litros</h3>
+                <ul class="list-unstyled">
+                    <li><strong>Dimensiones:</strong> 60 x 91</li>
+                    <li><strong>Caudal máximo:</strong> 840 l/d</li>
+                    <li><strong>Presión máxima:</strong> 650 kg/cm2</li>
+                    <li>Opcional para alta presión</li>
+                </ul>
+                <button class="btn btn-primary">Cotizar</button>
+            </div>
+            
+            <div class="col-md-6">
+               
+                <div class="equipo-image" id="equipo-200-img"></div>
+                <h3>Equipo de 200 Litros</h3>
+                <ul class="list-unstyled">
+                    <li><strong>Dimensiones:</strong> 76 x 100</li>
+                    <li><strong>Caudal máximo:</strong> 5200 l/d</li>
+                    <li><strong>Presión máxima:</strong> 200 kg/cm2</li>
+                    <li>Opcional para alta presión</li>
+                </ul>
+                <button class="btn btn-primary">Cotizar</button>
+            </div>
+        </div>
+    </div>
+      </section>
+
+
+        {/* Sección para Sistemas Portátiles de Dosificación */}
         <section id="sistemas-portatiles" className="my-5" style={{
-          backgroundImage: backgroundImages['sistemas portátiles de dosificación'] ? `url(/images/fondos/headeres/${backgroundImages['sistemas portátiles de dosificación']})` : 'none',
+          backgroundColor: sectionColors['sistemas-portatiles'] || 'transparent', // Usar color manual si existe, si no, usar "transparente"
+          backgroundImage: !sectionColors['sistemas-portatiles'] && backgroundImages['sistemas portátiles de dosificación'] ? `url(/images/fondos/headeres/${backgroundImages['sistemas portátiles de dosificación']})` : 'none',
           backgroundSize: 'cover',
-          backgroundPosition: 'center',
+          backgroundPosition: 'center'
         }}>
           <h2>Sistemas Portátiles de Dosificación</h2>
           <p>
@@ -118,55 +172,47 @@ function Aguas() {
             adaptándose a diferentes necesidades, desde comunidades pequeñas hasta grandes centros urbanos.
           </p>
         </section>
+      {/* Sección para Beneficios de la Dosificación Eficiente */}
+      <section id="beneficios-dosificacion" className="my-5" style={{
+        backgroundColor: sectionColors['beneficios-dosificacion'] || 'transparent',
+        backgroundImage: !sectionColors['beneficios-dosificacion'] && backgroundImages['beneficios de la dosificación eficiente'] ? `url(/images/fondos/headeres/${backgroundImages['beneficios de la dosificación eficiente']})` : 'none',
+        backgroundSize: 'cover',
+        backgroundPosition: 'center'
+      }}>
+        <h2>Beneficios de la Dosificación Eficiente</h2>
+        <p>
+          La dosificación eficiente de productos químicos en el agua no solo asegura la pureza del agua potable, sino que también optimiza los costos operativos
+          y reduce el desperdicio, lo que garantiza agua limpia y segura para todos.
+        </p>
+      </section>
 
-        <section id="sistemas-robustos" className="my-5" style={{
-          backgroundImage: backgroundImages['sistemas robustos con bombas dosivac'] ? `url(/images/fondos/headeres/${backgroundImages['sistemas robustos con bombas dosivac']})` : 'none',
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
-        }}>
-          <h2>Sistemas Robustos con Bombas Dosivac</h2>
-          <p>
-            Las bombas Dosivac proporcionan una dosificación precisa y segura, asegurando que el tratamiento de agua sea eficaz incluso en las condiciones más desafiantes.
-            Estos sistemas robustos están preparados para plantas de tratamiento de gran escala.
-          </p>
-        </section>
+      {/* Sección para Impacto Ambiental del Tratamiento de Agua */}
+      <section id="impacto-ambiental" className="my-5" style={{
+        backgroundColor: sectionColors['impacto-ambiental'] || 'transparent',
+        backgroundImage: !sectionColors['impacto-ambiental'] && backgroundImages['impacto ambiental del tratamiento de agua'] ? `url(/images/fondos/headeres/${backgroundImages['impacto ambiental del tratamiento de agua']})` : 'none',
+        backgroundSize: 'cover',
+        backgroundPosition: 'center'
+      }}>
+        <h2>Impacto Ambiental del Tratamiento de Agua</h2>
+        <p>
+          El tratamiento de agua no solo tiene un impacto positivo en la salud pública, sino que también juega un rol clave en la preservación del medio ambiente.
+          Nuestras tecnologías avanzadas reducen la contaminación y promueven la sostenibilidad.
+        </p>
+      </section>
 
-        <section id="beneficios-dosificacion" className="my-5" style={{
-          backgroundImage: backgroundImages['beneficios de la dosificación eficiente'] ? `url(/images/fondos/headeres/${backgroundImages['beneficios de la dosificación eficiente']})` : 'none',
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
-        }}>
-          <h2>Beneficios de la Dosificación Eficiente</h2>
-          <p>
-            La dosificación eficiente de productos químicos en el agua no solo asegura la pureza del agua potable, sino que también optimiza los costos operativos
-            y reduce el desperdicio, lo que garantiza agua limpia y segura para todos.
-          </p>
-        </section>
-
-        <section id="impacto-ambiental" className="my-5" style={{
-          backgroundImage: backgroundImages['impacto ambiental del tratamiento de agua'] ? `url(/images/fondos/headeres/${backgroundImages['impacto ambiental del tratamiento de agua']})` : 'none',
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
-        }}>
-          <h2>Impacto Ambiental del Tratamiento de Agua</h2>
-          <p>
-            El tratamiento de agua no solo tiene un impacto positivo en la salud pública, sino que también juega un rol clave en la preservación del medio ambiente.
-            Nuestras tecnologías avanzadas reducen la contaminación y promueven la sostenibilidad.
-          </p>
-        </section>
-  
-        <section id="futuro-agua-pura" className="my-5" style={{
-          backgroundImage: backgroundImages['el futuro del agua pura'] ? `url(/images/fondos/headeres/${backgroundImages['el futuro del agua pura']})` : 'none',
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
-        }}>
-          <h2>El Futuro del Agua Pura</h2>
-          <p>
-            A medida que las tecnologías avanzan, el futuro del tratamiento de agua apunta hacia soluciones aún más eficientes y sostenibles, con sistemas automatizados
-            que garantizarán agua pura y limpia para las generaciones futuras.
-          </p>
-        </section>
-      </div>
+      {/* Sección para El Futuro del Agua Pura */}
+      <section id="futuro-agua-pura" className="my-5" style={{
+        backgroundColor: sectionColors['futuro-agua-pura'] || 'transparent',
+        backgroundImage: !sectionColors['futuro-agua-pura'] && backgroundImages['el futuro del agua pura'] ? `url(/images/fondos/headeres/${backgroundImages['el futuro del agua pura']})` : 'none',
+        backgroundSize: 'cover',
+        backgroundPosition: 'center'
+      }}>
+        <h2>El Futuro del Agua Pura</h2>
+        <p>
+          A medida que las tecnologías avanzan, el futuro del tratamiento de agua apunta hacia soluciones aún más eficientes y sostenibles, con sistemas automatizados
+          que garantizarán agua pura y limpia para las generaciones futuras.
+        </p>
+      </section>
     </div>
   );
 }

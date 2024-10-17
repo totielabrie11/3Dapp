@@ -1,0 +1,59 @@
+/* Estilos para la sección de sistemas robustos */
+.sistemas-robustos {
+    background-color: #f8f9fa;
+    padding: 50px 0;
+}
+
+.sistemas-robustos h2 {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #003366; /* Color principal */
+    margin-bottom: 20px;
+}
+
+.sistemas-robustos p {
+    font-size: 1.1rem;
+    color: #333333;
+    margin-bottom: 40px;
+}
+
+.equipo-image {
+    height: 200px; /* Altura de la imagen */
+    background-color: #e9ecef; /* Espacio de imagen */
+    margin-bottom: 20px;
+    border-radius: 8px;
+}
+
+.sistemas-robustos h3 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #003366; /* Color principal */
+    margin-bottom: 15px;
+}
+
+.sistemas-robustos ul {
+    font-size: 1rem;
+    color: #333333;
+    padding-left: 0;
+    list-style-type: none;
+    margin-bottom: 30px;
+}
+
+.sistemas-robustos ul li {
+    margin-bottom: 5px;
+}
+
+.sistemas-robustos .btn {
+    font-size: 1rem;
+    font-weight: 600;
+    padding: 10px 20px;
+    background-color: #003366; /* Color del botón */
+    color: #ffffff;
+    border: none;
+    border-radius: 5px;
+}
+
+.sistemas-robustos .btn:hover {
+    background-color: #005bb5; /* Color hover del botón */
+    color: #ffffff;
+}

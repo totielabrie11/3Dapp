@@ -279,5 +279,12 @@
       "Tipo de Producto: Educativo"
     ],
     "path-image": "/models/tele.jpg"
+  },
+  {
+    "name": "fondo agua1",
+    "description": "",
+    "path": "",
+    "path-image": "/models/fondo agua1.jpg",
+    "caracteristicas": []
   }
 ]
