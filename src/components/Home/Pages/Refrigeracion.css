@@ -208,12 +208,8 @@
   }
 }
 
-#aplicaciones-refrigeracion {
-  margin: 0 auto;
-  padding: 20px;
-}
-
-.aplicaciones-refrigeracion-container {
+/* Estilos para mantenimiento preventivo */
+#mantenimiento-preventivo .mantenimiento-preventivo-container {
   background: #ffffff;
   padding: 20px;
   margin-bottom: 20px;
@@ -224,14 +220,35 @@
   margin-right: auto;
   opacity: 0;
   transform: translateY(20px);
-  transition: opacity 1.2s ease-out, transform 1.8s ease-out; /* Aumenta el tiempo para ralentizar el efecto */
+  transition: opacity 1.2s ease-out, transform 1.8s ease-out;
 }
 
-.aplicaciones-refrigeracion-container.visible {
+#mantenimiento-preventivo .mantenimiento-preventivo-container.visible {
   opacity: 1;
   transform: translateY(0);
 }
 
+/* Estilos para aplicaciones en refrigeración */
+#aplicaciones-refrigeracion .aplicaciones-refrigeracion-container {
+  background: #ffffff;
+  padding: 20px;
+  margin-bottom: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 1.2s ease-out, transform 1.8s ease-out;
+}
+
+#aplicaciones-refrigeracion .aplicaciones-refrigeracion-container.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Estilos generales */
 h2 {
   text-align: center;
   font-size: 2rem;

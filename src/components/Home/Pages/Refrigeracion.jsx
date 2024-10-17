@@ -5,7 +5,7 @@ import './Refrigeracion.css';
 
 function Refrigeracion() {
   const [backgroundImages, setBackgroundImages] = useState({});
-  const sectionRefs = useRef([]); // Mantiene las referencias de las secciones
+  const sectionRefs = useRef({ aplicaciones: [], mantenimiento: [] }); // Inicializamos los arrays correctamente
 
   // Función para normalizar el texto: convertir a minúsculas y quitar acentos
   const normalizeString = (str) => {
@@ -20,12 +20,11 @@ function Refrigeracion() {
     try {
       const response = await axios.get('/api/pages/assignments');
       const assignments = response.data;
-      console.log('Asignaciones obtenidas del backend:', assignments);
 
       // Separar las asignaciones por página de forma dinámica
       const assignmentsByPage = assignments.reduce((acc, assignment) => {
         const { pageName } = assignment;
-        const normalizedPageName = normalizeString(pageName); // Normalizar el nombre de la página
+        const normalizedPageName = normalizeString(pageName);
         if (!acc[normalizedPageName]) {
           acc[normalizedPageName] = [];
         }
@@ -33,19 +32,11 @@ function Refrigeracion() {
         return acc;
       }, {});
 
-      // Log de asignaciones separadas por página
-      Object.keys(assignmentsByPage).forEach(pageName => {
-        console.log(`Asignaciones para la página ${pageName}:`, assignmentsByPage[pageName]);
-      });
-
-      // Identificar y trabajar con el array de la página "Refrigeracion"
+      // Trabajar con el array de la página "Refrigeracion"
       if (assignmentsByPage.refrigeracion) {
-        console.log('Trabajando con el array de la página Refrigeracion:', assignmentsByPage.refrigeracion);
-
-        // Crear un objeto para almacenar las imágenes de fondo por sección
         const sectionImages = {};
         assignmentsByPage.refrigeracion.forEach((assignment) => {
-          const normalizedSection = normalizeString(assignment.section); // Normalizar la sección
+          const normalizedSection = normalizeString(assignment.section);
           const photoName = assignment.photoName;
           sectionImages[normalizedSection] = photoName;
         });
@@ -76,22 +67,34 @@ function Refrigeracion() {
       });
     }, { threshold: 0.1 });
 
-    // Crear una copia de los refs actuales para evitar la advertencia de ESLint
-    const currentSectionRefs = sectionRefs.current;
+    const aplicacionesRefs = sectionRefs.current.aplicaciones;
+    const mantenimientoRefs = sectionRefs.current.mantenimiento;
 
-    currentSectionRefs.forEach(ref => {
-      if (ref) {
-        observer.observe(ref);
-      }
+    aplicacionesRefs.forEach(ref => {
+      if (ref) observer.observe(ref);
     });
 
-    // Cleanup observer on component unmount
+    mantenimientoRefs.forEach(ref => {
+      if (ref) observer.observe(ref);
+    });
+
     return () => {
-      currentSectionRefs.forEach(ref => {
+      aplicacionesRefs.forEach(ref => {
+        if (ref) observer.unobserve(ref);
+      });
+      mantenimientoRefs.forEach(ref => {
         if (ref) observer.unobserve(ref);
       });
     };
-  }, []); // Dependencia vacía, ya que no queremos que se dispare con cada cambio de ref
+  }, []);
+
+  // Asegurarse de que los arrays de referencias estén inicializados correctamente
+  const assignRef = (section, index, el) => {
+    if (!sectionRefs.current[section]) {
+      sectionRefs.current[section] = [];
+    }
+    sectionRefs.current[section][index] = el;
+  };
 
   return (
     <div>
@@ -144,17 +147,20 @@ function Refrigeracion() {
       </div>
 
       {/* Sección: Bombas de Vacío */}
-      <section id="bombas de vacío" className="my-5 bombas-vacio-section" style={{
-        backgroundImage: backgroundImages[normalizeString('bombas de vacío')] ? `url(/images/fondos/headeres/${backgroundImages[normalizeString('bombas de vacío')]})` : 'none',
-        backgroundSize: 'cover',
-        backgroundPosition: 'center',
-      }}>
+      <section
+        id="bombas de vacío"
+        className="my-5 bombas-vacio-section"
+        style={{
+          backgroundImage: backgroundImages[normalizeString('bombas de vacío')] ? `url(/images/fondos/headeres/${backgroundImages[normalizeString('bombas de vacío')]})` : 'none',
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+        }}
+      >
         <h2 className="bombas-vacio-header">Bombas de Vacío</h2>
         <p className="bombas-vacio-description">
           LAS BOMBAS DE VACÍO DE DOSIVAC OFRECEN EFICIENCIA, DURABILIDAD Y ALTO RENDIMIENTO PARA APLICACIONES INDUSTRIALES EXIGENTES.
         </p>
 
-        {/* Contenedor para productos */}
         <div className="container mt-4">
           <div className="row bombas-vacio-product-row">
             {/* DVRII */}
@@ -171,6 +177,7 @@ function Refrigeracion() {
                 </div>
               </div>
             </div>
+
             {/* Supervac */}
             <div className="col-md-4 mb-4 bombas-vacio-product-col">
               <div className="card h-100 bombas-vacio-product-card">
@@ -185,7 +192,7 @@ function Refrigeracion() {
                 </div>
               </div>
             </div>
-            
+
             {/* DVR6 New Gen */}
             <div className="col-md-4 mb-4 bombas-vacio-product-col">
               <div className="card h-100 bombas-vacio-product-card">
@@ -200,6 +207,7 @@ function Refrigeracion() {
                 </div>
               </div>
             </div>
+
             {/* Recuperadora */}
             <div className="col-md-4 mb-4 bombas-vacio-product-col">
               <div className="card h-100 bombas-vacio-product-card">
@@ -214,7 +222,6 @@ function Refrigeracion() {
                 </div>
               </div>
             </div>
-
           </div>
         </div>
       </section>
@@ -229,30 +236,30 @@ function Refrigeracion() {
           backgroundPosition: 'center',
         }}
       >
-        <div ref={el => sectionRefs.current[0] = el} className="aplicaciones-refrigeracion-container">
+        <div ref={el => assignRef('aplicaciones', 0, el)} className="aplicaciones-refrigeracion-container">
           <h2>Aplicaciones en Refrigeración</h2>
         </div>
-        <div ref={el => sectionRefs.current[1] = el} className="aplicaciones-refrigeracion-container">
+        <div ref={el => assignRef('aplicaciones', 1, el)} className="aplicaciones-refrigeracion-container">
           <p>
             Las bombas de vacío juegan un rol crucial en los sistemas de refrigeración, permitiendo una extracción eficiente de gases y asegurando un rendimiento óptimo en la transferencia de calor.
           </p>
         </div>
-        <div ref={el => sectionRefs.current[2] = el} className="aplicaciones-refrigeracion-container">
+        <div ref={el => assignRef('aplicaciones', 2, el)} className="aplicaciones-refrigeracion-container">
           <p>
             El proceso de hacer vacío es fundamental para eliminar cualquier humedad presente dentro del circuito de refrigeración. La humedad puede causar problemas graves, como la formación de hielo en el sistema, lo cual compromete su eficiencia y puede llevar a fallas costosas.
           </p>
         </div>
-        <div ref={el => sectionRefs.current[3] = el} className="aplicaciones-refrigeracion-container">
+        <div ref={el => assignRef('aplicaciones', 3, el)} className="aplicaciones-refrigeracion-container">
           <p>
             Además, durante la instalación o el mantenimiento de los sistemas de refrigeración, es posible que se produzcan pequeñas pinchaduras en los caños. Estas pinchaduras permiten la entrada de aire y humedad, lo cual debe ser eliminado mediante un proceso de vacío adecuado para asegurar un funcionamiento sin problemas.
           </p>
         </div>
-        <div ref={el => sectionRefs.current[4] = el} className="aplicaciones-refrigeracion-container">
+        <div ref={el => assignRef('aplicaciones', 4, el)} className="aplicaciones-refrigeracion-container">
           <p>
             La presencia de gases no condensables en el circuito también disminuye la eficiencia de la transferencia de calor, lo cual afecta directamente el rendimiento del sistema de refrigeración. Las bombas de vacío ayudan a asegurar que solo el refrigerante esté presente en el circuito, garantizando un rendimiento óptimo.
           </p>
         </div>
-        <div ref={el => sectionRefs.current[5] = el} className="aplicaciones-refrigeracion-container">
+        <div ref={el => assignRef('aplicaciones', 5, el)} className="aplicaciones-refrigeracion-container">
           <p>
             Finalmente, hacer un buen vacío ayuda a prevenir la corrosión interna del sistema. La humedad en combinación con ciertos refrigerantes puede crear ácidos que dañan las tuberías y los componentes internos, lo cual reduce la vida útil del sistema.
           </p>
@@ -269,13 +276,43 @@ function Refrigeracion() {
           backgroundPosition: 'center',
         }}
       >
-        <h2>Mantenimiento Preventivo de Sistemas de Vacío</h2>
-        <p>
-          El mantenimiento preventivo es esencial para prolongar la vida útil de los sistemas de vacío y garantizar un rendimiento óptimo. Descubre nuestras recomendaciones para el mantenimiento periódico.
-        </p>
+        <div ref={el => assignRef('mantenimiento', 0, el)} className="mantenimiento-preventivo-container">
+          <h2>Mantenimiento Preventivo de Sistemas de Vacío</h2>
+        </div>
+        <div ref={el => assignRef('mantenimiento', 1, el)} className="mantenimiento-preventivo-container">
+          <p>
+            El mantenimiento preventivo es esencial para prolongar la vida útil de los sistemas de vacío y garantizar un rendimiento óptimo. Descubre nuestras recomendaciones para el mantenimiento periódico.
+          </p>
+        </div>
+        <div ref={el => assignRef('mantenimiento', 2, el)} className="mantenimiento-preventivo-container">
+          <p>
+            Las bombas consumen aceite y, durante el funcionamiento, almacenan humedad que condensa en forma de agua, la cual puede confundirse con el aceite. Es fundamental cambiar periódicamente el aceite para evitar daños en el sistema.
+          </p>
+        </div>
+        <div ref={el => assignRef('mantenimiento', 3, el)} className="mantenimiento-preventivo-container">
+          <p>
+            Es recomendable revisar los filtros de entrada y salida de la bomba para asegurar que no estén obstruidos, lo cual podría comprometer el rendimiento y la eficiencia del equipo.
+          </p>
+        </div>
+        <div ref={el => assignRef('mantenimiento', 4, el)} className="mantenimiento-preventivo-container">
+          <p>
+            Mantener las conexiones y mangueras en buen estado es crucial para evitar fugas de aire y garantizar un vacío adecuado en los sistemas.
+          </p>
+        </div>
+        <div ref={el => assignRef('mantenimiento', 5, el)} className="mantenimiento-preventivo-container">
+          <p>
+            Realizar inspecciones periódicas de los sellos y juntas, ya que un desgaste en estos componentes puede afectar la capacidad de la bomba para mantener el vacío.
+          </p>
+        </div>
+        <div ref={el => assignRef('mantenimiento', 6, el)} className="mantenimiento-preventivo-container">
+          <p>
+            No sobrecargar las bombas, respetando los límites de operación recomendados, ayuda a evitar el desgaste prematuro de los componentes y a prolongar la vida útil del equipo.
+          </p>
+        </div>
       </section>
     </div>
   );
 }
 
 export default Refrigeracion;
+  

@@ -103,5 +103,10 @@
     "photoName": "aplicandovacio.webp",
     "pageName": "Refrigeracion",
     "section": "Aplicaciones en Refrigeración"
+  },
+  {
+    "photoName": "mantenimiento.webp",
+    "pageName": "Refrigeracion",
+    "section": "Mantenimiento Preventivo de Sistemas de Vacío"
   }
 ]
