@@ -1,4 +1,55 @@
-/* Petroleo.css */
+#encabezado {
+  text-align: center;
+  padding-top: 70px;
+  position: relative;
+  z-index: 1;
+}
+
+.encabezado-titulo {
+  font-size: 1.25rem;
+  font-weight: lighter;
+  color: #fff;
+  margin-bottom: 10px;
+  letter-spacing: 0.05em;
+}
+
+.highlight {
+  display: block;
+  font-size: 3rem;
+  font-weight: bold;
+  margin-top: 10px;
+}
+
+.encabezado-descripcion {
+  font-size: 1.25rem;
+  line-height: 1.75;
+  color: #fff;
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 0 15px;
+  font-weight: 500;
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.8);
+}
+
+/* Estilos responsivos para encabezado */
+@media (max-width: 768px) {
+  .encabezado-titulo {
+    font-size: 1rem;
+  }
+
+  .highlight {
+    font-size: 1.5rem;
+  }
+
+  .encabezado-descripcion {
+    font-size: 1rem;
+    line-height: 1.5;
+    text-align: justify;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    padding: 10px;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+  }
+}
 
 #especializacion-sistemas {
     text-align: center;
@@ -274,153 +325,6 @@
   }
   
 
-/* Sección Equipos Inteligentes */
-#equipos-inteligentes-section {
-  position: relative;
-  padding: 100px 20px;
-  background-position: center;
-  background-size: cover;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-}
-
-#equipos-inteligentes-section-title {
-  font-size: 2.5rem;
-  font-weight: bold;
-  margin-bottom: 20px;
-  text-align: center;
-}
-
-#equipos-inteligentes-container {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-  flex-wrap: wrap;
-  width: 100%;
-  margin-top: 40px;
-}
-
-#text-content {
-  flex: 1;
-  max-width: 45%;
-  text-align: center;
-  position: relative;
-}
-
-#image-content {
-  flex: 1;
-  max-width: 45%;
-  position: relative;
-  display: flex;
-  justify-content: center;
-  align-items: flex-start;
-  flex-direction: column;
-}
-
-#equipos-inteligentes-section-description {
-  max-width: 600px;
-  font-size: 1.6rem;
-  font-weight: 900;
-  line-height: 1.8;
-  margin: 0 auto;
- 
-}
-
-#equipos-inteligentes-section-btn {
-  padding: 12px 35px;
-  font-size: 1.2rem;
-  border: 2px solid white;
-  font-weight: bold;
-  transition: all 0.3s ease;
-  margin-top: 20px;
-}
-
-#equipos-inteligentes-section-btn:hover {
-  background-color: white;
-  color: #0E0A0A;
-}
-
-.equipo-item {
-  width: 300px;
-  max-width: 100%;
-  transition: transform 0.3s ease;
-}
-
-.equipo-item img {
-  width: 100%;
-  height: auto;
-  object-fit: contain;
-}
-
-/* Posicionamiento de Imágenes */
-#image-content .equipo-item:first-of-type {
-  position: relative;
-  z-index: 1;
-  
-}
-
-#image-content .equipo-item:last-of-type {
-  position: absolute;
-  top: 28%;
-  left: 50%;
-  transform: translateY(-50%);
-  z-index: 0;
-  width: 40% !important;
-}
-
-.equipo-item:hover {
-  transform: scale(1.05);
-}
-
-/* Ajustes Responsivos */
-@media (max-width: 992px) {
-  #equipos-inteligentes-container {
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-  }
-
-  #text-content, #image-content {
-    max-width: 100%;
-  }
-
-  #image-content {
-    position: relative;
-    margin-top: 40px;
-  }
-
-  #image-content .equipo-item:last-of-type {
-    position: relative;
-    top: auto;
-    left: auto;
-    transform: none;
-    margin-top: 20px;
-  }
-
-  #equipos-inteligentes-section-description {
-    text-align: center;
-  }
-}
-
-@media (max-width: 576px) {
-  #equipos-inteligentes-section {
-    padding: 50px 10px;
-  }
-
-  #equipos-inteligentes-section-title {
-    font-size: 2rem;
-  }
-
-  #equipos-inteligentes-section-btn {
-    font-size: 1rem;
-    padding: 10px 30px;
-  }
-}
-
-/* Estilos para la sección 'tipo-de-bombas' */
 /* Estilos para la sección 'tipo-de-bombas' */
 #tipo-de-bombas {
   display: flex;
@@ -692,5 +596,197 @@
 
   .features-list {
     font-size: 0.9rem;
+  }
+}
+
+
+/* Sección Equipos Inteligentes */
+#equipos-inteligentes-section {
+  position: relative;
+  padding: 100px 20px;
+  background-position: center;
+  background-size: cover;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+#equipos-inteligentes-section-title {
+  font-size: 2.5rem;
+  font-weight: bold;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+#equipos-inteligentes-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  width: 100%;
+  margin-top: 40px;
+}
+
+#text-content {
+  flex: 1;
+  width: 100%;
+  text-align: center;
+  position: relative;
+  padding: 0 20px;
+  margin-bottom: 20px;
+}
+
+#image-content {
+  flex: 1;
+  width: 100%;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  flex-direction: column;
+}
+
+#equipos-inteligentes-section-description {
+  max-width: 600px;
+  font-size: 1.6rem;
+  font-weight: 900;
+  line-height: 1.8;
+  margin: 0 auto;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+#equipos-inteligentes-section-btn {
+  padding: 12px 35px;
+  font-size: 1.2rem;
+  border: 2px solid white;
+  font-weight: bold;
+  transition: all 0.3s ease;
+  margin-top: 20px;
+}
+
+#equipos-inteligentes-section-btn:hover {
+  background-color: white;
+  color: #0E0A0A;
+}
+
+.equipo-item {
+  width: 300px;
+  max-width: 100%;
+  transition: transform 0.3s ease;
+}
+
+.equipo-item img {
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+}
+
+/* Posicionamiento de Imágenes */
+#image-content .equipo-item:first-of-type {
+  position: relative;
+  z-index: 1;
+}
+
+#image-content .equipo-item:last-of-type {
+  position: absolute;
+  top: 25%;
+  left: 52%;
+  transform: translateY(-50%);
+  z-index: 0;
+  width: 40% !important;
+}
+
+.equipo-item:hover {
+  transform: scale(1.05);
+}
+
+/* Hover para la imagen secundaria */
+#image-content .equipo-item:first-of-type:hover {
+  transform: scale(1.4);
+}
+
+/* Deshabilitar el hover general para todas las imágenes */
+.equipo-item:first-of-type:hover {
+  transform: none;
+}
+/* Ajustes Responsivos */
+@media (max-width: 992px) {
+  #equipos-inteligentes-container {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  #text-content, #image-content {
+    max-width: 100%;
+    min-width: 100% !important;
+    padding: 0 10px;
+  }
+
+  #image-content {
+    position: relative;
+    margin-top: 40px;
+    align-items: center;
+  }
+
+  #image-content .equipo-item:last-of-type {
+    position: relative;
+    top: auto;
+    left: auto;
+    transform: none;
+    margin-top: 20px;
+  }
+
+  #equipos-inteligentes-section-description {
+    text-align: justify;
+    font-size: 1.4rem;
+    font-weight: 700;
+    margin: 0 20px;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+  }
+
+  #equipos-inteligentes-section-title {
+    font-size: 2rem;
+  }
+
+  #equipos-inteligentes-section-btn {
+    font-size: 1rem;
+    padding: 10px 30px;
+  }
+
+  .equipo-item img {
+    width: 80%;
+    margin: 0 auto;
+  }
+}
+
+@media (max-width: 576px) {
+  #equipos-inteligentes-section {
+    padding: 50px 10px;
+  }
+
+  #equipos-inteligentes-section-title {
+    font-size: 1.8rem;
+  }
+
+  #equipos-inteligentes-section-description {
+    text-align: justify;
+    font-size: 1.2rem;
+    line-height: 1.6;
+    font-weight: 600;
+    margin: 0 10px;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+  }
+
+  #equipos-inteligentes-section-btn {
+    font-size: 0.9rem;
+    padding: 8px 25px;
+  }
+
+  .equipo-item img {
+    width: 80%;
+    margin: 0 auto;
   }
 }

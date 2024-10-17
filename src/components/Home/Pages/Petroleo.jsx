@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import axios from 'axios';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import './Petroleo.css'
+import './Petroleo.css';
 
 function Petroleo() {
   const [backgroundImages, setBackgroundImages] = useState({});
@@ -87,9 +87,9 @@ function Petroleo() {
         </div>
 
         {/* Texto del encabezado */}
-        <div id="encabezado" className="container text-center" style={{ position: 'relative', zIndex: 1, paddingTop: '70px' }}>
-          <h1 className="mb-4" style={{ color: '#fff' }}>SOLUCIONES AVANZADAS PARA EL SECTOR OIL & GAS</h1>
-          <p className="mb-5" style={{ color: '#fff' }}>
+        <div id="encabezado" className="container text-center encabezado-container">
+          <h1 className="encabezado-titulo">SOLUCIONES AVANZADAS PARA EL SECTOR <span className="highlight">OIL & GAS</span></h1>
+          <p className="encabezado-descripcion">
             En Dosivac, nos enorgullece ofrecer soluciones avanzadas y adaptables para el sector del petróleo y gas, combinando innovación tecnológica con un enfoque en eficiencia y confiabilidad. Nuestra gama de equipos dosificadores está diseñada para satisfacer una amplia variedad de necesidades y aplicaciones, desde sistemas alimentados por energía solar hasta opciones neumáticas y eléctricas de alta presión.
           </p>
         </div>
@@ -344,7 +344,8 @@ function Petroleo() {
       </article>
     </div>
   </div>
-</section>
+    </section>
+
 
 
     </div>
