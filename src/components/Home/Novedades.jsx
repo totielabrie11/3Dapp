@@ -4,6 +4,7 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import './Novedades.css';
 import NovedadesDetalle from './NovedadesDetalle';
+import { BACKEND_URL } from '../configLocalHost'; // Importa la URL desde el archivo config
 
 const Novedades = () => {
     const [novedades, setNovedades] = useState([]);
@@ -12,7 +13,7 @@ const Novedades = () => {
 
     useEffect(() => {
         // Fetch data from the API
-        fetch('/api/novedades')
+        fetch(`${BACKEND_URL}/api/novedades`) // Usa BACKEND_URL aquí
             .then(response => response.json())
             .then(data => setNovedades(data))
             .catch(error => console.error('Error fetching novedades:', error));

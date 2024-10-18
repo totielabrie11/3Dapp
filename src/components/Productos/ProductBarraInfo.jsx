@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { BACKEND_URL } from '../configLocalHost'; // Importa la URL desde el archivo config
 import './ProductBarraInfo.css';
 
 function ProductBarraInfo({ productName }) {
@@ -12,7 +13,7 @@ function ProductBarraInfo({ productName }) {
     }
     const fetchProductDescriptions = async () => {
       try {
-        const response = await fetch('/api/product-descriptions');
+        const response = await fetch(`${BACKEND_URL}/api/product-descriptions`); // Usa BACKEND_URL aquí
         console.log('Response status:', response.status); // Verificar el estado de la respuesta
         if (!response.ok) {
           throw new Error(`Network response was not ok: ${response.statusText} (${response.status})`);

@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { BACKEND_URL } from '../configLocalHost'; // Importar BACKEND_URL
 
 function EquipoAdmin() {
   const [equipo, setEquipo] = useState([]);
@@ -14,7 +15,7 @@ function EquipoAdmin() {
   // Función para obtener los miembros del equipo desde el backend
   const fetchEquipo = async () => {
     try {
-      const response = await fetch('/api/equipo');
+      const response = await fetch(`${BACKEND_URL}/api/equipo`); // Usar BACKEND_URL
       if (!response.ok) {
         throw new Error('Error fetching equipo');
       }
@@ -46,7 +47,7 @@ function EquipoAdmin() {
     }
 
     try {
-      const response = await fetch('/api/equipo', {
+      const response = await fetch(`${BACKEND_URL}/api/equipo`, {
         method: 'POST',
         body: formData,
       });
@@ -87,7 +88,7 @@ function EquipoAdmin() {
   const handleDelete = async (id) => {
     if (window.confirm('¿Estás seguro de que deseas eliminar este miembro del equipo?')) {
       try {
-        const response = await fetch(`/api/equipo/${id}`, {
+        const response = await fetch(`${BACKEND_URL}/api/equipo/${id}`, {
           method: 'DELETE',
         });
 

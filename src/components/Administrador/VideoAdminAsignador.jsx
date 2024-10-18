@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Modal, Button, Form } from 'react-bootstrap';
 import axios from 'axios';
+import { BACKEND_URL } from '../configLocalHost'; // Importar BACKEND_URL
 
 function VideoAdminAsignador({ show, handleClose, selectedVideo }) {
   const [pages, setPages] = useState([]);
@@ -10,7 +11,7 @@ function VideoAdminAsignador({ show, handleClose, selectedVideo }) {
     // Detectar automáticamente las páginas disponibles
     const fetchPages = async () => {
       try {
-        const response = await axios.get('/api/pages'); // Asegúrate de que este endpoint devuelve las páginas disponibles
+        const response = await axios.get(`${BACKEND_URL}/api/pages`); // Usar BACKEND_URL
         setPages(response.data.pages); // Supone que el servidor devuelve un array de nombres de páginas
       } catch (error) {
         console.error('Error al cargar las páginas:', error);
@@ -28,7 +29,7 @@ function VideoAdminAsignador({ show, handleClose, selectedVideo }) {
       }
 
       // Enviar solicitud para asignar el video a la página seleccionada
-      const response = await axios.post(`/api/videos/assign`, {
+      const response = await axios.post(`${BACKEND_URL}/api/videos/assign`, { // Usar BACKEND_URL
         videoName: selectedVideo.name,
         pageName: selectedPage,
       });

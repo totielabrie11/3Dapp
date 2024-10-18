@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { Modal, Button } from 'react-bootstrap';
+import { BACKEND_URL } from '../configLocalHost'; // Importar BACKEND_URL
 
 function EditorFotografico({ show, handleClose, selectedPhoto, onSave }) {
   const [editedPhoto, setEditedPhoto] = useState({ name: selectedPhoto?.name || '', image: null });
@@ -30,7 +31,7 @@ function EditorFotografico({ show, handleClose, selectedPhoto, onSave }) {
         formData.append('image', editedPhoto.image);
       }
 
-      const endpoint = `/api/images/${selectedPhoto.name}`;
+      const endpoint = `${BACKEND_URL}/api/images/${selectedPhoto.name}`; // Usar BACKEND_URL
 
       const response = await axios.put(endpoint, formData, {
         headers: { 'Content-Type': 'multipart/form-data' }

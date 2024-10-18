@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Geocodificador from './Geocodificador'; // Importamos el componente Geocodificador
+import { BACKEND_URL } from '../configLocalHost'; // Importar BACKEND_URL
 
 function DistribuidorAdmin() {
   const [distribuidores, setDistribuidores] = useState([]);
@@ -16,7 +17,7 @@ function DistribuidorAdmin() {
   // Obtener distribuidores desde la API
   const fetchDistribuidores = async () => {
     try {
-      const response = await fetch('/api/distribuidores');
+      const response = await fetch(`${BACKEND_URL}/api/distribuidores`); // Usar BACKEND_URL
       const data = await response.json();
       setDistribuidores(data);
     } catch (error) {
@@ -44,7 +45,7 @@ function DistribuidorAdmin() {
     };
 
     try {
-      const response = await fetch('/api/distribuidores', {
+      const response = await fetch(`${BACKEND_URL}/api/distribuidores`, {
         method: 'POST', // Usamos POST para creación y edición
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(distribuidor),
@@ -89,7 +90,7 @@ function DistribuidorAdmin() {
   const handleDelete = async (id) => {
     if (window.confirm('¿Estás seguro de que deseas eliminar este distribuidor?')) {
       try {
-        const response = await fetch(`/api/distribuidores/${id}`, { method: 'DELETE' });
+        const response = await fetch(`${BACKEND_URL}/api/distribuidores/${id}`, { method: 'DELETE' });
 
         if (response.ok) {
           fetchDistribuidores();

@@ -5,6 +5,7 @@ import ThreeDCanvas from '../ThreeDCanvas/ThreeDCanvas';
 import ProductList from './ProductList';
 import Characteristic from './Characteristic';
 import ProductManuals from './ProductManuals'; // Importa el componente ProductManuals
+import { BACKEND_URL } from '../configLocalHost'; // Importa la URL desde el archivo config
 import './Productos.css';
 
 function ProductAdmin() {
@@ -27,7 +28,7 @@ function ProductAdmin() {
 
   const fetchProducts = useCallback(async () => {
     try {
-      const response = await fetch('/api/product-descriptions');
+      const response = await fetch(`${BACKEND_URL}/api/product-descriptions`);
       const data = await response.json();
       setProducts(data);
     } catch (error) {
@@ -53,7 +54,7 @@ function ProductAdmin() {
 
   const updateDescription = async () => {
     if (selectedProduct) {
-      const response = await fetch('/api/product-descriptions', {
+      const response = await fetch(`${BACKEND_URL}/api/product-descriptions`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -69,7 +70,7 @@ function ProductAdmin() {
 
   const updateCharacteristics = async (updatedCharacteristics) => {
     if (selectedProduct) {
-      const response = await fetch('/api/product-characteristics', {
+      const response = await fetch(`${BACKEND_URL}/api/product-characteristics`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -85,7 +86,7 @@ function ProductAdmin() {
 
   const updateSettings = async () => {
     if (selectedProduct) {
-      const response = await fetch('/api/product-settings', {
+      const response = await fetch(`${BACKEND_URL}/api/product-settings`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -173,7 +174,7 @@ function ProductAdmin() {
       formData.append('name', selectedProduct);
 
       try {
-        const response = await fetch('/api/upload', {
+        const response = await fetch(`${BACKEND_URL}/api/upload`, {
           method: 'POST',
           body: formData,
         });
@@ -199,7 +200,7 @@ function ProductAdmin() {
 
   const fetchProductDescription = async (name) => {
     try {
-      const response = await fetch('/api/product-descriptions');
+      const response = await fetch(`${BACKEND_URL}/api/product-descriptions`);
       if (!response.ok) {
         throw new Error('Network response was not ok');
       }
@@ -224,7 +225,7 @@ function ProductAdmin() {
 
   const fetchProductSettings = async (name) => {
     try {
-      const response = await fetch('/api/product-settings');
+      const response = await fetch(`${BACKEND_URL}/api/product-settings`);
       if (!response.ok) {
         throw new Error('Network response was not ok');
       }

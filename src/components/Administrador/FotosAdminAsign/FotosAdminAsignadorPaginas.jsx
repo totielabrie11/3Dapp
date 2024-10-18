@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Modal, Button, Form } from 'react-bootstrap';
 import axios from 'axios';
+import { BACKEND_URL } from '../../configLocalHost'; // Importar BACKEND_URL
 
 function FotosAdminAsignadorPaginas({ show, handleClose, onSave }) {
   const [pages, setPages] = useState([]);
@@ -10,7 +11,7 @@ function FotosAdminAsignadorPaginas({ show, handleClose, onSave }) {
     // Obtener las páginas disponibles desde el backend
     const fetchPages = async () => {
       try {
-        const response = await axios.get('/api/pages');
+        const response = await axios.get(`${BACKEND_URL}/api/pages`); // Usar BACKEND_URL
         setPages(response.data.pages);
       } catch (error) {
         console.error('Error al cargar las páginas:', error);

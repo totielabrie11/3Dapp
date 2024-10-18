@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import ProductFilter from './ProductFilter';
 import ProductCards from './ProductCards';
+import { BACKEND_URL } from '../configLocalHost'; // Importa la URL desde el archivo config
 import './Productos.css';
 
 function Productos() {
@@ -14,7 +15,7 @@ function Productos() {
 
     const fetchProducts = async () => {
       try {
-        const response = await fetch('/api/product-descriptions');
+        const response = await fetch(`${BACKEND_URL}/api/product-descriptions`); // Usa BACKEND_URL aquí
         const data = await response.json();
         setProducts(data);
         setFilteredProducts(data); // Inicializar filteredProducts con todos los productos
@@ -25,7 +26,7 @@ function Productos() {
 
     const fetchProductOrder = async () => {
       try {
-        const response = await fetch('/api/product-order');
+        const response = await fetch(`${BACKEND_URL}/api/product-order`); // Usa BACKEND_URL aquí
         if (!response.ok) {
           throw new Error('Network response was not ok');
         }

@@ -1,12 +1,13 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import axios from 'axios';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import './Aguas.css'
+import './Aguas.css';
+import { BACKEND_URL } from '../../configLocalHost'; // Importar BACKEND_URL desde config.js
 
 function Aguas() {
   const [backgroundImages, setBackgroundImages] = useState({}); // Estado para las imágenes de fondo por sección
-  const [sectionColors, setSectionColors] = useState({ // Estado para los colores de fondo manuales
-    'sistemas-portatiles': '#FFFFFF', // Puedes agregar un color inicial aquí si es necesario
+  const [sectionColors, setSectionColors] = useState({
+    'sistemas-portatiles': '#FFFFFF',
     'sistemas-robustos': '#FFFFFF',
     'beneficios-dosificacion': '',
     'impacto-ambiental': '',
@@ -16,9 +17,9 @@ function Aguas() {
   // Función para obtener las asignaciones de contenido desde el backend
   const fetchAssignments = useCallback(async () => {
     try {
-      const response = await axios.get('/api/pages/assignments');
+      const response = await axios.get(`${BACKEND_URL}/api/pages/assignments`); // Usar BACKEND_URL
       const assignments = response.data;
-      console.log('Asignaciones obtenidas del backend:', assignments); // Log de la respuesta obtenida
+      console.log('Asignaciones obtenidas del backend:', assignments);
 
       // Separar las asignaciones por página de forma dinámica
       const assignmentsByPage = assignments.reduce((acc, assignment) => {
@@ -30,7 +31,6 @@ function Aguas() {
         return acc;
       }, {});
 
-      // Log de asignaciones separadas por página
       Object.keys(assignmentsByPage).forEach(pageName => {
         console.log(`Asignaciones para la página ${pageName}:`, assignmentsByPage[pageName]);
       });
@@ -42,7 +42,7 @@ function Aguas() {
         // Crear un objeto para almacenar las imágenes de fondo por sección utilizando un map
         const sectionImages = {};
         assignmentsByPage.Aguas.forEach((assignment) => {
-          const section = assignment.section.toLowerCase(); // Convertir a minúsculas para evitar discrepancias
+          const section = assignment.section.toLowerCase();
           const photoName = assignment.photoName;
           sectionImages[section] = photoName;
         });
@@ -54,13 +54,11 @@ function Aguas() {
     }
   }, []);
 
-  // Cargar las asignaciones cuando se monte el componente
   useEffect(() => {
     fetchAssignments();
   }, [fetchAssignments]);
 
   useEffect(() => {
-    // Log para verificar si el valor de 'encabezado' está presente
     console.log('Imagen de encabezado:', backgroundImages.encabezado);
   }, [backgroundImages]);
 
@@ -116,62 +114,55 @@ function Aguas() {
       </div>
 
       {/* Secciones de contenido */}
-
-
-      {/* Sección para Sistemas Robustos con Bombas Dosivac */}
-      <section id="sistemas-robustos" class="my-5 sistemas-robustos">
-    <div class="container">
-        <h2 class="text-center">Sistemas de Dosificación de Alta Calidad</h2>
-        <p class="text-center">
+      <section id="sistemas-robustos" className="my-5 sistemas-robustos">
+        <div className="container">
+          <h2 className="text-center">Sistemas de Dosificación de Alta Calidad</h2>
+          <p className="text-center">
             En Dosivac, ofrecemos equipos de dosificación diseñados para garantizar la máxima eficiencia 
             y seguridad en el manejo de fluidos. Nuestros sistemas están disponibles en capacidades de 1000 
             y 200 litros, cada uno adaptado a diferentes requerimientos industriales y de tratamiento de agua.
-        </p>
-        
-        <div class="row text-center">
-            <div class="col-md-6">
-            
-                <div class="equipo-image" id="equipo-1000-img"></div>
-                <h3>Equipo de 1000 Litros</h3>
-                <ul class="list-unstyled">
-                    <li><strong>Dimensiones:</strong> 60 x 91</li>
-                    <li><strong>Caudal máximo:</strong> 840 l/d</li>
-                    <li><strong>Presión máxima:</strong> 650 kg/cm2</li>
-                    <li>Opcional para alta presión</li>
-                </ul>
-                <button class="btn btn-primary">Cotizar</button>
+          </p>
+          <div className="row text-center">
+            <div className="col-md-6">
+              <div className="equipo-image" id="equipo-1000-img"></div>
+              <h3>Equipo de 1000 Litros</h3>
+              <ul className="list-unstyled">
+                <li><strong>Dimensiones:</strong> 60 x 91</li>
+                <li><strong>Caudal máximo:</strong> 840 l/d</li>
+                <li><strong>Presión máxima:</strong> 650 kg/cm2</li>
+                <li>Opcional para alta presión</li>
+              </ul>
+              <button className="btn btn-primary">Cotizar</button>
             </div>
-            
-            <div class="col-md-6">
-               
-                <div class="equipo-image" id="equipo-200-img"></div>
-                <h3>Equipo de 200 Litros</h3>
-                <ul class="list-unstyled">
-                    <li><strong>Dimensiones:</strong> 76 x 100</li>
-                    <li><strong>Caudal máximo:</strong> 5200 l/d</li>
-                    <li><strong>Presión máxima:</strong> 200 kg/cm2</li>
-                    <li>Opcional para alta presión</li>
-                </ul>
-                <button class="btn btn-primary">Cotizar</button>
+            <div className="col-md-6">
+              <div className="equipo-image" id="equipo-200-img"></div>
+              <h3>Equipo de 200 Litros</h3>
+              <ul className="list-unstyled">
+                <li><strong>Dimensiones:</strong> 76 x 100</li>
+                <li><strong>Caudal máximo:</strong> 5200 l/d</li>
+                <li><strong>Presión máxima:</strong> 200 kg/cm2</li>
+                <li>Opcional para alta presión</li>
+              </ul>
+              <button className="btn btn-primary">Cotizar</button>
             </div>
+          </div>
         </div>
-    </div>
       </section>
 
+      {/* Sección para Sistemas Portátiles de Dosificación */}
+      <section id="sistemas-portatiles" className="my-5" style={{
+        backgroundColor: sectionColors['sistemas-portatiles'] || 'transparent',
+        backgroundImage: !sectionColors['sistemas-portatiles'] && backgroundImages['sistemas portátiles de dosificación'] ? `url(/images/fondos/headeres/${backgroundImages['sistemas portátiles de dosificación']})` : 'none',
+        backgroundSize: 'cover',
+        backgroundPosition: 'center'
+      }}>
+        <h2>Sistemas Portátiles de Dosificación</h2>
+        <p>
+          Nuestros sistemas portátiles están diseñados para ofrecer soluciones rápidas y eficientes en el tratamiento de agua,
+          adaptándose a diferentes necesidades, desde comunidades pequeñas hasta grandes centros urbanos.
+        </p>
+      </section>
 
-        {/* Sección para Sistemas Portátiles de Dosificación */}
-        <section id="sistemas-portatiles" className="my-5" style={{
-          backgroundColor: sectionColors['sistemas-portatiles'] || 'transparent', // Usar color manual si existe, si no, usar "transparente"
-          backgroundImage: !sectionColors['sistemas-portatiles'] && backgroundImages['sistemas portátiles de dosificación'] ? `url(/images/fondos/headeres/${backgroundImages['sistemas portátiles de dosificación']})` : 'none',
-          backgroundSize: 'cover',
-          backgroundPosition: 'center'
-        }}>
-          <h2>Sistemas Portátiles de Dosificación</h2>
-          <p>
-            Nuestros sistemas portátiles están diseñados para ofrecer soluciones rápidas y eficientes en el tratamiento de agua,
-            adaptándose a diferentes necesidades, desde comunidades pequeñas hasta grandes centros urbanos.
-          </p>
-        </section>
       {/* Sección para Beneficios de la Dosificación Eficiente */}
       <section id="beneficios-dosificacion" className="my-5" style={{
         backgroundColor: sectionColors['beneficios-dosificacion'] || 'transparent',

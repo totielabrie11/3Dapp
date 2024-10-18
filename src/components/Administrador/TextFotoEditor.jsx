@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Modal, Button, Form } from 'react-bootstrap';
+import { BACKEND_URL } from '../configLocalHost'; // Importar BACKEND_URL
 
 function TextFotoEditor({ show, handleClose, selectedPhoto, handleSave }) {
   const [description, setDescription] = useState('');
@@ -18,7 +19,7 @@ function TextFotoEditor({ show, handleClose, selectedPhoto, handleSave }) {
     const fetchPhotoTextDetails = async () => {
       if (selectedPhoto) {
         try {
-          const response = await axios.get('/api/fotoText');
+          const response = await axios.get(`${BACKEND_URL}/api/fotoText`); // Usar BACKEND_URL
           const photoData = response.data.find(photo => photo.name === selectedPhoto.name);
           if (photoData) {
             setDescription(photoData.description);
@@ -45,7 +46,7 @@ function TextFotoEditor({ show, handleClose, selectedPhoto, handleSave }) {
     // Detectar automáticamente las páginas disponibles
     const fetchPages = async () => {
       try {
-        const response = await axios.get('/api/pages');
+        const response = await axios.get(`${BACKEND_URL}/api/pages`); // Usar BACKEND_URL
         setPages(response.data.pages); // Asume que devuelve un array de nombres de páginas
       } catch (error) {
         console.error('Error al cargar las páginas:', error);
@@ -59,7 +60,7 @@ function TextFotoEditor({ show, handleClose, selectedPhoto, handleSave }) {
     if (selectedPhoto) {
       const rgbaColor = `rgba(${parseInt(backgroundColor.slice(1, 3), 16)}, ${parseInt(backgroundColor.slice(3, 5), 16)}, ${parseInt(backgroundColor.slice(5, 7), 16)}, ${backgroundOpacity})`;
       try {
-        const response = await axios.post('/api/fotoText/save', {
+        const response = await axios.post(`${BACKEND_URL}/api/fotoText/save`, { // Usar BACKEND_URL
           name: selectedPhoto.name,
           description,
           fontFamily,

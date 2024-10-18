@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Mapa from './Mapa';
 import ListaDistribuidores from './ListaDistribuidores';
 import './Distribuidores.css'; // Asegúrate de importar el archivo CSS
+import { BACKEND_URL } from '../../configLocalHost'; // Importar BACKEND_URL desde config.js
 
 const Distribuidores = () => {
   const [distribuidores, setDistribuidores] = useState([]); // Estado para almacenar los distribuidores
@@ -13,7 +14,7 @@ const Distribuidores = () => {
   // Función para obtener los distribuidores desde la API
   const fetchDistribuidores = async () => {
     try {
-      const response = await fetch('/api/distribuidores'); // Llamada a la API
+      const response = await fetch(`${BACKEND_URL}/api/distribuidores`); // Llamada a la API con BACKEND_URL
       const data = await response.json();
       setDistribuidores(data); // Actualizar el estado con los datos de la API
     } catch (error) {

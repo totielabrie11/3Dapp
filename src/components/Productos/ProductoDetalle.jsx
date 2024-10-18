@@ -3,6 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom'; // Importa useNavigat
 import ThreeDCanvas from '../ThreeDCanvas/ThreeDCanvas';
 import Loading from '../Productos/Loading';
 import ProductBarraInfo from './ProductBarraInfo';
+import { BACKEND_URL } from '../configLocalHost'; // Importa la URL desde el archivo config
 import './ProductoDetalle.css';
 
 function ProductoDetalle() {
@@ -15,7 +16,7 @@ function ProductoDetalle() {
   useEffect(() => {
     const fetchProduct = async () => {
       try {
-        const response = await fetch(`/api/product/${name}`);
+        const response = await fetch(`${BACKEND_URL}/api/product/${name}`); // Usa BACKEND_URL aquí
         if (!response.ok) {
           throw new Error('Network response was not ok');
         }
@@ -28,7 +29,7 @@ function ProductoDetalle() {
 
     const fetchSettings = async () => {
       try {
-        const response = await fetch(`/api/product-settings`);
+        const response = await fetch(`${BACKEND_URL}/api/product-settings`); // Usa BACKEND_URL aquí
         if (!response.ok) {
           throw new Error('Network response was not ok');
         }

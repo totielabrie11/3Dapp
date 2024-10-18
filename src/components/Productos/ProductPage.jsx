@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import ProductFilter from './ProductFilter';
 import ProductCards from './ProductCards';
+import { BACKEND_URL } from '../config'; // Importa la URL desde el archivo config
 
 const ProductPage = () => {
   const [products, setProducts] = useState([]);
@@ -9,7 +10,7 @@ const ProductPage = () => {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const response = await fetch('/api/product-descriptions');
+        const response = await fetch(`${BACKEND_URL}/api/product-descriptions`); // Usa BACKEND_URL aquí
         if (!response.ok) {
           throw new Error('Network response was not ok');
         }

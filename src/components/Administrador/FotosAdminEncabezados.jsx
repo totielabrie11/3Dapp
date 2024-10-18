@@ -3,6 +3,7 @@ import axios from 'axios';
 import FotosAdminAsignadorPaginas from './FotosAdminAsign/FotosAdminAsignadorPaginas';
 import FotosAdminAsignadorSeccion from './FotosAdminAsign/FotosAdminAsignadorSeccion';
 import FotosAdminAsignadorEnviar from './FotosAdminAsign/FotosAdminAsignadorEnviar';
+import { BACKEND_URL } from '../configLocalHost'; // Importar BACKEND_URL
 
 function FotosAdminEncabezados({ onPhotosLoaded, onAssign }) {
   const [headers, setHeaders] = useState([]);
@@ -17,7 +18,7 @@ function FotosAdminEncabezados({ onPhotosLoaded, onAssign }) {
   useEffect(() => {
     const fetchHeaders = async () => {
       try {
-        const response = await axios.get('/api/encabezados');
+        const response = await axios.get(`${BACKEND_URL}/api/encabezados`); // Usar BACKEND_URL
         if (response.data.success) {
           setHeaders(response.data.headers);
           setError(null);
@@ -37,7 +38,7 @@ function FotosAdminEncabezados({ onPhotosLoaded, onAssign }) {
 
   const handleDeleteHeader = async (filename) => {
     try {
-      await axios.delete(`/api/encabezados/${filename}`);
+      await axios.delete(`${BACKEND_URL}/api/encabezados/${filename}`); // Usar BACKEND_URL
       setHeaders(headers.filter(header => header.name !== filename));
       setError(null);  // Limpiar cualquier error previo
     } catch (error) {

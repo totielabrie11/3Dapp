@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import './Contacto.css';
-
+import { BACKEND_URL } from '../../configLocalHost'; // Importar BACKEND_URL
 
 const Contacto = () => {
     const [formData, setFormData] = useState({
@@ -63,7 +63,7 @@ const Contacto = () => {
             }
 
             try {
-                const response = await fetch('/api/contact', {
+                const response = await fetch(`${BACKEND_URL}/api/contact`, {
                     method: 'POST',
                     body: formDataToSend, // Enviamos los datos del formulario
                 });
@@ -212,9 +212,6 @@ const Contacto = () => {
                     </button>
                 </div>
             </form>
-
-
-
             </div>
         </section>
     );

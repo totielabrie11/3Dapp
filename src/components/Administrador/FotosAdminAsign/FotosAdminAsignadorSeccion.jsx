@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { Modal, Button, Form } from 'react-bootstrap';
 import axios from 'axios';
+import { BACKEND_URL } from '../../configLocalHost'; // Importar BACKEND_URL
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 function FotosAdminAsignadorSeccion({ show, handleClose, onSave, selectedPage }) {
@@ -10,7 +11,7 @@ function FotosAdminAsignadorSeccion({ show, handleClose, onSave, selectedPage })
   // Función para obtener las secciones de las páginas desde el backend
   const fetchSections = useCallback(async () => {
     try {
-      const response = await axios.get('/api/pages/sections');
+      const response = await axios.get(`${BACKEND_URL}/api/pages/sections`); // Usar BACKEND_URL
       const allSections = response.data.sections;
 
       // Filtrar secciones de acuerdo con la página seleccionada

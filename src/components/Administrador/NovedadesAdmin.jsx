@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { BACKEND_URL } from '../configLocalHost'; // Importar BACKEND_URL
 
 function NovedadesAdmin() {
   const [novedades, setNovedades] = useState([]);
@@ -11,7 +12,7 @@ function NovedadesAdmin() {
   // Función para obtener las novedades desde el backend
   const fetchNovedades = async () => {
     try {
-      const response = await fetch('/api/novedades');
+      const response = await fetch(`${BACKEND_URL}/api/novedades`); // Usar BACKEND_URL
       if (!response.ok) {
         throw new Error('Error fetching novedades');
       }
@@ -40,7 +41,7 @@ function NovedadesAdmin() {
     }
 
     try {
-      const response = await fetch('/api/novedades', {
+      const response = await fetch(`${BACKEND_URL}/api/novedades`, {
         method: 'POST',
         body: formData,
       });
@@ -75,7 +76,7 @@ function NovedadesAdmin() {
   const handleDelete = async (id) => {
     if (window.confirm('¿Estás seguro de que deseas eliminar esta novedad?')) {
       try {
-        const response = await fetch(`/api/novedades/${id}`, {
+        const response = await fetch(`${BACKEND_URL}/api/novedades/${id}`, {
           method: 'DELETE',
         });
 

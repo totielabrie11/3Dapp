@@ -2,13 +2,14 @@ import React, { useState, useEffect, useCallback } from 'react';
 import axios from 'axios';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './Petroleo.css';
+import { BACKEND_URL } from '../../configLocalHost'; // Importar BACKEND_URL desde config.js
 
 function Petroleo() {
   const [backgroundImages, setBackgroundImages] = useState({});
 
   const fetchAssignments = useCallback(async () => {
     try {
-      const response = await axios.get('/api/pages/assignments');
+      const response = await axios.get(`${BACKEND_URL}/api/pages/assignments`); // Usar BACKEND_URL
       const assignments = response.data;
       console.log('Asignaciones obtenidas del backend:', assignments);
 
@@ -345,8 +346,6 @@ function Petroleo() {
     </div>
   </div>
     </section>
-
-
 
     </div>
   );

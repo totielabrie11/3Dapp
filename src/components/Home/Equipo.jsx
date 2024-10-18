@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Modal, Button } from 'react-bootstrap';
+import { BACKEND_URL } from '../configLocalHost'; // Importa la URL desde el archivo config
 
 const Equipo = () => {
   const [equipo, setEquipo] = useState([]);
@@ -9,7 +10,7 @@ const Equipo = () => {
   // Función para obtener los datos del equipo desde la API
   const fetchEquipo = async () => {
     try {
-      const response = await fetch('/api/equipo');
+      const response = await fetch(`${BACKEND_URL}/api/equipo`); // Usa BACKEND_URL aquí
       const data = await response.json();
       setEquipo(data);
     } catch (error) {

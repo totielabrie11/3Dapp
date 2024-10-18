@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import VideoAdminAsignador from './VideoAdminAsignador';  // Importación del modal asignador
+import { BACKEND_URL } from '../configLocalHost'; // Importar BACKEND_URL
 
 function VideoAdmin() {
   const [videos, setVideos] = useState([]);  // Lista de videos
@@ -16,7 +17,7 @@ function VideoAdmin() {
   useEffect(() => {
     const fetchVideos = async () => {
       try {
-        const response = await axios.get('/api/videos');  // Obtener la lista de videos
+        const response = await axios.get(`${BACKEND_URL}/api/videos`);  // Usar BACKEND_URL
         if (response.data && response.data.videos) {
           setVideos(response.data.videos);  // Asegúrate de que existan los datos antes de asignarlos
         }
@@ -56,7 +57,7 @@ function VideoAdmin() {
       setSuccessMessage('');
       setError('');
 
-      const response = await axios.post('/api/videos/upload', formData, {
+      const response = await axios.post(`${BACKEND_URL}/api/videos/upload`, formData, {
         headers: { 'Content-Type': 'multipart/form-data' },
         onUploadProgress: (progressEvent) => {
           const percentCompleted = Math.round((progressEvent.loaded * 100) / progressEvent.total);
@@ -80,7 +81,7 @@ function VideoAdmin() {
   // Marcar un video como principal
   const handleSetPrincipal = async (id) => {
     try {
-      const response = await axios.put(`/api/videos/set-principal/${id}`);
+      const response = await axios.put(`${BACKEND_URL}/api/videos/set-principal/${id}`);  // Usar BACKEND_URL
       const updatedVideos = videos.map((video) => ({
         ...video,
         isPrincipal: video.id === id
@@ -114,7 +115,7 @@ function VideoAdmin() {
         formData.append('video', newVideo.video);
       }
 
-      const response = await axios.put(`/api/videos/${editingVideo.id}`, formData, {
+      const response = await axios.put(`${BACKEND_URL}/api/videos/${editingVideo.id}`, formData, {
         headers: { 'Content-Type': 'multipart/form-data' },
         onUploadProgress: (progressEvent) => {
           const percentCompleted = Math.round((progressEvent.loaded * 100) / progressEvent.total);
@@ -141,7 +142,7 @@ function VideoAdmin() {
   // Eliminar un video
   const handleDeleteVideo = async (id) => {
     try {
-      await axios.delete(`/api/videos/${id}`);
+      await axios.delete(`${BACKEND_URL}/api/videos/${id}`);  // Usar BACKEND_URL
       const updatedVideos = videos.filter(video => video.id !== id);
       setVideos(updatedVideos);
     } catch (error) {

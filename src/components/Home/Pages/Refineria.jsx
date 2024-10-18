@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import axios from 'axios';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { BACKEND_URL } from '../../configLocalHost'; // Importar BACKEND_URL desde el archivo de configuración
 
 function Refineria() {
   const [backgroundImages, setBackgroundImages] = useState({}); // Estado para las imágenes de fondo por sección
@@ -8,7 +9,7 @@ function Refineria() {
   // Función para obtener las asignaciones de contenido desde el backend
   const fetchAssignments = useCallback(async () => {
     try {
-      const response = await axios.get('/api/pages/assignments');
+      const response = await axios.get(`${BACKEND_URL}/api/pages/assignments`); // Usar BACKEND_URL en la llamada a la API
       const assignments = response.data;
       console.log('Asignaciones obtenidas del backend:', assignments); // Log de la respuesta obtenida
 
@@ -81,7 +82,7 @@ function Refineria() {
         >
           {backgroundImages.encabezado ? (
             <img
-              src={`/images/fondos/headeres/${backgroundImages.encabezado}`}
+              src={`${BACKEND_URL}/images/fondos/headeres/${backgroundImages.encabezado}`} // Usar BACKEND_URL para la ruta de la imagen
               alt="Fondo Refineria"
               style={{
                 width: '100%',
@@ -89,7 +90,7 @@ function Refineria() {
                 objectFit: 'cover',
                 pointerEvents: 'none'
               }}
-              onError={() => console.error('Error al cargar la imagen desde:', `/images/fondos/headeres/${backgroundImages.encabezado}`)}
+              onError={() => console.error('Error al cargar la imagen desde:', `${BACKEND_URL}/images/fondos/headeres/${backgroundImages.encabezado}`)}
             />
           ) : (
             <p>Cargando imagen...</p>
@@ -108,7 +109,7 @@ function Refineria() {
       {/* Secciones de contenido */}
       <div className="container">
         <section id="bombas-vacio" className="my-5" style={{
-          backgroundImage: backgroundImages['bombas de vacío'] ? `url(/images/fondos/headeres/${backgroundImages['bombas de vacío']})` : 'none',
+          backgroundImage: backgroundImages['bombas de vacío'] ? `url(${BACKEND_URL}/images/fondos/headeres/${backgroundImages['bombas de vacío']})` : 'none',
           backgroundSize: 'cover',
           backgroundPosition: 'center',
         }}>
@@ -119,7 +120,7 @@ function Refineria() {
         </section>
 
         <section id="equipos-mineria" className="my-5" style={{
-          backgroundImage: backgroundImages['equipos para minería'] ? `url(/images/fondos/headeres/${backgroundImages['equipos para minería']})` : 'none',
+          backgroundImage: backgroundImages['equipos para minería'] ? `url(${BACKEND_URL}/images/fondos/headeres/${backgroundImages['equipos para minería']})` : 'none',
           backgroundSize: 'cover',
           backgroundPosition: 'center',
         }}>
@@ -130,7 +131,7 @@ function Refineria() {
         </section>
 
         <section id="eficiencia-seguridad" className="my-5" style={{
-          backgroundImage: backgroundImages['eficiencia y seguridad'] ? `url(/images/fondos/headeres/${backgroundImages['eficiencia y seguridad']})` : 'none',
+          backgroundImage: backgroundImages['eficiencia y seguridad'] ? `url(${BACKEND_URL}/images/fondos/headeres/${backgroundImages['eficiencia y seguridad']})` : 'none',
           backgroundSize: 'cover',
           backgroundPosition: 'center',
         }}>
@@ -141,7 +142,7 @@ function Refineria() {
         </section>
 
         <section id="nuevas-tecnologias" className="my-5" style={{
-          backgroundImage: backgroundImages['nuevas tecnologías en equipos de vacío'] ? `url(/images/fondos/headeres/${backgroundImages['nuevas tecnologías en equipos de vacío']})` : 'none',
+          backgroundImage: backgroundImages['nuevas tecnologías en equipos de vacío'] ? `url(${BACKEND_URL}/images/fondos/headeres/${backgroundImages['nuevas tecnologías en equipos de vacío']})` : 'none',
           backgroundSize: 'cover',
           backgroundPosition: 'center',
         }}>
@@ -155,4 +156,4 @@ function Refineria() {
   );
 }
 
-export default Refineria;   
+export default Refineria;

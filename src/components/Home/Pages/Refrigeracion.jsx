@@ -2,12 +2,12 @@ import React, { useState, useEffect, useCallback, useRef } from 'react';
 import axios from 'axios';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './Refrigeracion.css';
+import { BACKEND_URL } from '../../configLocalHost'; // Importa la URL desde el archivo config
 
 function Refrigeracion() {
   const [backgroundImages, setBackgroundImages] = useState({});
-  const sectionRefs = useRef({ aplicaciones: [], mantenimiento: [] }); // Inicializamos los arrays correctamente
+  const sectionRefs = useRef({ aplicaciones: [], mantenimiento: [] });
 
-  // Función para normalizar el texto: convertir a minúsculas y quitar acentos
   const normalizeString = (str) => {
     return str
       .toLowerCase()
@@ -15,13 +15,11 @@ function Refrigeracion() {
       .replace(/[\u0300-\u036f]/g, ''); // Elimina acentos
   };
 
-  // Función para obtener las asignaciones de contenido desde el backend
   const fetchAssignments = useCallback(async () => {
     try {
-      const response = await axios.get('/api/pages/assignments');
+      const response = await axios.get(`${BACKEND_URL}/api/pages/assignments`); // Usa BACKEND_URL aquí
       const assignments = response.data;
 
-      // Separar las asignaciones por página de forma dinámica
       const assignmentsByPage = assignments.reduce((acc, assignment) => {
         const { pageName } = assignment;
         const normalizedPageName = normalizeString(pageName);
@@ -32,7 +30,6 @@ function Refrigeracion() {
         return acc;
       }, {});
 
-      // Trabajar con el array de la página "Refrigeracion"
       if (assignmentsByPage.refrigeracion) {
         const sectionImages = {};
         assignmentsByPage.refrigeracion.forEach((assignment) => {
@@ -56,7 +53,6 @@ function Refrigeracion() {
     console.log('Imagen de encabezado:', backgroundImages.encabezado);
   }, [backgroundImages]);
 
-  // Intersection Observer para las animaciones al hacer scroll
   useEffect(() => {
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
@@ -88,7 +84,6 @@ function Refrigeracion() {
     };
   }, []);
 
-  // Asegurarse de que los arrays de referencias estén inicializados correctamente
   const assignRef = (section, index, el) => {
     if (!sectionRefs.current[section]) {
       sectionRefs.current[section] = [];
@@ -98,7 +93,6 @@ function Refrigeracion() {
 
   return (
     <div>
-      {/* Sección de encabezado con imagen de fondo */}
       <div
         style={{
           position: 'relative',
@@ -315,4 +309,3 @@ function Refrigeracion() {
 }
 
 export default Refrigeracion;
-  

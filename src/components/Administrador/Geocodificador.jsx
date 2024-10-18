@@ -6,13 +6,18 @@ const Geocodificador = () => {
 
   // Función que obtiene las coordenadas usando la API de Nominatim
   const obtenerCoordenadas = async (direccion) => {
-    const response = await fetch(`https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(direccion)}&format=json&limit=1`);
-    const data = await response.json();
-    if (data.length > 0) {
-      const { lat, lon } = data[0];
-      setCoordenadas({ lat, lon }); // Guardamos las coordenadas en el estado
-    } else {
-      alert('No se encontraron coordenadas para esa dirección');
+    try {
+      const response = await fetch(`https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(direccion)}&format=json&limit=1`);
+      const data = await response.json();
+      if (data.length > 0) {
+        const { lat, lon } = data[0];
+        setCoordenadas({ lat, lon }); // Guardamos las coordenadas en el estado
+      } else {
+        alert('No se encontraron coordenadas para esa dirección');
+      }
+    } catch (error) {
+      console.error('Error al obtener las coordenadas:', error);
+      alert('Hubo un error al obtener las coordenadas.');
     }
   };
 

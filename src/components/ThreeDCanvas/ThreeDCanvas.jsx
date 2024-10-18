@@ -3,6 +3,7 @@ import { Canvas, useFrame } from '@react-three/fiber';
 import { OrbitControls, useGLTF, Html } from '@react-three/drei';
 import './ThreeDCanvas.css';
 import Loading from '../Productos/Loading';
+import { BACKEND_URL } from '../configLocalHost'; // Importa la URL desde el archivo config
 
 function Model({ path, rotationSpeed, isAnimating, rotationDirection, ...props }) {
   const { scene, nodes, materials } = useGLTF(path, true);
@@ -59,7 +60,7 @@ function ThreeDCanvas({
     if (!modelPath) return;
     const fetchSettings = async () => {
       try {
-        const response = await fetch('/api/product-settings');
+        const response = await fetch(`${BACKEND_URL}/api/product-settings`); // Usa BACKEND_URL aquí
         if (!response.ok) {
           throw new Error('Network response was not ok');
         }

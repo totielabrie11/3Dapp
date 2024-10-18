@@ -113,5 +113,10 @@
     "photoName": "fondoagua.jpg",
     "pageName": "Aguas",
     "section": "Encabezado"
+  },
+  {
+    "photoName": "cara.webp",
+    "pageName": "Refineria",
+    "section": "Nuevas Tecnologías en Equipos de Vacío"
   }
 ]

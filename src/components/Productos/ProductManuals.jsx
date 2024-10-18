@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { BACKEND_URL } from '../configLocalHost'; // Importa la URL desde el archivo config
 
 function ProductManuals({ selectedProduct, updateProductDetails }) {
   const [manual, setManual] = useState('');
@@ -18,7 +19,7 @@ function ProductManuals({ selectedProduct, updateProductDetails }) {
       // Fetch de los detalles del producto seleccionado
       const fetchProductDetails = async () => {
         try {
-          const response = await fetch(`/api/product/${selectedProduct}`);
+          const response = await fetch(`${BACKEND_URL}/api/product/${selectedProduct}`); // Usa BACKEND_URL aquí
           const product = await response.json();
 
           if (product.rutas) {
@@ -40,7 +41,7 @@ function ProductManuals({ selectedProduct, updateProductDetails }) {
   const handleSubmit = async () => {
     if (!selectedProduct) return;
 
-    const response = await fetch('/api/product-details', {
+    const response = await fetch(`${BACKEND_URL}/api/product-details`, { // Usa BACKEND_URL aquí
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

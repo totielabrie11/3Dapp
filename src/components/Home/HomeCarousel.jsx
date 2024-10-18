@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { BACKEND_URL } from '../configLocalHost'; // Importa la URL desde el archivo config
 
 const HomeCarousel = () => {
   // Estado para almacenar las imágenes del carrusel
@@ -12,11 +13,11 @@ const HomeCarousel = () => {
     const fetchImages = async () => {
       try {
         // Obtener imágenes
-        const response = await axios.get('/api/images'); // Endpoint que devuelve las imágenes
+        const response = await axios.get(`${BACKEND_URL}/api/images`); // Usa BACKEND_URL aquí
         setCarouselImages(response.data.images);  // Actualizar el estado con las imágenes
 
         // Obtener descripciones adicionales
-        const descriptionsResponse = await axios.get('/api/fotoText'); // Endpoint para descripciones adicionales
+        const descriptionsResponse = await axios.get(`${BACKEND_URL}/api/fotoText`); // Usa BACKEND_URL aquí
         setAdditionalDescriptions(descriptionsResponse.data);  // Actualizar el estado con las descripciones adicionales
 
         // Mostrar las descripciones en la consola

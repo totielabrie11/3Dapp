@@ -1,7 +1,7 @@
-// React Component
 import React, { useState } from 'react';
 import { Modal, Button } from 'react-bootstrap';
 import axios from 'axios';
+import { BACKEND_URL } from '../../configLocalHost'; // Importar BACKEND_URL
 
 function FotosAdminAsignadorEnviar({ show, handleClose, selectedHeader, selectedPage, selectedSection }) {
   const [isLoading, setIsLoading] = useState(false);
@@ -12,14 +12,14 @@ function FotosAdminAsignadorEnviar({ show, handleClose, selectedHeader, selected
     setIsLoading(true);
     setError(null);
     setSuccessMessage('');
-  
+
     // Verificar que todos los datos estén presentes
     if (!selectedHeader || !selectedPage || !selectedSection) {
       setError('Por favor, asegúrate de haber seleccionado una página, sección y encabezado.');
       setIsLoading(false);
       return;
     }
-  
+
     try {
       // Preparar la data para enviar
       const data = {
@@ -30,10 +30,10 @@ function FotosAdminAsignadorEnviar({ show, handleClose, selectedHeader, selected
 
       // Mostrar la data en la consola antes de enviarla
       console.log('Datos que se enviarán al backend:', data);
-  
-      // Realizar la solicitud POST al endpoint
-      const response = await axios.post('/api/save-selection', data);
-  
+
+      // Realizar la solicitud POST al endpoint correcto dependiendo del entorno
+      const response = await axios.post(`${BACKEND_URL}/api/save-selection`, data);  // Usar BACKEND_URL
+
       if (response.data.success) {
         setSuccessMessage('¡Asignación guardada exitosamente!');
         handleClose(); // Cerrar el modal al completar
@@ -44,10 +44,9 @@ function FotosAdminAsignadorEnviar({ show, handleClose, selectedHeader, selected
       console.error('Error al enviar los datos:', err);
       setError('Error al enviar los datos al servidor.');
     }
-  
+
     setIsLoading(false);
   };
-  
 
   return (
     <Modal show={show} onHide={handleClose} centered>

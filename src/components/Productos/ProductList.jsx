@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { Link } from 'react-router-dom';
+import { BACKEND_URL } from '../configLocalHost'; // Importa la URL desde el archivo config
 import './ProductList.css';
 
 const ProductList = ({ setModelPath, setProductDescription, setSelectedProduct, setCharacteristics }) => {
@@ -12,7 +13,7 @@ const ProductList = ({ setModelPath, setProductDescription, setSelectedProduct, 
 
   const fetchProducts = useCallback(async (order) => {
     try {
-      const response = await fetch('/api/models');
+      const response = await fetch(`${BACKEND_URL}/api/models`); // Usa BACKEND_URL aquí
       if (!response.ok) {
         throw new Error('Network response was not ok');
       }
@@ -31,7 +32,7 @@ const ProductList = ({ setModelPath, setProductDescription, setSelectedProduct, 
 
   const fetchProductOrder = useCallback(async () => {
     try {
-      const response = await fetch('/api/product-order');
+      const response = await fetch(`${BACKEND_URL}/api/product-order`); // Usa BACKEND_URL aquí
       if (!response.ok) {
         throw new Error('Network response was not ok');
       }
@@ -45,7 +46,7 @@ const ProductList = ({ setModelPath, setProductDescription, setSelectedProduct, 
 
   const cleanProductOrder = useCallback(async () => {
     try {
-      const response = await fetch('/api/clean-product-order');
+      const response = await fetch(`${BACKEND_URL}/api/clean-product-order`); // Usa BACKEND_URL aquí
       if (!response.ok) {
         throw new Error('Network response was not ok');
       }
@@ -63,7 +64,7 @@ const ProductList = ({ setModelPath, setProductDescription, setSelectedProduct, 
 
   const saveProductOrder = async (order) => {
     try {
-      const response = await fetch('/api/product-order', {
+      const response = await fetch(`${BACKEND_URL}/api/product-order`, { // Usa BACKEND_URL aquí
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -81,7 +82,7 @@ const ProductList = ({ setModelPath, setProductDescription, setSelectedProduct, 
 
   const fetchProductDescription = async (name) => {
     try {
-      const response = await fetch('/api/product-descriptions');
+      const response = await fetch(`${BACKEND_URL}/api/product-descriptions`); // Usa BACKEND_URL aquí
       if (!response.ok) {
         throw new Error('Network response was not ok');
       }
@@ -115,7 +116,7 @@ const ProductList = ({ setModelPath, setProductDescription, setSelectedProduct, 
     formData.append('file', file);
 
     try {
-      const response = await fetch('/api/upload', {
+      const response = await fetch(`${BACKEND_URL}/api/upload`, { // Usa BACKEND_URL aquí
         method: 'POST',
         body: formData,
       });
@@ -172,7 +173,7 @@ const ProductList = ({ setModelPath, setProductDescription, setSelectedProduct, 
     setEditName("");
 
     try {
-      const response = await fetch('/api/edit-product-name', {
+      const response = await fetch(`${BACKEND_URL}/api/edit-product-name`, { // Usa BACKEND_URL aquí
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { BACKEND_URL } from './configLocalHost'; // Importar la URL del backend
 
 const Login = ({ setIsAdmin, setUser }) => {
   const [username, setUsername] = useState('');
@@ -10,7 +11,8 @@ const Login = ({ setIsAdmin, setUser }) => {
     setError('');
 
     try {
-      const response = await fetch('/api/login', {
+      // Usar BACKEND_URL en la llamada a la API
+      const response = await fetch(`${BACKEND_URL}/api/login`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -20,7 +22,9 @@ const Login = ({ setIsAdmin, setUser }) => {
 
       const data = await response.json();
       if (data.success) {
+        // Guardar el usuario en el localStorage
         localStorage.setItem('user', JSON.stringify({ name: data.username, role: data.role }));
+        // Establecer si el usuario es administrador
         setIsAdmin(data.role === 'administrador');
         setUser({ name: data.username, role: data.role });
       } else {

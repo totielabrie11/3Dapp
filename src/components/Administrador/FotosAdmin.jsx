@@ -4,6 +4,7 @@ import FotosAdminAsignador from './FotosAdminAsignador';
 import TextFotoEditor from './TextFotoEditor';
 import EditorFotografico from './EditorFotografico';
 import FotosAdminEncabezados from './FotosAdminEncabezados';
+import { BACKEND_URL } from '../configLocalHost'; // Importar BACKEND_URL
 
 function FotosAdmin() {
   const [selectedSection, setSelectedSection] = useState('homeCarousel');
@@ -20,8 +21,8 @@ function FotosAdmin() {
       const fetchPhotos = async () => {
         try {
           const endpoint = selectedSection === 'fondos'
-            ? '/api/fondos'
-            : '/api/images';
+            ? `${BACKEND_URL}/api/fondos`  // Usar BACKEND_URL
+            : `${BACKEND_URL}/api/images`; // Usar BACKEND_URL
 
           const response = await axios.get(endpoint);
           const fetchedPhotos = response.data.fondos || response.data.images || [];
@@ -64,10 +65,10 @@ function FotosAdmin() {
       formData.append('image', newPhoto.image);
 
       const endpoint = selectedSection === 'fondos'
-        ? '/api/fondos/upload'
+        ? `${BACKEND_URL}/api/fondos/upload`  // Usar BACKEND_URL
         : selectedSection === 'encabezados'
-        ? '/api/encabezados/upload'
-        : '/api/images/upload';
+        ? `${BACKEND_URL}/api/encabezados/upload`  // Usar BACKEND_URL
+        : `${BACKEND_URL}/api/images/upload`;  // Usar BACKEND_URL
 
       const response = await axios.post(endpoint, formData, {
         headers: { 'Content-Type': 'multipart/form-data' }
@@ -86,10 +87,10 @@ function FotosAdmin() {
   const handleDeletePhoto = async (filename) => {
     try {
       const endpoint = selectedSection === 'fondos'
-        ? `/api/fondos/${filename}`
+        ? `${BACKEND_URL}/api/fondos/${filename}`  // Usar BACKEND_URL
         : selectedSection === 'encabezados'
-        ? `/api/encabezados/${filename}`
-        : `/api/images/${filename}`;
+        ? `${BACKEND_URL}/api/encabezados/${filename}`  // Usar BACKEND_URL
+        : `${BACKEND_URL}/api/images/${filename}`;  // Usar BACKEND_URL
 
       await axios.delete(endpoint);
       const updatedPhotos = photos.filter(photo => photo.name !== filename);
@@ -125,7 +126,7 @@ function FotosAdmin() {
     if (!selectedPhoto) return;
   
     try {
-      const endpoint = '/api/fotoText/save';
+      const endpoint = `${BACKEND_URL}/api/fotoText/save`;  // Usar BACKEND_URL
       const data = {
         name: selectedPhoto.name,
         description,

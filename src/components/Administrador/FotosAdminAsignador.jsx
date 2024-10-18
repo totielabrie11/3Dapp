@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Modal, Button, Form } from 'react-bootstrap';
 import axios from 'axios';
+import { BACKEND_URL } from './../configLocalHost'; // Importar BACKEND_URL
 
 function FotosAdminAsignador({ show, handleClose, selectedPhoto }) {
   const [pages, setPages] = useState([]);
@@ -11,7 +12,7 @@ function FotosAdminAsignador({ show, handleClose, selectedPhoto }) {
     const fetchPages = async () => {
       try {
         // Simulamos la detección de páginas mediante una llamada al servidor o listando archivos de la carpeta Pages
-        const response = await axios.get('/api/pages');
+        const response = await axios.get(`${BACKEND_URL}/api/pages`); // Usar BACKEND_URL
         setPages(response.data.pages); // Asume que devuelve un array de nombres de páginas
       } catch (error) {
         console.error('Error al cargar las páginas:', error);
@@ -29,7 +30,7 @@ function FotosAdminAsignador({ show, handleClose, selectedPhoto }) {
       }
 
       // Enviar solicitud para asignar el fondo de pantalla a la página seleccionada
-      const response = await axios.post(`/api/pages/assign`, {
+      const response = await axios.post(`${BACKEND_URL}/api/pages/assign`, { // Usar BACKEND_URL
         photoName: selectedPhoto.name,
         pageName: selectedPage,
       });

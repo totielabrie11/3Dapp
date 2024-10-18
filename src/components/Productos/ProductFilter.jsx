@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { BACKEND_URL } from '../configLocalHost'; // Importa la URL desde el archivo config
 import './ProductFilter.css';
 
 const ProductFilter = ({ onFilter }) => {
@@ -10,13 +11,8 @@ const ProductFilter = ({ onFilter }) => {
     subTipoBombaDosificadora: '',
     marcaBomba: '',
     tipoAccionamiento: '',
-    // presionMin: 0, // Inicializar en un valor adecuado
-    // presionMax: 10, // Inicializar en un valor adecuado
-    // caudalMin: 30, // Inicializar en 30
-    // caudalMax: 1800, // Inicializar en 1800 o un valor máximo adecuado
   });
 
-  // const [singlePressure, setSinglePressure] = useState(0); // Estado para la presión única de soplador
   const [tipoProductoOptions, setTipoProductoOptions] = useState([]);
   const [aplicacionOptions, setAplicacionOptions] = useState([]);
   const [allAplicacionOptions, setAllAplicacionOptions] = useState([]);
@@ -28,10 +24,9 @@ const ProductFilter = ({ onFilter }) => {
     setFilters({ ...filters, [name]: value });
   };
 
-
   const fetchProductos = async () => {
     try {
-      const response = await fetch('/api/product-descriptions');
+      const response = await fetch(`${BACKEND_URL}/api/product-descriptions`); // Usa BACKEND_URL aquí
       const data = await response.json();
       const tiposDeProducto = new Set();
       const tiposDeAplicacion = new Set();
@@ -105,12 +100,8 @@ const ProductFilter = ({ onFilter }) => {
   }, [filters.tipoBombaDosificadora]);
 
   useEffect(() => {
-    // if (filters.tipoBomba === 'soplador') {
-    //   onFilter({ ...filters, singlePressure });
-    // } else {
-      onFilter(filters);
-    // }
-  }, [filters, /*singlePressure,*/ onFilter]);
+    onFilter(filters);
+  }, [filters, onFilter]);
 
   return (
     <div className="product-filter">
