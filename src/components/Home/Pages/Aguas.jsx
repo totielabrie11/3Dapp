@@ -7,11 +7,14 @@ import { BACKEND_URL } from '../../configLocalHost'; // Importar BACKEND_URL des
 function Aguas() {
   const [backgroundImages, setBackgroundImages] = useState({}); // Estado para las imágenes de fondo por sección
   const [sectionColors, setSectionColors] = useState({
-    'sistemas-portatiles': '#FFFFFF',
-    'sistemas-robustos': '#FFFFFF',
+    'equipos-portatiles': '',
+    'sistemas-robustos': '',
     'beneficios-dosificacion': '',
-    'impacto-ambiental': '',
-    'futuro-agua-pura': ''
+    'equipo-dosificacion': '',
+    'portable-equipment-section': '',
+    'equipo-1000-litros': '',
+    'equipo-200-litros': '',
+    'seccion-prueba': '#123456' // Nueva sección con color imaginario
   });
 
   // Función para obtener las asignaciones de contenido desde el backend
@@ -127,7 +130,7 @@ function Aguas() {
             <div className="col-md-6">
               <div className="equipo-image" id="equipo-1000-img">
                 <div className="image-container">
-                  <img src="assets/img/portfolio/eq1000.png" alt="Equipo de 1000 Litros" className="img-fluid" />
+                  <img src="assets/img/portfolio/equipoAguas1000.png" alt="equipoAguas1000" className="img-fluid" />
                 </div>
               </div>
               <h3>Equipo de 1000 Litros</h3>
@@ -159,61 +162,87 @@ function Aguas() {
         </div>
       </section>
 
-
-      {/* Sección para Sistemas Portátiles de Dosificación */}
-      <section id="sistemas-portatiles" className="my-5" style={{
-        backgroundColor: sectionColors['sistemas-portatiles'] || 'transparent',
-        backgroundImage: !sectionColors['sistemas-portatiles'] && backgroundImages['sistemas portátiles de dosificación'] ? `url(/images/fondos/headeres/${backgroundImages['sistemas portátiles de dosificación']})` : 'none',
+      {/* Sección para Equipo de 1000 Litros */}
+      <section id="equipo-dosificacion" className="my-5 equipment-section" style={{
+        backgroundColor: sectionColors['equipo-dosificacion'] || 'transparent',
+        backgroundImage: backgroundImages['equipo de dosificacion'] ? `url(/images/fondos/headeres/${backgroundImages['equipo de dosificacion']})` : 'none',
         backgroundSize: 'cover',
         backgroundPosition: 'center'
       }}>
-        <h2>Sistemas Portátiles de Dosificación</h2>
+        <h2>EQUIPOS DE DOSIFICACIÓN</h2>
+        <div className="equipment-block row">
+          <div className="equipment col-md-6">
+            <h3>EQUIPO DE 1000 LITROS</h3>
+            <p>
+              Nuestro equipo de 1000 litros está diseñado para operaciones de gran escala, proporcionando una solución robusta y confiable para la dosificación de fluidos. Este sistema incluye:
+            </p>
+            <ul>
+              <li>Tablero Eléctrico: Disponible para equipos con bomba DECI/DDI.</li>
+              <li>Probeta de Calibración: Con visualización de nivel para una calibración precisa.</li>
+              <li>Válvulas de Maniobra: Facilitan el servicio del filtro y la probeta.</li>
+              <li>Contenedor de 1000 Litros: Amplia capacidad para grandes volúmenes.</li>
+              <li>Batea Contenedora Antiderrames: De 1100 litros, asegura que cualquier derrame sea contenido.</li>
+              <li>Reja para Batea: Con puerta para vaciado eficiente.</li>
+              <li>Sistema Anti Hurto: Protección adicional para la batea.</li>
+              <li>Ganchos Sujeta Contenedor: Para una mayor estabilidad y seguridad.</li>
+              <li>Acople Rápido: Facilita el reemplazo del contenedor.</li>
+              <li>Skid Modular: Compacto y liviano para una fácil instalación.</li>
+              <li>Gabinete Opcional: Para proteger la bomba.</li>
+              <li>Peso: 280kg, dependiendo de la configuración.</li>
+            </ul>
+          </div>
+          <div className="equipment col-md-6">
+            <h3>EQUIPO DE 200 LITROS</h3>
+            <p>
+              El equipo de 200 litros es ideal para operaciones de menor escala que requieren la misma fiabilidad y precisión. Sus características incluyen:
+            </p>
+            <ul>
+              <li>Tablero Eléctrico: Disponible para equipos con bomba DECI/DDI.</li>
+              <li>Probeta de Calibración: Con visualización de nivel.</li>
+              <li>Válvulas de Maniobra: Para el servicio del filtro y la probeta.</li>
+              <li>Tanque de 200 Litros: Adecuado para volúmenes menores.</li>
+              <li>Batea Contenedora Antiderrames: De 260 litros para máxima seguridad.</li>
+              <li>Reja para Batea: Con puerta para vaciado.</li>
+              <li>Sistema Anti Hurto: Protege la batea de posibles robos.</li>
+              <li>Suncho Sujeta Tanque: Asegura el tanque firmemente.</li>
+              <li>Skid Modular: Compacto y liviano.</li>
+              <li>Gabinete Opcional: Para la protección de la bomba.</li>
+              <li>Peso: 80kg, dependiendo de la configuración.</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section id="equipos-portatiles" className="my-5 portable-equipment-section" style={{
+        backgroundColor: sectionColors['equipos-portatiles'] || 'transparent',
+        backgroundImage: backgroundImages['equipos portatiles'] ? `url(/images/fondos/headeres/${backgroundImages['equipos portatiles']})` : 'none',
+        backgroundSize: 'cover',
+        backgroundPosition: 'center'
+      }}>
+        <h2>SERIE EQUIPOS PORTATILES DE CLORACION</h2>
         <p>
-          Nuestros sistemas portátiles están diseñados para ofrecer soluciones rápidas y eficientes en el tratamiento de agua,
-          adaptándose a diferentes necesidades, desde comunidades pequeñas hasta grandes centros urbanos.
+          Una línea de equipos modulares para la dosificación, construidos enteramente en polietileno de media densidad (PEMD) de alta resistencia química, compatible con una amplia gama de los productos a dosificar.
+        </p>
+        <p>
+          Diseño compacto y modular, de fácil instalación. Diseñados para nuestra línea de bombas EMD, EMD Plus y EMD Max. Posibilidad de realizar distintas configuraciones y de esta forma lograr dar solución a un sinfín de aplicaciones con el concepto “plug & play”.
+        </p>
+        <p>
+          Aplicaciones: desinfección de agua potable en depuradoras, pozos de abastecimiento agua residual, albercas, zonas rurales, entre otros. Tratamientos de agua de enfriamiento para inhibir el crecimiento biológico y control de algas. Cloración de agua potable en barrios, colegios, clubes, cooperativas, industria. Sistemas de tratamiento de agua en equipos de enfriamientos.
+        </p>
+        <p>
+          El tanque fabricado en material PEMD natural con boca de carga superior y puerto de venteo para gases de cloro. Opcional de 35, 50 y 90 litros. Probeta de acrílico incorporada con graduación para medición de caudal y visualización del nivel. Equipada con válvulas de doble vía para realizar maniobras de cubicado de la bomba y mantenimiento.
         </p>
       </section>
 
-      {/* Sección para Beneficios de la Dosificación Eficiente */}
-      <section id="beneficios-dosificacion" className="my-5" style={{
-        backgroundColor: sectionColors['beneficios-dosificacion'] || 'transparent',
-        backgroundImage: !sectionColors['beneficios-dosificacion'] && backgroundImages['beneficios de la dosificación eficiente'] ? `url(/images/fondos/headeres/${backgroundImages['beneficios de la dosificación eficiente']})` : 'none',
+      {/* Nueva sección de prueba */}
+      <section id="seccion-prueba" className="my-5" style={{
+        backgroundColor: sectionColors['seccion-prueba'],
+        backgroundImage: backgroundImages['seccion-prueba'] ? `url(/images/fondos/headeres/${backgroundImages['seccion-prueba']})` : 'none',
         backgroundSize: 'cover',
         backgroundPosition: 'center'
       }}>
-        <h2>Beneficios de la Dosificación Eficiente</h2>
-        <p>
-          La dosificación eficiente de productos químicos en el agua no solo asegura la pureza del agua potable, sino que también optimiza los costos operativos
-          y reduce el desperdicio, lo que garantiza agua limpia y segura para todos.
-        </p>
-      </section>
-
-      {/* Sección para Impacto Ambiental del Tratamiento de Agua */}
-      <section id="impacto-ambiental" className="my-5" style={{
-        backgroundColor: sectionColors['impacto-ambiental'] || 'transparent',
-        backgroundImage: !sectionColors['impacto-ambiental'] && backgroundImages['impacto ambiental del tratamiento de agua'] ? `url(/images/fondos/headeres/${backgroundImages['impacto ambiental del tratamiento de agua']})` : 'none',
-        backgroundSize: 'cover',
-        backgroundPosition: 'center'
-      }}>
-        <h2>Impacto Ambiental del Tratamiento de Agua</h2>
-        <p>
-          El tratamiento de agua no solo tiene un impacto positivo en la salud pública, sino que también juega un rol clave en la preservación del medio ambiente.
-          Nuestras tecnologías avanzadas reducen la contaminación y promueven la sostenibilidad.
-        </p>
-      </section>
-
-      {/* Sección para El Futuro del Agua Pura */}
-      <section id="futuro-agua-pura" className="my-5" style={{
-        backgroundColor: sectionColors['futuro-agua-pura'] || 'transparent',
-        backgroundImage: !sectionColors['futuro-agua-pura'] && backgroundImages['el futuro del agua pura'] ? `url(/images/fondos/headeres/${backgroundImages['el futuro del agua pura']})` : 'none',
-        backgroundSize: 'cover',
-        backgroundPosition: 'center'
-      }}>
-        <h2>El Futuro del Agua Pura</h2>
-        <p>
-          A medida que las tecnologías avanzan, el futuro del tratamiento de agua apunta hacia soluciones aún más eficientes y sostenibles, con sistemas automatizados
-          que garantizarán agua pura y limpia para las generaciones futuras.
-        </p>
+        <h2>Sección de Prueba</h2>
+        <p>Esta es una sección de prueba con un color imaginario.</p>
       </section>
     </div>
   );
