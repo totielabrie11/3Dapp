@@ -1,24 +1,52 @@
 // SubscriptionNewsLatter.jsx
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 
 const SubscriptionNewsLatter = () => {
+  const [email, setEmail] = useState('');
+  const [message, setMessage] = useState('');
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    setMessage('Aún en fabricación, estará funcionando pronto.');
+    setEmail('');
+  };
+
+  useEffect(() => {
+    if (message) {
+      const timer = setTimeout(() => {
+        setMessage('');
+      }, 5000);
+      return () => clearTimeout(timer);
+    }
+  }, [message]);
+
   return (
-    <footer className="footer py-4" style={{ backgroundColor: 'white', position: 'absolute', bottom: 0, width: '100%' }}>
-      <div className="container">
-        <div className="row align-items-center">
-          <div className="col-lg-4 text-lg-start" style={{ color: '#333' }}>Copyright &copy; Tu Sitio 2024</div>
-          <div className="col-lg-4 my-3 my-lg-0">
-            <a className="btn btn-dark btn-social mx-2" href="#!" aria-label="Twitter"><i className="fab fa-twitter"></i></a>
-            <a className="btn btn-dark btn-social mx-2" href="#!" aria-label="Facebook"><i className="fab fa-facebook-f"></i></a>
-            <a className="btn btn-dark btn-social mx-2" href="#!" aria-label="LinkedIn"><i className="fab fa-linkedin-in"></i></a>
-          </div>
-          <div className="col-lg-4 text-lg-end">
-            <a className="link-dark text-decoration-none me-3" style={{ color: '#333' }} href="#!">Política de Privacidad</a>
-            <a className="link-dark text-decoration-none" style={{ color: '#333' }} href="#!">Términos de Uso</a>
-          </div>
+    <div className="container my-5 p-5" style={{ backgroundColor: '#f9f9f9', borderRadius: '12px', boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)' }}>
+      <div className="row">
+        <div className="col-12 text-center">
+          <h2 style={{ color: '#333', fontWeight: 'bold', marginBottom: '20px' }}>Suscríbete a nuestro boletín de noticias</h2>
+          <p style={{ color: '#666', marginBottom: '30px' }}>Recibe actualizaciones y noticias directamente en tu bandeja de entrada</p>
+          <form onSubmit={handleSubmit} className="d-flex justify-content-center align-items-center flex-column flex-md-row">
+            <input
+              type="email"
+              className="form-control mb-3 mb-md-0 w-75 w-md-50"
+              style={{ padding: '15px', borderRadius: '50px', border: '1px solid #ccc', outline: 'none' }}
+              placeholder="Ingresa tu correo electrónico"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
+            <button
+              type="submit"
+              className="btn btn-primary mx-2 px-4 py-2"
+              style={{ borderRadius: '50px', fontWeight: 'bold', backgroundColor: '#007bff', border: 'none' }}
+            >
+              Suscribirse
+            </button>
+          </form>
+          {message && <p className="mt-4" style={{ color: '#007bff', fontWeight: 'bold' }}>{message}</p>}
         </div>
       </div>
-    </footer>
+    </div>
   );
 };
 
