@@ -124,7 +124,9 @@ function Aguas() {
           </p>
           <div className="row text-center">
             <div className="col-md-6">
-              <div className="equipo-image" id="equipo-1000-img"></div>
+              <div className="equipo-image" id="equipo-1000-img">
+                <img src="assets/img/portfolio/eq1000.png" alt="eq1000" />
+              </div>
               <h3>Equipo de 1000 Litros</h3>
               <ul className="list-unstyled">
                 <li><strong>Dimensiones:</strong> 60 x 91</li>
@@ -135,7 +137,9 @@ function Aguas() {
               <button className="btn btn-primary">Cotizar</button>
             </div>
             <div className="col-md-6">
-              <div className="equipo-image" id="equipo-200-img"></div>
+              <div className="equipo-image" id="equipo-200-img">
+                <img src="assets/img/portfolio/equipo200.jpg" alt="equipo200" />
+              </div>
               <h3>Equipo de 200 Litros</h3>
               <ul className="list-unstyled">
                 <li><strong>Dimensiones:</strong> 76 x 100</li>

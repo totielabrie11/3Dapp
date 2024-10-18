@@ -118,5 +118,10 @@
     "photoName": "cara.webp",
     "pageName": "Refineria",
     "section": "Nuevas Tecnologías en Equipos de Vacío"
+  },
+  {
+    "photoName": "fondoPetroleo.png",
+    "pageName": "Petroleo",
+    "section": "Encabezado"
   }
 ]

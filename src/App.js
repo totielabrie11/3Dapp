@@ -19,6 +19,14 @@ import Refrigeracion from './components/Home/Pages/Refrigeracion';
 import Refineria from './components/Home/Pages/Refineria';
 import VideoAdmin from './components/Administrador/VideoAdmin';
 
+const isLocalhost = window.location.hostname === 'localhost';
+
+const BACKEND_URL = isLocalhost 
+? 'http://localhost:3005'
+: 'http://dosivac.homeip.net:3005';
+
+console.log("🚀 ~ BACKEND_URL:", BACKEND_URL);
+
 function App() {
   const [isAdmin, setIsAdmin] = useState(false);
   const [user, setUser] = useState(null);
