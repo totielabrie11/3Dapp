@@ -1,11 +1,6 @@
 const getBackendUrl = () => {
-  // Verifica si estás en localhost
-  const isLocalhost = window.location.hostname === 'localhost';
-
-  // Determina la URL del backend según el entorno
-  const BACKEND_URL = isLocalhost 
-    ? 'http://localhost:3005'
-    : 'http://dosivac.homeip.net:3005';
+  // URL estática del backend
+  const BACKEND_URL = 'http://dosivac.homeip.net:3005';
 
   console.log("🚀 ~ BACKEND_URL:", BACKEND_URL);
 
