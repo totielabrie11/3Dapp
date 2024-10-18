@@ -7,6 +7,7 @@ import Contacto from './Contacto/Contacto'; // Importamos el componente de Conta
 import Mercados from './Mercados/Mercados'; // Importamos el nuevo componente de Mercados
 import Empresa from './Empresa/Empresa'; 
 import Historia from './Historia/Historia'; 
+import SubscriptionNewsLatter from './NewsLatter/SubscriptionNewsLatter'
 
 const Home = () => {
 
@@ -48,7 +49,7 @@ const Home = () => {
             <Novedades />
             {/* Sección de Contacto */}
             <Contacto />
-
+            <SubscriptionNewsLatter />
             {/* Footer */}
             <footer className="footer py-4">
                 <div className="container">

@@ -123,5 +123,10 @@
     "photoName": "fondoPetroleo.png",
     "pageName": "Petroleo",
     "section": "Encabezado"
+  },
+  {
+    "photoName": "fondoPetroleoEspecificas.png",
+    "pageName": "Petroleo",
+    "section": "EQUIPOS INTELIGENTES"
   }
 ]

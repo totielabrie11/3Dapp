@@ -1,10 +1,10 @@
 import './Footer.css'; // Enlaza tu CSS personalizado
-import { FaFacebook, FaTwitter, FaLinkedin, FaInstagram, FaYoutube, FaWhatsapp } from 'react-icons/fa'; // Importa los iconos de Font Awesome desde react-icons
+import { FaFacebook, FaLinkedin, FaInstagram, FaYoutube, FaWhatsapp } from 'react-icons/fa'; // Importa los iconos de Font Awesome desde react-icons
 
 const Footer = () => {
   return (
-    <div id="footer-wrapper">
-      <footer id="footer" className="container">
+    <div id="footer-wrapper" style={{ position: 'relative', minHeight: '100vh' }}>
+      <footer id="footer" className="container" style={{ paddingBottom: '100px' }}>
         <div className="row">
           {/* Certificaciones */}
           <div className="col-3 col-6-medium col-12-small">
@@ -43,6 +43,8 @@ const Footer = () => {
                 <a href="/" onClick={(e) => e.preventDefault()}><FaYoutube /></a>
                 <a href="/" onClick={(e) => e.preventDefault()}><FaWhatsapp /></a>
                 <a href="/" onClick={(e) => e.preventDefault()}><FaLinkedin /></a>
+                <a href="/" onClick={(e) => e.preventDefault()}><FaFacebook /></a>
+                <a href="/" onClick={(e) => e.preventDefault()}>X</a>
               </div>
             </section>
           </div>
@@ -61,13 +63,22 @@ const Footer = () => {
             </section>
           </div>
         </div>
-        {/* Sección de redes sociales alineada al final del footer */}
-        <div id="footer-social">
-          <div className="social-icons">
-            <a href="/" onClick={(e) => e.preventDefault()}><FaFacebook /></a>
-            <a href="/" onClick={(e) => e.preventDefault()}><FaTwitter /></a>
-            <a href="/" onClick={(e) => e.preventDefault()}><FaLinkedin /></a>
-            <a href="/" onClick={(e) => e.preventDefault()}><FaInstagram /></a>
+      </footer>
+
+      {/* Copyright y Redes sociales adicionales */}
+      <footer className="footer py-4" style={{ backgroundColor: 'white', position: 'absolute', bottom: 0, width: '100%' }}>
+        <div className="container">
+          <div className="row align-items-center">
+            <div className="col-lg-4 text-lg-start" style={{ color: '#333' }}>Copyright &copy; Tu Sitio 2024</div>
+            <div className="col-lg-4 my-3 my-lg-0">
+              <a className="btn btn-dark btn-social mx-2" href="#!" aria-label="Twitter"><i className="fab fa-twitter"></i></a>
+              <a className="btn btn-dark btn-social mx-2" href="#!" aria-label="Facebook"><i className="fab fa-facebook-f"></i></a>
+              <a className="btn btn-dark btn-social mx-2" href="#!" aria-label="LinkedIn"><i className="fab fa-linkedin-in"></i></a>
+            </div>
+            <div className="col-lg-4 text-lg-end">
+              <a className="link-dark text-decoration-none me-3" style={{ color: '#333' }} href="#!">Política de Privacidad</a>
+              <a className="link-dark text-decoration-none" style={{ color: '#333' }} href="#!">Términos de Uso</a>
+            </div>
           </div>
         </div>
       </footer>

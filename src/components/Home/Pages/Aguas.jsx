@@ -123,28 +123,34 @@ function Aguas() {
             y 200 litros, cada uno adaptado a diferentes requerimientos industriales y de tratamiento de agua.
           </p>
           <div className="row text-center">
+            {/* Equipo 1000 Litros */}
             <div className="col-md-6">
               <div className="equipo-image" id="equipo-1000-img">
-                <img src="assets/img/portfolio/eq1000.png" alt="eq1000" />
+                <div className="image-container">
+                  <img src="assets/img/portfolio/eq1000.png" alt="Equipo de 1000 Litros" className="img-fluid" />
+                </div>
               </div>
               <h3>Equipo de 1000 Litros</h3>
               <ul className="list-unstyled">
                 <li><strong>Dimensiones:</strong> 60 x 91</li>
                 <li><strong>Caudal máximo:</strong> 840 l/d</li>
-                <li><strong>Presión máxima:</strong> 650 kg/cm2</li>
+                <li><strong>Presión máxima:</strong> 650 kg/cm²</li>
                 <li>Opcional para alta presión</li>
               </ul>
               <button className="btn btn-primary">Cotizar</button>
             </div>
+            {/* Equipo 200 Litros */}
             <div className="col-md-6">
               <div className="equipo-image" id="equipo-200-img">
-                <img src="assets/img/portfolio/equipo200.jpg" alt="equipo200" />
+                <div className="image-container">
+                  <img src="assets/img/portfolio/equipo200.jpg" alt="Equipo de 200 Litros" className="img-fluid" />
+                </div>
               </div>
               <h3>Equipo de 200 Litros</h3>
               <ul className="list-unstyled">
                 <li><strong>Dimensiones:</strong> 76 x 100</li>
                 <li><strong>Caudal máximo:</strong> 5200 l/d</li>
-                <li><strong>Presión máxima:</strong> 200 kg/cm2</li>
+                <li><strong>Presión máxima:</strong> 200 kg/cm²</li>
                 <li>Opcional para alta presión</li>
               </ul>
               <button className="btn btn-primary">Cotizar</button>
@@ -152,6 +158,7 @@ function Aguas() {
           </div>
         </div>
       </section>
+
 
       {/* Sección para Sistemas Portátiles de Dosificación */}
       <section id="sistemas-portatiles" className="my-5" style={{
