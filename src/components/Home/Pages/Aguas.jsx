@@ -213,13 +213,13 @@ function Aguas() {
         </div>
       </section>
 
-      <section id="equipos-portatiles" className="my-5 portable-equipment-section" style={{
+      <section id="equipos-portatiles" className="my-5 cloracion-equipment-section" style={{
         backgroundColor: sectionColors['equipos-portatiles'] || 'transparent',
-        backgroundImage: backgroundImages['equipos portatiles'] ? `url(/images/fondos/headeres/${backgroundImages['equipos portatiles']})` : 'none',
+        backgroundImage: backgroundImages['equipos-portatiles'] ? `url(/images/fondos/headeres/${backgroundImages['equipos-portatiles']})` : 'none',
         backgroundSize: 'cover',
         backgroundPosition: 'center'
-      }}>
-        <h2>SERIE EQUIPOS PORTATILES DE CLORACION</h2>
+        }}>
+        <h2>SERIE AQUALINE - EQUIPOS DE CLORACIÓN</h2>
         <p>
           Una línea de equipos modulares para la dosificación, construidos enteramente en polietileno de media densidad (PEMD) de alta resistencia química, compatible con una amplia gama de los productos a dosificar.
         </p>
@@ -227,10 +227,10 @@ function Aguas() {
           Diseño compacto y modular, de fácil instalación. Diseñados para nuestra línea de bombas EMD, EMD Plus y EMD Max. Posibilidad de realizar distintas configuraciones y de esta forma lograr dar solución a un sinfín de aplicaciones con el concepto “plug & play”.
         </p>
         <p>
-          Aplicaciones: desinfección de agua potable en depuradoras, pozos de abastecimiento agua residual, albercas, zonas rurales, entre otros. Tratamientos de agua de enfriamiento para inhibir el crecimiento biológico y control de algas. Cloración de agua potable en barrios, colegios, clubes, cooperativas, industria. Sistemas de tratamiento de agua en equipos de enfriamientos.
+          <strong>Aplicaciones:</strong> desinfección de agua potable en depuradoras, pozos de abastecimiento de agua residual, albercas, zonas rurales, entre otros. Tratamientos de agua de enfriamiento para inhibir el crecimiento biológico y control de algas. Cloración de agua potable en barrios, colegios, clubes, cooperativas, industria. Sistemas de tratamiento de agua en equipos de enfriamientos.
         </p>
         <p>
-          El tanque fabricado en material PEMD natural con boca de carga superior y puerto de venteo para gases de cloro. Opcional de 35, 50 y 90 litros. Probeta de acrílico incorporada con graduación para medición de caudal y visualización del nivel. Equipada con válvulas de doble vía para realizar maniobras de cubicado de la bomba y mantenimiento.
+          El tanque está fabricado en material PEMD natural con boca de carga superior y puerto de venteo para gases de cloro. Opcional de 35, 50 y 90 litros. Probeta de acrílico incorporada con graduación para medición de caudal y visualización del nivel. Equipada con válvulas de doble vía para realizar maniobras de cubicado de la bomba y mantenimiento.
         </p>
       </section>
 
