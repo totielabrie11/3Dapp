@@ -1,21 +1,23 @@
 const getBackendUrl = () => {
-  const hostname = window.location.hostname;
-  console.log('Hostname actual:', hostname); // Para verificar el hostname actual
+  // Verifica si estás en localhost
+  const isLocalhost = window.location.hostname === 'localhost';
 
-  const isLocalhost = ['localhost', '127.0.0.1', '::1'].includes(hostname);
-  
-  // Verifica si la variable de entorno está definida
-  const prodUrl = process.env.REACT_APP_BACKEND_URL_PROD || 'http://dosivac.homeip.net:3005';
+  // Determina la URL del backend según el entorno
+  const BACKEND_URL = isLocalhost 
+    ? 'http://localhost:3005'
+    : 'http://dosivac.homeip.net:3005';
 
-  if (!process.env.REACT_APP_BACKEND_URL_PROD) {
-    console.warn('Advertencia: REACT_APP_BACKEND_URL_PROD no está definida. Usando valor por defecto:', prodUrl);
-  }
+  console.log("🚀 ~ BACKEND_URL:", BACKEND_URL);
 
-  console.log('REACT_APP_BACKEND_URL_PROD:', prodUrl);
-  console.log('isLocalhost:', isLocalhost);
+  // Construye la URL de la API
+  const apiURL = `${BACKEND_URL}/api/v1`;
 
-  // Devuelve la URL correcta dependiendo si es localhost o no
-  return isLocalhost ? 'http://localhost:3005' : prodUrl;
+  console.log('Environment:', process.env.NODE_ENV);
+  console.log('API URL:', apiURL);
+
+  // Retorna la URL del backend
+  return BACKEND_URL;
 };
 
+// Exporta la URL correcta del backend
 export const BACKEND_URL = getBackendUrl();
