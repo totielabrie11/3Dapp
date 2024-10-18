@@ -27,6 +27,12 @@ const BACKEND_URL = isLocalhost
 
 console.log("🚀 ~ BACKEND_URL:", BACKEND_URL);
 
+
+const apiURL = `${BACKEND_URL}/api/v1`;
+
+console.log('Environment:', process.env.NODE_ENV);
+console.log('API URL:', apiURL);
+
 function App() {
   const [isAdmin, setIsAdmin] = useState(false);
   const [user, setUser] = useState(null);
