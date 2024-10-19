@@ -355,6 +355,47 @@ app.post('/api/product-characteristics', (req, res) => {
   res.json({ success: true });
 });
 
+
+
+// Eliminar una descripción de producto, la imagen asociada y su orden
+app.delete('/api/product', (req, res) => {
+  const { name } = req.body;
+
+  // Leer las descripciones de productos
+  let descriptions = readFileFromPath(productosDescriptionPath);
+
+  // Buscar el producto a eliminar
+  const productToDelete = descriptions.find(product => product.name === name);
+  if (!productToDelete) {
+    return res.status(404).json({ success: false, message: 'Producto no encontrado.' });
+  }
+
+  // Eliminar el producto del archivo de descripciones
+  descriptions = descriptions.filter(product => product.name !== name);
+  saveFileToPath(productosDescriptionPath, descriptions);
+
+  // Eliminar la imagen asociada al producto
+  const imagePath = path.join(__dirname, 'public', productToDelete['path-image']);
+  fs.unlink(imagePath, (err) => {
+    if (err) {
+      console.error('Error al eliminar la imagen:', err);
+      return res.status(500).json({ success: false, message: 'No se pudo eliminar la imagen.' });
+    }
+
+    // Leer el archivo de orden de productos
+    let order = readFileFromPath(productOrderPath);
+
+    // Eliminar el nombre del producto del orden
+    order = order.filter(productName => productName !== name);
+    saveFileToPath(productOrderPath, order);
+
+    // Responder con éxito
+    res.json({ success: true });
+  });
+});
+
+
+
 // Establecer configuraciones de productos
 app.post('/api/product-settings', (req, res) => {
   const { name, lightIntensity, spotLightIntensity, lightPosition, isAnimating, rotationSpeed } = req.body;

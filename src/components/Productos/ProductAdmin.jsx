@@ -68,6 +68,31 @@ function ProductAdmin() {
     }
   };
 
+  const deleteProductDescription = async (name) => {
+    if (!window.confirm('¿Estás seguro de que deseas eliminar este producto?')) {
+      return;
+    }
+    try {
+      const response = await fetch(`${BACKEND_URL}/api/product`, {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ name }),
+      });
+
+      if (response.ok) {
+        alert('Producto eliminado exitosamente');
+        fetchProducts();
+      } else {
+        alert('No se ha logrado eliminar el producto o la imagen');
+      }
+    } catch (error) {
+      console.error('No se ha logrado eliminar el producto o la imagen:', error);
+      alert('No se ha logrado eliminar el producto o la imagen');
+    }
+  };
+
   const updateCharacteristics = async (updatedCharacteristics) => {
     if (selectedProduct) {
       const response = await fetch(`${BACKEND_URL}/api/product-characteristics`, {
@@ -279,6 +304,14 @@ function ProductAdmin() {
             setCharacteristics={setCharacteristics}
             handleProductClick={handleProductClick}
           />
+          <div className="product-list">
+            {products.map((product) => (
+              <div key={product.name} className="product-item">
+                <span>{product.name}</span>
+                <button onClick={() => deleteProductDescription(product.name)}>Eliminar</button>
+              </div>
+            ))}
+          </div>
         </div>
         <div className="center-column">
           {selectedProduct && (

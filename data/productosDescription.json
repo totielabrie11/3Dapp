@@ -260,31 +260,5 @@
       "Tipo de accionamiento: Eléctrico"
     ],
     "path-image": "/models/EMDMAX.png"
-  },
-  {
-    "name": "Imagen de WhatsApp 2023-11-08 a las 11.14.24_b69cc648",
-    "description": "televisor 29\" philco\n",
-    "path": "",
-    "path-image": "/models/Imagen de WhatsApp 2023-11-08 a las 11.14.24_b69cc648.jpg",
-    "caracteristicas": [
-      "full hd",
-      "pantalla: led"
-    ]
-  },
-  {
-    "name": "tele",
-    "description": "Tele",
-    "path": "/models/tele.jpg",
-    "caracteristicas": [
-      "Tipo de Producto: Educativo"
-    ],
-    "path-image": "/models/tele.jpg"
-  },
-  {
-    "name": "fondo agua1",
-    "description": "",
-    "path": "",
-    "path-image": "/models/fondo agua1.jpg",
-    "caracteristicas": []
   }
 ]
