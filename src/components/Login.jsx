@@ -1,10 +1,13 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { BACKEND_URL } from './configLocalHost'; // Importar la URL del backend
+import './Login.css';
 
 const Login = ({ setIsAdmin, setUser }) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
+  const navigate = useNavigate();
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -27,38 +30,45 @@ const Login = ({ setIsAdmin, setUser }) => {
         // Establecer si el usuario es administrador
         setIsAdmin(data.role === 'administrador');
         setUser({ name: data.username, role: data.role });
+        alert('Logueado correctamente.');
+        // Redirigir a la vista original o al home
+        setTimeout(() => navigate('/home'), 500);
       } else {
-        setError('Invalid credentials');
+        setError('Credenciales inválidas.');
       }
       
     } catch (error) {
-      setError('An error occurred. Please try again.');
+      setError('Ocurrió un error. Por favor, intente nuevamente.');
     }
   };
 
   return (
-    <div>
-      <h1>Login</h1>
-      <form onSubmit={handleLogin}>
-        <div>
-          <label>Username:</label>
-          <input
-            type="text"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-          />
-        </div>
-        <div>
-          <label>Password:</label>
-          <input
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
-        </div>
-        <button type="submit">Login</button>
-        {error && <p style={{ color: 'red' }}>{error}</p>}
-      </form>
+    <div id="login-wrapper">
+      <div id="login-container">
+        <h1>Login</h1>
+        <form onSubmit={handleLogin}>
+          <div>
+            <label htmlFor="username">Username:</label>
+            <input
+              type="text"
+              id="username"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+            />
+          </div>
+          <div>
+            <label htmlFor="password">Password:</label>
+            <input
+              type="password"
+              id="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
+          </div>
+          <button type="submit">Login</button>
+          {error && <p>{error}</p>}
+        </form>
+      </div>
     </div>
   );
 };
