@@ -7,11 +7,13 @@ const Login = ({ setIsAdmin, setUser }) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
+  const [success, setSuccess] = useState('');
   const navigate = useNavigate();
 
   const handleLogin = async (e) => {
     e.preventDefault();
     setError('');
+    setSuccess('');
 
     try {
       // Usar BACKEND_URL en la llamada a la API
@@ -30,9 +32,9 @@ const Login = ({ setIsAdmin, setUser }) => {
         // Establecer si el usuario es administrador
         setIsAdmin(data.role === 'administrador');
         setUser({ name: data.username, role: data.role });
-        alert('Logueado correctamente.');
+        setSuccess('Logueado correctamente. Se ha agregado el menú administrador. Redirigiendo...');
         // Redirigir a la vista original o al home
-        setTimeout(() => navigate('/home'), 500);
+        setTimeout(() => navigate('/home'), 3000);
       } else {
         setError('Credenciales inválidas.');
       }
@@ -66,7 +68,8 @@ const Login = ({ setIsAdmin, setUser }) => {
             />
           </div>
           <button type="submit">Login</button>
-          {error && <p>{error}</p>}
+          {error && <p style={{ color: 'red' }}>{error}</p>}
+          {success && <p style={{ color: 'green' }}>{success}</p>}
         </form>
       </div>
     </div>
@@ -74,3 +77,4 @@ const Login = ({ setIsAdmin, setUser }) => {
 };
 
 export default Login;
+  

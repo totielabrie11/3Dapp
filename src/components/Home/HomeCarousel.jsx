@@ -60,7 +60,7 @@ const HomeCarousel = () => {
           const matchingFontColor = matchingData.fontColor || '#ffffff'; // Color predeterminado
           const matchingTextTransform = matchingData.textTransform || 'none'; // Transformación de texto predeterminada
           const matchingBackgroundColor = matchingData.backgroundColor || 'rgba(0, 0, 0, 0.7)'; // Color de fondo predeterminado
-          const matchingPageUrl = matchingData.pageName ? `http://localhost:3000/${matchingData.pageName.toLowerCase()}` : '#'; // URL de la página
+          const matchingPageUrl = matchingData.pageName ? `${BACKEND_URL}/${matchingData.pageName.toLowerCase()}` : '#'; // URL de la página
 
           return (
             <div

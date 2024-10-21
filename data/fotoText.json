@@ -1,11 +1,11 @@
 [
   {
     "name": "campo.png",
-    "description": "Venite Que La Vas a Pasar Genial",
+    "description": "Venite Que La Vas a Pasar Genial con todo tu equipo",
     "fontFamily": "Times New Roman, serif",
     "fontColor": "#04ff00",
     "textTransform": "uppercase",
-    "backgroundColor": "rgba(0, 0, 0, 0.4)",
+    "backgroundColor": "rgba(0, 0, 0, 0.7)",
     "pageName": "Aguas"
   },
   {
@@ -23,7 +23,8 @@
     "fontFamily": "Comic Sans MS, cursive",
     "fontColor": "#ffffff",
     "textTransform": "uppercase",
-    "backgroundColor": "rgba(0, 0, 0, 0.7)"
+    "backgroundColor": "rgba(0, 0, 0, 0)",
+    "pageName": "Refrigeracion"
   },
   {
     "name": "noche.png",
@@ -45,5 +46,14 @@
     "fontColor": "#ffffff",
     "textTransform": "none",
     "backgroundColor": "rgba(0, 0, 0, 0.7)"
+  },
+  {
+    "name": "aplicandovacio.webp",
+    "description": "estudia regrigeración con dosivac que te va a quedar piola",
+    "fontFamily": "Georgia, serif",
+    "fontColor": "#d7c614",
+    "textTransform": "uppercase",
+    "backgroundColor": "rgba(255, 0, 0, 0.7)",
+    "paginaAsignar": "Refrigeracion"
   }
 ]

@@ -3,6 +3,7 @@ import axios from 'axios';
 import FotosAdminAsignadorPaginas from './FotosAdminAsign/FotosAdminAsignadorPaginas';
 import FotosAdminAsignadorSeccion from './FotosAdminAsign/FotosAdminAsignadorSeccion';
 import FotosAdminAsignadorEnviar from './FotosAdminAsign/FotosAdminAsignadorEnviar';
+import TextFotoEditorEncabezado from './TextFotoEditorEncabezado';
 import { BACKEND_URL } from '../configLocalHost'; // Importar BACKEND_URL
 
 function FotosAdminEncabezados({ onPhotosLoaded, onAssign }) {
@@ -11,6 +12,7 @@ function FotosAdminEncabezados({ onPhotosLoaded, onAssign }) {
   const [showAssignPageModal, setShowAssignPageModal] = useState(false);  // Primer modal
   const [showAssignSectionModal, setShowAssignSectionModal] = useState(false);  // Segundo modal
   const [showConfirmModal, setShowConfirmModal] = useState(false);  // Modal para confirmar y enviar
+  const [showTextEditorModal, setShowTextEditorModal] = useState(false);  // Modal para agregar descripción
   const [selectedHeader, setSelectedHeader] = useState(null);
   const [selectedPage, setSelectedPage] = useState(null);  // Almacena la página seleccionada
   const [selectedSection, setSelectedSection] = useState(null);  // Almacena la sección seleccionada
@@ -58,6 +60,7 @@ function FotosAdminEncabezados({ onPhotosLoaded, onAssign }) {
     setShowAssignPageModal(false);
     setShowAssignSectionModal(false);
     setShowConfirmModal(false);
+    setShowTextEditorModal(false);
     setSelectedHeader(null);
     setSelectedPage(null);
     setSelectedSection(null);
@@ -75,6 +78,12 @@ function FotosAdminEncabezados({ onPhotosLoaded, onAssign }) {
     setSelectedSection(section);
     setShowAssignSectionModal(false);
     setShowConfirmModal(true); // Abre el modal de confirmación
+  };
+
+  // Abrir el modal del editor de texto
+  const handleEditDescription = (header) => {
+    setSelectedHeader(header);
+    setShowTextEditorModal(true);
   };
 
   return (
@@ -102,10 +111,16 @@ function FotosAdminEncabezados({ onPhotosLoaded, onAssign }) {
                   Eliminar
                 </button>
                 <button
-                  className="btn btn-info btn-sm"
+                  className="btn btn-info btn-sm me-2"
                   onClick={() => handleAssignHeader(header)}
                 >
                   Asignar
+                </button>
+                <button
+                  className="btn btn-secondary btn-sm"
+                  onClick={() => handleEditDescription(header)}
+                >
+                  Descripción
                 </button>
               </div>
             </li>
@@ -142,6 +157,20 @@ function FotosAdminEncabezados({ onPhotosLoaded, onAssign }) {
           selectedHeader={selectedHeader}
           selectedPage={selectedPage}
           selectedSection={selectedSection}
+        />
+      )}
+
+      {/* Modal de edición de descripción */}
+      {selectedHeader && (
+        <TextFotoEditorEncabezado
+          show={showTextEditorModal}
+          handleClose={handleAssignModalClose}
+          selectedPhoto={selectedHeader}
+          handleSave={(updatedHeader) => {
+            // Actualizar el encabezado con la nueva descripción
+            setHeaders(headers.map(header => header.name === updatedHeader.name ? updatedHeader : header));
+            setShowTextEditorModal(false);
+          }}
         />
       )}
     </div>

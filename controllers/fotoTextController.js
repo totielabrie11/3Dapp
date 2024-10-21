@@ -6,8 +6,9 @@ const fotoTextController = {
   // Método POST para guardar o actualizar las descripciones
   save: (req, res) => {
     const dataPath = path.join(__dirname, '../data/fotoText.json');
-    const { name, description, fontFamily, fontColor, textTransform, backgroundColor, pageName } = req.body;
+    const { name, description, fontFamily, fontColor, textTransform, backgroundColor, pageName, paginaAsignar } = req.body;
 
+    // Validar campos obligatorios
     if (!name || !fontFamily || !fontColor || !textTransform || !backgroundColor) {
       console.log('Error: Faltan datos requeridos para guardar la descripción.', req.body);
       return res.status(400).json({ error: 'El nombre, el tipo de letra, el color de letra, la transformación del texto y el color de fondo son requeridos.' });
@@ -25,21 +26,43 @@ const fotoTextController = {
         fs.writeFileSync(dataPath, JSON.stringify(jsonData, null, 2));
       }
 
-      // Verificar si ya existe una entrada con el mismo nombre y reemplazarla
+      // Verificar si ya existe una entrada con el mismo nombre
       const existingIndex = jsonData.findIndex(entry => entry.name === name);
       const sanitizedBackgroundColor = backgroundColor.includes('NaN') || backgroundColor.includes('undefined') ? 'rgba(0, 0, 0, 0)' : backgroundColor;
 
+      // Determinar si usamos pageName o paginaAsignar, según qué campo esté presente
+      const pageField = paginaAsignar ? { paginaAsignar } : { pageName };
+
       if (existingIndex !== -1) {
-        console.log('Actualizando descripción existente:', { name, description, fontFamily, fontColor, textTransform, backgroundColor: sanitizedBackgroundColor, pageName });
+        // Actualizar la entrada existente
+        console.log('Actualizando descripción existente:', { name, description, fontFamily, fontColor, textTransform, backgroundColor: sanitizedBackgroundColor, ...pageField });
         jsonData[existingIndex].description = description;
         jsonData[existingIndex].fontFamily = fontFamily;
         jsonData[existingIndex].fontColor = fontColor;
         jsonData[existingIndex].textTransform = textTransform;
         jsonData[existingIndex].backgroundColor = sanitizedBackgroundColor;
-        jsonData[existingIndex].pageName = pageName;
+
+        // Actualizar pageName o paginaAsignar según sea el caso
+        if (paginaAsignar) {
+          jsonData[existingIndex].paginaAsignar = paginaAsignar;
+          delete jsonData[existingIndex].pageName; // Remover pageName si antes existía
+        } else {
+          jsonData[existingIndex].pageName = pageName;
+          delete jsonData[existingIndex].paginaAsignar; // Remover paginaAsignar si antes existía
+        }
       } else {
-        console.log('Guardando nueva descripción:', { name, description, fontFamily, fontColor, textTransform, backgroundColor: sanitizedBackgroundColor, pageName });
-        jsonData.push({ name, description, fontFamily, fontColor, textTransform, backgroundColor: sanitizedBackgroundColor, pageName });
+        // Crear una nueva entrada
+        console.log('Guardando nueva descripción:', { name, description, fontFamily, fontColor, textTransform, backgroundColor: sanitizedBackgroundColor, ...pageField });
+        const newEntry = {
+          name,
+          description,
+          fontFamily,
+          fontColor,
+          textTransform,
+          backgroundColor: sanitizedBackgroundColor,
+          ...pageField
+        };
+        jsonData.push(newEntry);
       }
 
       // Guardar los cambios en el archivo JSON
@@ -60,6 +83,7 @@ const fotoTextController = {
       if (fs.existsSync(dataPath)) {
         const fileData = fs.readFileSync(dataPath, 'utf8');
         const jsonData = JSON.parse(fileData);
+
         // Asegurarse de que los valores NaN se manejen adecuadamente
         const sanitizedData = jsonData.map(entry => {
           if (entry.backgroundColor && (entry.backgroundColor.includes('NaN') || entry.backgroundColor.includes('undefined'))) {
@@ -67,8 +91,9 @@ const fotoTextController = {
           }
           return entry;
         });
-        console.log('Datos enviados:', sanitizedData); // <-- Asegúrate de ver estos datos
-        return res.status(200).json(sanitizedData); // Devolver todo el contenido del archivo JSON
+
+        console.log('Datos enviados:', sanitizedData);
+        return res.status(200).json(sanitizedData);
       } else {
         console.log('Archivo JSON no encontrado. No hay datos disponibles.');
         return res.status(404).json({ message: 'No se encontraron descripciones.' });
