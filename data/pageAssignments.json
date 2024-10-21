@@ -128,5 +128,10 @@
     "photoName": "fondoPetroleoEspecificas.png",
     "pageName": "Petroleo",
     "section": "EQUIPOS INTELIGENTES"
+  },
+  {
+    "photoName": "aplicandovacio.webp",
+    "pageName": "Refrigeracion",
+    "section": "Encabezado"
   }
 ]

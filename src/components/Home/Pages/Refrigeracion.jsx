@@ -3,6 +3,7 @@ import axios from 'axios';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './Refrigeracion.css';
 import { BACKEND_URL } from '../../configLocalHost'; // Importa la URL desde el archivo config
+import Encabezado from './Encabezado'; // Importamos el componente Encabezado
 
 function Refrigeracion() {
   const [backgroundImages, setBackgroundImages] = useState({});
@@ -93,52 +94,8 @@ function Refrigeracion() {
 
   return (
     <div>
-      <div
-        style={{
-          position: 'relative',
-          height: '100vh',
-          width: '100%',
-          overflow: 'hidden'
-        }}
-      >
-        <div
-          style={{
-            position: 'absolute',
-            top: 0,
-            left: 0,
-            width: '100%',
-            height: '100%',
-            zIndex: -1,
-            opacity: 0.5,
-            overflow: 'hidden',
-          }}
-        >
-          {backgroundImages.encabezado ? (
-            <img
-              src={`/images/fondos/headeres/${backgroundImages.encabezado}`}
-              alt="Fondo Refrigeración"
-              style={{
-                width: '100%',
-                height: '100%',
-                objectFit: 'cover',
-                pointerEvents: 'none'
-              }}
-              onError={() => console.error('Error al cargar la imagen desde:', `/images/fondos/headeres/${backgroundImages.encabezado}`)}
-            />
-          ) : (
-            <p>Cargando imagen...</p>
-          )}
-        </div>
-
-        <div id="encabezado" className="container text-center" style={{ position: 'relative', zIndex: 1, paddingTop: '150px', marginTop: '70px' }}>
-          <h2 className="mb-3" style={{ color: '#fff' }}>SOLUCIONES AVANZADAS PARA EL SECTOR</h2>
-          <h1 className="mb-4" style={{ color: '#fff' }}>REFRIGERACIÓN Y VACÍO INDUSTRIA</h1>
-          <p className="mb-5" style={{ color: '#fff' }}>
-            Dosivac se especializa en soluciones avanzadas de refrigeración y vacío industrial, ofreciendo una gama de bombas de alta eficiencia y rendimiento para diversas aplicaciones industriales.
-            Sus productos están diseñados para garantizar la fiabilidad y el ahorro energético, respondiendo a las necesidades más exigentes del mercado.
-          </p>
-        </div>
-      </div>
+      {/* Componente Encabezado con la imagen de fondo */}
+      <Encabezado backgroundImage={backgroundImages.encabezado} />
 
       {/* Sección: Bombas de Vacío */}
       <section

@@ -48,12 +48,21 @@
     "backgroundColor": "rgba(0, 0, 0, 0.7)"
   },
   {
+    "name": "fondoagua.jpg",
+    "description": "toma agua purta muy rica con sabor a Dosivac ",
+    "fontFamily": "Arial, sans-serif",
+    "fontColor": "#ffffff",
+    "textTransform": "none",
+    "backgroundColor": "rgba(0, 0, 0, 0.7)",
+    "paginaAsignar": "Aguas"
+  },
+  {
     "name": "aplicandovacio.webp",
-    "description": "estudia regrigeración con dosivac que te va a quedar piola",
-    "fontFamily": "Georgia, serif",
-    "fontColor": "#d7c614",
-    "textTransform": "uppercase",
-    "backgroundColor": "rgba(255, 0, 0, 0.7)",
+    "description": "Te va a quedar hermoso el equipo con nuestra bomba Dosivac",
+    "fontFamily": "Arial, sans-serif",
+    "fontColor": "#ffffff",
+    "textTransform": "none",
+    "backgroundColor": "rgba(0, 0, 0, 0.7)",
     "paginaAsignar": "Refrigeracion"
   }
 ]
