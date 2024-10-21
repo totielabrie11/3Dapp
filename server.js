@@ -755,12 +755,15 @@ app.put('/api/distribuidores/:id', (req, res) => {
 // Endpoint para manejar contactos y envío de correos
 app.post('/api/contact', upload.single('file'), enviarCorreo);
 
-/* // Para servir el frontend (React o cualquier SPA)
+
+// Servir archivos estáticos desde el directorio 'build'
 app.use(express.static(path.join(__dirname, 'build')));
+
+// Para cualquier ruta, servir el archivo 'index.html'
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, 'build', 'index.html'));
 });
- */
+
 // Iniciar el servidor
 const server = app.listen(port, () => {
   console.log(`Servidor corriendo en el puerto ${port}`);

@@ -3,6 +3,7 @@ import axios from 'axios';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './Aguas.css';
 import { BACKEND_URL } from '../../configLocalHost'; // Importar BACKEND_URL desde config.js
+import Encabezado from './Encabezado'; // Importamos el componente Encabezado
 
 function Aguas() {
   const [backgroundImages, setBackgroundImages] = useState({}); // Estado para las imágenes de fondo por sección
@@ -17,14 +18,11 @@ function Aguas() {
     'seccion-prueba': '#123456' // Nueva sección con color imaginario
   });
 
-  // Función para obtener las asignaciones de contenido desde el backend
   const fetchAssignments = useCallback(async () => {
     try {
-      const response = await axios.get(`${BACKEND_URL}/api/pages/assignments`); // Usar BACKEND_URL
+      const response = await axios.get(`${BACKEND_URL}/api/pages/assignments`);
       const assignments = response.data;
-      console.log('Asignaciones obtenidas del backend:', assignments);
 
-      // Separar las asignaciones por página de forma dinámica
       const assignmentsByPage = assignments.reduce((acc, assignment) => {
         const { pageName } = assignment;
         if (!acc[pageName]) {
@@ -34,15 +32,7 @@ function Aguas() {
         return acc;
       }, {});
 
-      Object.keys(assignmentsByPage).forEach(pageName => {
-        console.log(`Asignaciones para la página ${pageName}:`, assignmentsByPage[pageName]);
-      });
-
-      // Identificar y trabajar con el array de la página "Aguas"
       if (assignmentsByPage.Aguas) {
-        console.log('Trabajando con el array de la página Aguas:', assignmentsByPage.Aguas);
-
-        // Crear un objeto para almacenar las imágenes de fondo por sección utilizando un map
         const sectionImages = {};
         assignmentsByPage.Aguas.forEach((assignment) => {
           const section = assignment.section.toLowerCase();
@@ -61,62 +51,11 @@ function Aguas() {
     fetchAssignments();
   }, [fetchAssignments]);
 
-  useEffect(() => {
-    console.log('Imagen de encabezado:', backgroundImages.encabezado);
-  }, [backgroundImages]);
-
   return (
     <div>
-      {/* Sección de encabezado con imagen de fondo */}
-      <div
-        style={{
-          position: 'relative',
-          height: '100vh',
-          width: '100%',
-          overflow: 'hidden'
-        }}
-      >
-        <div
-          style={{
-            position: 'absolute',
-            top: 0,
-            left: 0,
-            width: '100%',
-            height: '100%',
-            zIndex: -1,
-            opacity: 0.5,
-            overflow: 'hidden',
-          }}
-        >
-          {backgroundImages.encabezado ? (
-            <img
-              src={`/images/fondos/headeres/${backgroundImages.encabezado}`}
-              alt="Fondo Aguas"
-              style={{
-                width: '100%',
-                height: '100%',
-                objectFit: 'cover',
-                pointerEvents: 'none'
-              }}
-              onError={() => console.error('Error al cargar la imagen desde:', `/images/fondos/headeres/${backgroundImages.encabezado}`)}
-            />
-          ) : (
-            <p>Cargando imagen...</p>
-          )}
-        </div>
+      {/* Componente Encabezado con imagen de fondo */}
+      <Encabezado backgroundImage={backgroundImages.encabezado} />
 
-        {/* Texto del encabezado */}
-        <div id="encabezado" className="container text-center" style={{ position: 'relative', zIndex: 1, paddingTop: '70px', backgroundSize: 'cover' }}>
-          <h1 className="mb-4 text-white">
-            Aguas, Industrias y Tratamiento de Efluentes
-          </h1>
-          <p className="mb-5 text-white">
-            En Dosivac, nos especializamos en proporcionar equipos que optimizan el manejo y la distribución de fluidos, contribuyendo a procesos más eficientes y sostenibles en la purificación, distribución y gestión del agua. Nuestro equipo está diseñado para ofrecer un sistema de dosificación completo con todos los accesorios y la estructura necesaria en el área de trabajo.
-          </p>
-        </div>
-      </div>
-
-      {/* Secciones de contenido */}
       <section id="sistemas-robustos" className="my-5 sistemas-robustos">
         <div className="container">
           <h2 className="text-center">Sistemas de Dosificación de Alta Calidad</h2>
@@ -126,7 +65,6 @@ function Aguas() {
             y 200 litros, cada uno adaptado a diferentes requerimientos industriales y de tratamiento de agua.
           </p>
           <div className="row text-center">
-            {/* Equipo 1000 Litros */}
             <div className="col-md-6">
               <div className="equipo-image" id="equipo-1000-img">
                 <div className="image-container">
@@ -142,7 +80,6 @@ function Aguas() {
               </ul>
               <button className="btn btn-primary">Cotizar</button>
             </div>
-            {/* Equipo 200 Litros */}
             <div className="col-md-6">
               <div className="equipo-image" id="equipo-200-img">
                 <div className="image-container">
@@ -162,7 +99,6 @@ function Aguas() {
         </div>
       </section>
 
-      {/* Sección para Equipo de 1000 Litros */}
       <section id="equipo-dosificacion" className="my-5 equipment-section" style={{
         backgroundColor: sectionColors['equipo-dosificacion'] || 'transparent',
         backgroundImage: backgroundImages['equipo de dosificacion'] ? `url(/images/fondos/headeres/${backgroundImages['equipo de dosificacion']})` : 'none',
@@ -234,7 +170,6 @@ function Aguas() {
         </p>
       </section>
 
-      {/* Nueva sección de prueba */}
       <section id="seccion-prueba" className="my-5" style={{
         backgroundColor: sectionColors['seccion-prueba'],
         backgroundImage: backgroundImages['seccion-prueba'] ? `url(/images/fondos/headeres/${backgroundImages['seccion-prueba']})` : 'none',
