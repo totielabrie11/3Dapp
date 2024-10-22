@@ -8,6 +8,7 @@ import Mercados from './Mercados/Mercados'; // Importamos el nuevo componente de
 import Empresa from './Empresa/Empresa'; 
 import Historia from './Historia/Historia'; 
 import SubscriptionNewsLatter from './NewsLatter/SubscriptionNewsLatter'
+import IrInicio from './IrInicio/IrInicio'
 
 const Home = () => {
 
@@ -39,21 +40,46 @@ const Home = () => {
             </header>
             
             {/* Sección de Explora Nuestros Mercados */}
-            <Mercados />
-            
-            <Empresa />
-            <Historia />
-            <Equipo />
+            <div id="mercados">
+                <Mercados />
+            </div>
 
-            <Distribuidores />
-            <Novedades />
+            {/* Sección de Empresa con su id */}
+            <div id="empresa">
+                <Empresa />
+            </div>
+
+            {/* Sección Historia (excluida del ScrollSpy) */}
+            <div id="historia">
+                <Historia />
+            </div>
+
+            {/* Sección Equipo (excluida del ScrollSpy) */}
+            <div id="equipo">
+                <Equipo />
+            </div>
+
+            {/* Sección Distribuidores */}
+            <div id="distribuidores">
+                <Distribuidores />
+            </div>
+
+            {/* Sección Novedades */}
+            <div id="novedades">
+                <Novedades />
+            </div>
+
             {/* Sección de Contacto */}
-            <Contacto />
+            <div id="contacto">
+                <Contacto />
+            </div>
+
             <SubscriptionNewsLatter />
+            <IrInicio />
+
             {/* Footer */}
-       
         </div>
     );
-};  
+};
 
 export default Home;

@@ -3,6 +3,7 @@ import axios from 'axios';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { BACKEND_URL } from '../../configLocalHost'; // Asegúrate de que la ruta es correcta
 import Encabezado from './Encabezado'; // Importamos el componente Encabezado
+import IrInicio from '../IrInicio/IrInicio';
 
 function Refineria() {
   const [backgroundImages, setBackgroundImages] = useState({});
@@ -191,6 +192,7 @@ function Refineria() {
           </div>
         </div>
       </section>
+      <IrInicio/>
     </div>
   );
 }

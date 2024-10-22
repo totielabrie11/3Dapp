@@ -4,6 +4,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import './Aguas.css'; // Archivo CSS específico para el componente
 import { BACKEND_URL } from '../../configLocalHost'; // Asegúrate de que la ruta es correcta
 import Encabezado from './Encabezado'; // Importamos el componente Encabezado
+import IrInicio from '../IrInicio/IrInicio';
 
 function Aguas() {
   const [backgroundImages, setBackgroundImages] = useState({}); // Estado para las imágenes de fondo por sección
@@ -344,7 +345,7 @@ function Aguas() {
       </section>
 
 
-
+        <IrInicio/>
 
 
 

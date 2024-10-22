@@ -4,6 +4,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import './Petroleo.css';
 import { BACKEND_URL } from '../../configLocalHost'; // Importar BACKEND_URL desde config.js
 import Encabezado from './Encabezado'; // Importamos el componente Encabezado
+import IrInicio from '../IrInicio/IrInicio';
 
 function Petroleo() {
   const [backgroundImages, setBackgroundImages] = useState({});
@@ -333,6 +334,7 @@ function Petroleo() {
           </div>
         </div>
       </section>
+      <IrInicio/>
     </div>
   );
 }

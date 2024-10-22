@@ -9,7 +9,7 @@ function NavBar({ isAdmin, user, handleLogout, activeSection }) {
   const [isTop, setIsTop] = useState(true); // Estado para manejar si estamos en el top
   const logoTop = 'assets/img/logos/Logoazul.png'; // Logo cuando estamos en el top
   const logoScroll = 'assets/img/logos/Logo.png'; // Logo cuando hacemos scroll
-  const sections = ['home', 'novedades', 'about', 'team', 'distribuidores', 'contact', 'productos'];
+  const sections = ['home', 'novedades', 'about', 'distribuidores', 'contact', 'productos']; // Quitar 'team'
 
   // Efecto para detectar scroll y cambiar el estado de isTop
   useEffect(() => {
@@ -77,16 +77,13 @@ function NavBar({ isAdmin, user, handleLogout, activeSection }) {
                 <NavDropdown.Item onClick={() => handleNavClick('home')}>Principal</NavDropdown.Item>
                 <NavDropdown.Item onClick={() => navigate('/petroleo')}>Petróleo</NavDropdown.Item>
                 <NavDropdown.Item onClick={() => navigate('/refrigeracion')}>Refrigeración</NavDropdown.Item> {/* Nuevo item para Refrigeración */}
-                <NavDropdown.Item onClick={() => navigate('/refineria')}>Refinería</NavDropdown.Item> {/* Nuevo item para Refineria */}
+                <NavDropdown.Item onClick={() => navigate('/refineria')}>Refinería</NavDropdown.Item> {/* Nuevo item para Refinería */}
                 <NavDropdown.Item onClick={() => navigate('/aguas')}>Aguas</NavDropdown.Item> {/* Nuevo item para Aguas */}
               </NavDropdown>
 
               {/* Otras secciones de la navegación */}
               <Nav.Link onClick={() => handleNavClick('about')} className={`nav-link text-uppercase ${activeSection === 'about' ? 'active' : ''}`}>
                 Empresa
-              </Nav.Link>
-              <Nav.Link onClick={() => handleNavClick('team')} className={`nav-link text-uppercase ${activeSection === 'team' ? 'active' : ''}`}>
-                Equipo
               </Nav.Link>
               <Nav.Link onClick={() => handleNavClick('distribuidores')} className={`nav-link text-uppercase ${activeSection === 'distribuidores' ? 'active' : ''}`}>
                 Distribuidores

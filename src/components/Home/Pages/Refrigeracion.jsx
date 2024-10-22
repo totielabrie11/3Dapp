@@ -4,6 +4,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import './Refrigeracion.css';
 import { BACKEND_URL } from '../../configLocalHost'; // Importa la URL desde el archivo config
 import Encabezado from './Encabezado'; // Importamos el componente Encabezado
+import IrInicio from '../IrInicio/IrInicio';
 
 function Refrigeracion() {
   const [backgroundImages, setBackgroundImages] = useState({});
@@ -261,6 +262,7 @@ function Refrigeracion() {
           </p>
         </div>
       </section>
+      <IrInicio/>
     </div>
   );
 }

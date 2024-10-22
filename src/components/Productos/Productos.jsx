@@ -3,6 +3,7 @@ import ProductFilter from './ProductFilter';
 import ProductCards from './ProductCards';
 import { BACKEND_URL } from '../configLocalHost'; // Importa la URL desde el archivo config
 import './Productos.css';
+import IrInicio from '../Home/IrInicio/IrInicio';
 
 function Productos() {
   const [products, setProducts] = useState([]);
@@ -127,6 +128,7 @@ function Productos() {
       <div className="center-column">
         <ProductCards products={filteredProducts} />
       </div>
+      <IrInicio/>
     </div>
   );
 }
