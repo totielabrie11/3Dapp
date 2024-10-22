@@ -19,7 +19,7 @@ function FotosAdminAsignadorSeccion({ show, handleClose, onSave, selectedPage })
       setSections(filteredSections);
 
       if (filteredSections.length > 0) {
-        setSelectedSection(filteredSections[0].id); // Seleccionar la primera sección por defecto
+        setSelectedSection(filteredSections[0].name); // Seleccionar la primera sección por defecto
       }
     } catch (error) {
       console.error('Error al obtener las secciones:', error);
@@ -35,9 +35,9 @@ function FotosAdminAsignadorSeccion({ show, handleClose, onSave, selectedPage })
 
   const handleSave = () => {
     if (selectedSection === 'header/encabezado') {
-      onSave({ id: 'header/encabezado', name: 'Encabezado', page: selectedPage });
+      onSave({ name: 'Encabezado', page: selectedPage });
     } else {
-      const selectedSectionData = sections.find(section => section.id === selectedSection);
+      const selectedSectionData = sections.find(section => section.name === selectedSection);
       if (selectedSectionData) {
         onSave(selectedSectionData); // Enviar el objeto completo de la sección seleccionada al componente padre
       }
@@ -61,7 +61,7 @@ function FotosAdminAsignadorSeccion({ show, handleClose, onSave, selectedPage })
               <option value="header/encabezado">Encabezado</option> {/* Opción estática para encabezado */}
               {sections.length > 0 ? (
                 sections.map((section) => (
-                  <option key={section.id} value={section.id}>
+                  <option key={section.name} value={section.name}>
                     {`${section.name} - Página: ${section.page}`}
                   </option>
                 ))

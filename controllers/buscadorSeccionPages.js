@@ -34,27 +34,26 @@ const getSectionsFromPages = () => {
           JSXElement(path) {
             const nodeName = path.node.openingElement.name.name;
             if (nodeName === 'section') {
-              const attributes = path.node.openingElement.attributes;
-              let id = null;
               let name = null;
 
-              // Buscar el atributo 'id' y el texto del título (h2) dentro de la etiqueta <section>
-              attributes.forEach((attr) => {
-                if (attr.name && attr.name.name === 'id') {
-                  id = attr.value.value; // Obtener el valor del id
+              // Buscar la etiqueta <h2> dentro de la sección
+              path.traverse({
+                JSXElement(innerPath) {
+                  const innerNodeName = innerPath.node.openingElement.name.name;
+                  if (innerNodeName === 'h2') {
+                    // Intentar encontrar el texto dentro del <h2>
+                    innerPath.node.children.forEach((child) => {
+                      if (child.type === 'JSXText') {
+                        name = child.value.trim(); // Obtener el texto dentro del <h2> y eliminar espacios en blanco
+                      }
+                    });
+                  }
                 }
               });
 
-              // Buscar el texto dentro de la etiqueta <h2> dentro de la sección
-              path.node.children.forEach((child) => {
-                if (child.type === 'JSXElement' && child.openingElement.name.name === 'h2') {
-                  name = child.children[0].value; // El texto dentro del <h2>
-                }
-              });
-
-              if (id && name) {
-                sectionData.push({ id, name, page: file.replace('.jsx', '') });
-                console.log(`Sección encontrada: ID = ${id}, Nombre = ${name}, Página = ${file.replace('.jsx', '')}`);
+              if (name) {
+                sectionData.push({ name, page: file.replace('.jsx', '') });
+                console.log(`Sección encontrada: Nombre = ${name}, Página = ${file.replace('.jsx', '')}`);
               }
             }
           }
@@ -71,6 +70,7 @@ const getSectionsFromPages = () => {
 
   return sectionData;
 };
+
 
 // Endpoint para obtener las secciones de las páginas
 router.get('/api/pages/sections', (req, res) => {

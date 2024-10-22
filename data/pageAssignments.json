@@ -1,108 +1,13 @@
 [
   {
-    "photoName": "cara.webp",
-    "pageName": "Aguas",
-    "section": "Sistemas Robustos con Bombas Dosivac"
-  },
-  {
-    "photoName": "petroleo.webp",
-    "pageName": "Aguas",
-    "section": "Impacto Ambiental del Tratamiento de Agua"
-  },
-  {
-    "photoName": "verde.webp",
-    "pageName": "Aguas",
-    "section": "El Futuro del Agua Pura"
-  },
-  {
-    "photoName": "argentina.png",
-    "pageName": "Aguas",
-    "section": "Beneficios de la Dosificación Eficiente"
-  },
-  {
-    "photoName": "avion.webp",
-    "pageName": "Aguas",
-    "section": "Encabezado"
-  },
-  {
-    "photoName": "argentina.png",
-    "pageName": "Aguas",
-    "section": "Encabezado"
-  },
-  {
-    "photoName": "argentina.png",
-    "pageName": "Aguas",
-    "section": "Encabezado"
-  },
-  {
-    "photoName": "cara.webp",
-    "pageName": "Aguas",
-    "section": "Encabezado"
-  },
-  {
-    "photoName": "avion.webp",
-    "pageName": "Aguas",
-    "section": "Sistemas Portátiles de Dosificación"
-  },
-  {
-    "photoName": "sistema refri pc.webp",
-    "pageName": "Refrigeracion",
-    "section": "Encabezado"
-  },
-  {
-    "photoName": "argentina.png",
-    "pageName": "Refrigeracion",
-    "section": "Sistemas Industriales de Vacío"
-  },
-  {
-    "photoName": "petroleoFondo.png",
+    "photoName": "fondoPetroleo.png",
     "pageName": "Petroleo",
     "section": "Encabezado"
-  },
-  {
-    "photoName": "fondoPetroleoEspecificas.png",
-    "pageName": "Petroleo",
-    "section": "TIPO DE BOMBAS"
-  },
-  {
-    "photoName": "equipo de aire.jpg",
-    "pageName": "Refrigeracion",
-    "section": "Mantenimiento Preventivo de Sistemas de Vacío"
-  },
-  {
-    "photoName": "cara.webp",
-    "pageName": "Refrigeracion",
-    "section": "Nuevas Tecnologías en Sistemas de Vacío"
-  },
-  {
-    "photoName": "equipo.png",
-    "pageName": "Refrigeracion",
-    "section": "Eficiencia de los Sistemas de Vacío"
-  },
-  {
-    "photoName": "fondoParaPetroleo.jpg",
-    "pageName": "Petroleo",
-    "section": "EQUIPOS INTELIGENTES"
-  },
-  {
-    "photoName": " fondo refri.jpg",
-    "pageName": "Refrigeracion",
-    "section": "Encabezado"
-  },
-  {
-    "photoName": "fondoRefri2.jpg",
-    "pageName": "Refrigeracion",
-    "section": "Bombas de Vacío"
-  },
-  {
-    "photoName": "sistemasvacio.webp",
-    "pageName": "Refrigeracion",
-    "section": "Aplicaciones en Refrigeración"
   },
   {
     "photoName": "aplicandovacio.webp",
     "pageName": "Refrigeracion",
-    "section": "Aplicaciones en Refrigeración"
+    "section": "Encabezado"
   },
   {
     "photoName": "mantenimiento.webp",
@@ -110,28 +15,13 @@
     "section": "Mantenimiento Preventivo de Sistemas de Vacío"
   },
   {
-    "photoName": "fondoagua.jpg",
-    "pageName": "Aguas",
-    "section": "Encabezado"
-  },
-  {
-    "photoName": "cara.webp",
-    "pageName": "Refineria",
-    "section": "Nuevas Tecnologías en Equipos de Vacío"
-  },
-  {
-    "photoName": "fondoPetroleo.png",
-    "pageName": "Petroleo",
-    "section": "Encabezado"
-  },
-  {
-    "photoName": "fondoPetroleoEspecificas.png",
-    "pageName": "Petroleo",
-    "section": "EQUIPOS INTELIGENTES"
-  },
-  {
     "photoName": "aplicandovacio.webp",
     "pageName": "Refrigeracion",
+    "section": "Aplicaciones en Refrigeración"
+  },
+  {
+    "photoName": "fondoagua.jpg",
+    "pageName": "Aguas",
     "section": "Encabezado"
   }
 ]

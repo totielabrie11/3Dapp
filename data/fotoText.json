@@ -49,7 +49,7 @@
   },
   {
     "name": "fondoagua.jpg",
-    "description": "toma agua purta muy rica con sabor a Dosivac ",
+    "description": "toma agua pura y rica con sabor a Dosivac ",
     "fontFamily": "Arial, sans-serif",
     "fontColor": "#ffffff",
     "textTransform": "none",
@@ -60,9 +60,9 @@
     "name": "aplicandovacio.webp",
     "description": "Te va a quedar hermoso el equipo con nuestra bomba Dosivac",
     "fontFamily": "Arial, sans-serif",
-    "fontColor": "#ffffff",
-    "textTransform": "none",
-    "backgroundColor": "rgba(0, 0, 0, 0.7)",
+    "fontColor": "#007bff",
+    "textTransform": "uppercase",
+    "backgroundColor": "rgba(30, 204, 65, 0.8)",
     "paginaAsignar": "Refrigeracion"
   }
 ]

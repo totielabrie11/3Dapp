@@ -8,7 +8,7 @@ const ASSIGNMENTS_FILE = path.join(__dirname, '..', 'data', 'pageAssignments.jso
 
 // Verificar si el archivo `pageAssignments.json` existe, si no, crearlo con un contenido vacío
 if (!fs.existsSync(ASSIGNMENTS_FILE)) {
-  fs.writeFileSync(ASSIGNMENTS_FILE, JSON.stringify({}));
+  fs.writeFileSync(ASSIGNMENTS_FILE, JSON.stringify([]));
 }
 
 // Endpoint para obtener las páginas existentes

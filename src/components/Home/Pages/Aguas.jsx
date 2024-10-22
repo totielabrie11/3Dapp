@@ -1,47 +1,56 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import axios from 'axios';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import './Aguas.css';
-import { BACKEND_URL } from '../../configLocalHost'; // Importar BACKEND_URL desde config.js
+import './Aguas.css'; // Archivo CSS específico para el componente
+import { BACKEND_URL } from '../../configLocalHost'; // Asegúrate de que la ruta es correcta
 import Encabezado from './Encabezado'; // Importamos el componente Encabezado
 
 function Aguas() {
   const [backgroundImages, setBackgroundImages] = useState({}); // Estado para las imágenes de fondo por sección
+  const [sectionTexts, setSectionTexts] = useState({}); // Estado para los textos dinámicos de cada sección
   const [sectionColors, setSectionColors] = useState({
     'equipos-portatiles': '',
     'sistemas-robustos': '',
     'beneficios-dosificacion': '',
     'equipo-dosificacion': '',
-    'portable-equipment-section': '',
+    'equipos-cloracion': '#123456',
     'equipo-1000-litros': '',
     'equipo-200-litros': '',
-    'seccion-prueba': '#123456' // Nueva sección con color imaginario
+    'seccion-prueba': '#123456', // Color imaginario para la sección de prueba
   });
 
+  // Función para obtener las asignaciones de contenido desde el backend
   const fetchAssignments = useCallback(async () => {
     try {
       const response = await axios.get(`${BACKEND_URL}/api/pages/assignments`);
       const assignments = response.data;
 
       const assignmentsByPage = assignments.reduce((acc, assignment) => {
-        const { pageName } = assignment;
-        if (!acc[pageName]) {
-          acc[pageName] = [];
+        const { pageName, section, photoName, description } = assignment;
+
+        if (pageName === "Aguas") {
+          const sectionKey = section.trim().toLowerCase(); // Elimina espacios y convierte a minúsculas para comparación
+          acc[sectionKey] = {
+            photoName: photoName,
+            description: description || ''
+          };
         }
-        acc[pageName].push(assignment);
+
         return acc;
       }, {});
 
-      if (assignmentsByPage.Aguas) {
-        const sectionImages = {};
-        assignmentsByPage.Aguas.forEach((assignment) => {
-          const section = assignment.section.toLowerCase();
-          const photoName = assignment.photoName;
-          sectionImages[section] = photoName;
-        });
+      // Guardar las imágenes y textos en el estado
+      const sectionImages = {};
+      const sectionTexts = {};
 
-        setBackgroundImages(sectionImages);
-      }
+      Object.keys(assignmentsByPage).forEach((key) => {
+        sectionImages[key] = assignmentsByPage[key].photoName;
+        sectionTexts[key] = assignmentsByPage[key].description;
+      });
+
+      setBackgroundImages(sectionImages);
+      setSectionTexts(sectionTexts);
+
     } catch (error) {
       console.error('Error al obtener las asignaciones:', error);
     }
@@ -51,24 +60,46 @@ function Aguas() {
     fetchAssignments();
   }, [fetchAssignments]);
 
+  // Función para obtener el nombre de la imagen basado en el contenido del h2
+  const getBackgroundImage = (sectionTitle) => {
+    const key = sectionTitle.trim().toLowerCase(); // Aseguramos que la clave sea consistente
+    return backgroundImages[key] ? `${BACKEND_URL}/images/fondos/headeres/${backgroundImages[key]}` : null;
+  };
+
   return (
     <div>
       {/* Componente Encabezado con imagen de fondo */}
       <Encabezado backgroundImage={backgroundImages.encabezado} />
 
-      <section id="sistemas-robustos" className="my-5 sistemas-robustos">
+      {/* Sección de Sistemas de Dosificación */}
+      <section
+        id="sistemas-robustos"
+        className="my-5"
+        style={{
+          backgroundImage: getBackgroundImage('Sistemas de Dosificación')
+            ? `url(${getBackgroundImage('Sistemas de Dosificación')})`
+            : 'none',
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+        }}
+      >
         <div className="container">
           <h2 className="text-center">Sistemas de Dosificación de Alta Calidad</h2>
           <p className="text-center">
-            En Dosivac, ofrecemos equipos de dosificación diseñados para garantizar la máxima eficiencia 
-            y seguridad en el manejo de fluidos. Nuestros sistemas están disponibles en capacidades de 1000 
-            y 200 litros, cada uno adaptado a diferentes requerimientos industriales y de tratamiento de agua.
+            {sectionTexts['sistemas-robustos'] ||
+              `En Dosivac, ofrecemos equipos de dosificación diseñados para garantizar la máxima eficiencia y seguridad en el manejo de fluidos. 
+              Nuestros sistemas están disponibles en capacidades de 1000 y 200 litros, 
+              cada uno adaptado a diferentes requerimientos industriales y de tratamiento de agua.`}
           </p>
           <div className="row text-center">
             <div className="col-md-6">
               <div className="equipo-image" id="equipo-1000-img">
                 <div className="image-container">
-                  <img src="assets/img/portfolio/equipoAguas1000.png" alt="equipoAguas1000" className="img-fluid" />
+                  <img
+                    src="assets/img/portfolio/equipoAguas1000.png"
+                    alt="Equipo Aguas 1000 Litros"
+                    className="img-fluid"
+                  />
                 </div>
               </div>
               <h3>Equipo de 1000 Litros</h3>
@@ -83,7 +114,11 @@ function Aguas() {
             <div className="col-md-6">
               <div className="equipo-image" id="equipo-200-img">
                 <div className="image-container">
-                  <img src="assets/img/portfolio/equipo200.jpg" alt="Equipo de 200 Litros" className="img-fluid" />
+                  <img
+                    src="assets/img/portfolio/equipo200.jpg"
+                    alt="Equipo de 200 Litros"
+                    className="img-fluid"
+                  />
                 </div>
               </div>
               <h3>Equipo de 200 Litros</h3>
@@ -99,18 +134,26 @@ function Aguas() {
         </div>
       </section>
 
-      <section id="equipo-dosificacion" className="my-5 equipment-section" style={{
-        backgroundColor: sectionColors['equipo-dosificacion'] || 'transparent',
-        backgroundImage: backgroundImages['equipo de dosificacion'] ? `url(/images/fondos/headeres/${backgroundImages['equipo de dosificacion']})` : 'none',
-        backgroundSize: 'cover',
-        backgroundPosition: 'center'
-      }}>
-        <h2>EQUIPOS DE DOSIFICACIÓN</h2>
+      {/* Sección de Equipos de Dosificación */}
+      <section
+        id="equipos-dosificacion"
+        className="my-5 equipment-section"
+        style={{
+          backgroundColor: sectionColors['equipo-dosificacion'] || 'transparent',
+          backgroundImage: getBackgroundImage('Equipos de Dosificación')
+            ? `url(${getBackgroundImage('Equipos de Dosificación')})`
+            : 'none',
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+        }}
+      >
+        <h2 className="text-center">Equipos de Dosificación</h2>
         <div className="equipment-block row">
           <div className="equipment col-md-6">
             <h3>EQUIPO DE 1000 LITROS</h3>
             <p>
-              Nuestro equipo de 1000 litros está diseñado para operaciones de gran escala, proporcionando una solución robusta y confiable para la dosificación de fluidos. Este sistema incluye:
+              Nuestro equipo de 1000 litros está diseñado para operaciones de gran escala, proporcionando una solución robusta y confiable 
+              para la dosificación de fluidos. Este sistema incluye:
             </p>
             <ul>
               <li>Tablero Eléctrico: Disponible para equipos con bomba DECI/DDI.</li>
@@ -149,35 +192,61 @@ function Aguas() {
         </div>
       </section>
 
-      <section id="equipos-portatiles" className="my-5 cloracion-equipment-section" style={{
-        backgroundColor: sectionColors['equipos-portatiles'] || 'transparent',
-        backgroundImage: backgroundImages['equipos-portatiles'] ? `url(/images/fondos/headeres/${backgroundImages['equipos-portatiles']})` : 'none',
-        backgroundSize: 'cover',
-        backgroundPosition: 'center'
-        }}>
-        <h2>SERIE AQUALINE - EQUIPOS DE CLORACIÓN</h2>
-        <p>
-          Una línea de equipos modulares para la dosificación, construidos enteramente en polietileno de media densidad (PEMD) de alta resistencia química, compatible con una amplia gama de los productos a dosificar.
-        </p>
-        <p>
-          Diseño compacto y modular, de fácil instalación. Diseñados para nuestra línea de bombas EMD, EMD Plus y EMD Max. Posibilidad de realizar distintas configuraciones y de esta forma lograr dar solución a un sinfín de aplicaciones con el concepto “plug & play”.
-        </p>
-        <p>
-          <strong>Aplicaciones:</strong> desinfección de agua potable en depuradoras, pozos de abastecimiento de agua residual, albercas, zonas rurales, entre otros. Tratamientos de agua de enfriamiento para inhibir el crecimiento biológico y control de algas. Cloración de agua potable en barrios, colegios, clubes, cooperativas, industria. Sistemas de tratamiento de agua en equipos de enfriamientos.
-        </p>
-        <p>
-          El tanque está fabricado en material PEMD natural con boca de carga superior y puerto de venteo para gases de cloro. Opcional de 35, 50 y 90 litros. Probeta de acrílico incorporada con graduación para medición de caudal y visualización del nivel. Equipada con válvulas de doble vía para realizar maniobras de cubicado de la bomba y mantenimiento.
-        </p>
+      {/* Sección de Equipos de Cloración */}
+      <section
+        id="equipos-cloracion"
+        className="my-5"
+        style={{
+          backgroundImage: getBackgroundImage('Serie Aqualine - Equipos de Cloración')
+            ? `url(${getBackgroundImage('Serie Aqualine - Equipos de Cloración')})`
+            : 'none',
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+        }}
+      >
+        <div className="container">
+          <h2 className="text-center">Serie Aqualine - Equipos de Cloración</h2>
+          <p className="text-center">
+            {sectionTexts['equipos-cloracion'] ||
+              `Una línea de equipos modulares para la dosificación, construidos enteramente en polietileno de media densidad (PEMD) de alta resistencia química, compatible con una amplia gama de los productos a dosificar.`}
+          </p>
+          <div className="image-container-aqualine" style={{ display: 'flex', justifyContent: 'center', marginBottom: '2rem' }}>
+            <img
+              src="assets/img/portfolio/aqualine.png"
+              alt="Equipos de Cloración Aqualine"
+              className="img-fluid"
+            />
+          </div>
+          <ul className="list-unstyled" style={{ textAlign: 'left', maxWidth: '800px', margin: '0 auto' }}>
+            <li>Diseño compacto y modular, de fácil instalación.</li>
+            <li>Diseñados para nuestra línea de bombas EMD, EMD Plus y EMD Max.</li>
+            <li>Posibilidad de realizar distintas configuraciones y de esta forma lograr dar solución a un sinfín de aplicaciones con el concepto "plug & play".</li>
+            <li>Aplicaciones: desinfección de agua potable en depuradoras, pozos de abastecimiento de agua residual, aljibes, zonas rurales, entre otros. Tratamientos de agua para inhibir el crecimiento biológico y control de algas. Cloración de agua potable en barrios, colegios, clubes, cooperativas, industria. Sistemas de tratamiento de agua de enfriamientos.</li>
+            <li>El tanque fabricado en material PEMD natural con boca de carga superior y puerto de venteo para gases de cloro. Opcional de 35, 50 y 90 litros.</li>
+            <li>Probeta de acrílico incorporada con graduación para medición de caudal y visualización del nivel. Equipada con válvulas de doble vía para realizar maniobras de cubicado de la bomba y mantenimiento.</li>
+          </ul>
+        </div>
       </section>
 
-      <section id="seccion-prueba" className="my-5" style={{
-        backgroundColor: sectionColors['seccion-prueba'],
-        backgroundImage: backgroundImages['seccion-prueba'] ? `url(/images/fondos/headeres/${backgroundImages['seccion-prueba']})` : 'none',
-        backgroundSize: 'cover',
-        backgroundPosition: 'center'
-      }}>
-        <h2>Sección de Prueba</h2>
-        <p>Esta es una sección de prueba con un color imaginario.</p>
+      {/* Sección de Prueba */}
+      <section
+        id="seccion-prueba"
+        className="my-5"
+        style={{
+          backgroundColor: sectionColors['seccion-prueba'],
+          backgroundImage: getBackgroundImage('Sección de Prueba')
+            ? `url(${getBackgroundImage('Sección de Prueba')})`
+            : 'none',
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+        }}
+      >
+        <div className="container">
+          <h2 className="text-center">Sección de Prueba</h2>
+          <p className="text-center">
+            {sectionTexts['seccion-prueba'] || 'Esta es una sección de prueba con un color imaginario.'}
+          </p>
+        </div>
       </section>
     </div>
   );

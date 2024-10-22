@@ -8,30 +8,24 @@ import Encabezado from './Encabezado'; // Importamos el componente Encabezado
 function Petroleo() {
   const [backgroundImages, setBackgroundImages] = useState({});
 
+  // Función para obtener las asignaciones de contenido desde el backend
   const fetchAssignments = useCallback(async () => {
     try {
       const response = await axios.get(`${BACKEND_URL}/api/pages/assignments`);
       const assignments = response.data;
 
       const assignmentsByPage = assignments.reduce((acc, assignment) => {
-        const { pageName } = assignment;
-        if (!acc[pageName]) {
-          acc[pageName] = [];
+        const { pageName, section, photoName } = assignment;
+
+        if (pageName === "Petroleo") {
+          const sectionKey = section.trim().toLowerCase(); // Formateamos la clave para mayor consistencia
+          acc[sectionKey] = photoName;
         }
-        acc[pageName].push(assignment);
+
         return acc;
       }, {});
 
-      if (assignmentsByPage.Petroleo) {
-        const sectionImages = {};
-        assignmentsByPage.Petroleo.forEach((assignment) => {
-          const section = assignment.section.toLowerCase();
-          const photoName = assignment.photoName;
-          sectionImages[section] = photoName;
-        });
-
-        setBackgroundImages(sectionImages);
-      }
+      setBackgroundImages(assignmentsByPage);
     } catch (error) {
       console.error('Error al obtener las asignaciones:', error);
     }
@@ -41,17 +35,24 @@ function Petroleo() {
     fetchAssignments();
   }, [fetchAssignments]);
 
+  // Función para obtener la imagen de fondo basada en el contenido del h2
+  const getBackgroundImage = (sectionTitle) => {
+    const key = sectionTitle.trim().toLowerCase(); // Aseguramos consistencia en la clave
+    return backgroundImages[key] ? `${BACKEND_URL}/images/fondos/headeres/${backgroundImages[key]}` : null;
+  };
+
   return (
     <div>
       {/* Usamos el componente Encabezado */}
       <Encabezado backgroundImage={backgroundImages.encabezado} />
 
+      {/* Sección de Especialización en Sistemas */}
       <section
         id="especializacion-sistemas"
         className="text-center"
         style={{
-          backgroundImage: backgroundImages['especialización en sistemas de dosificación modulares']
-            ? `url(/images/fondos/headeres/${backgroundImages['especialización en sistemas de dosificación modulares']})`
+          backgroundImage: getBackgroundImage('Especialización en Sistemas de Dosificación Modulares')
+            ? `url(${getBackgroundImage('Especialización en Sistemas de Dosificación Modulares')})`
             : 'none',
           backgroundSize: 'cover',
           backgroundPosition: 'center',
@@ -72,10 +73,7 @@ function Petroleo() {
         </p>
 
         <div className="d-flex justify-content-center equipo-container">
-          <article
-            className="equipo m-3 text-center"
-            aria-label="Equipo Solar"
-          >
+          <article className="equipo m-3 text-center" aria-label="Equipo Solar">
             <img
               src="assets/img/portfolio/eqsolar.png"
               alt="Equipos Solares"
@@ -94,10 +92,7 @@ function Petroleo() {
             </button>
           </article>
 
-          <article
-            className="equipo m-3 text-center"
-            aria-label="Equipo Neumático"
-          >
+          <article className="equipo m-3 text-center" aria-label="Equipo Neumático">
             <img
               src="assets/img/portfolio/eq400.png"
               alt="Equipos Neumáticos"
@@ -116,10 +111,7 @@ function Petroleo() {
             </button>
           </article>
 
-          <article
-            className="equipo m-3 text-center"
-            aria-label="Equipo Electrónico"
-          >
+          <article className="equipo m-3 text-center" aria-label="Equipo Electrónico">
             <img
               src="assets/img/portfolio/eq1000.png"
               alt="Equipos Electrónicos"
@@ -140,12 +132,13 @@ function Petroleo() {
         </div>
       </section>
 
+      {/* Sección de Tipo de Bombas */}
       <section
         id="tipo-de-bombas"
         className="tipo-de-bombas-section text-center"
         style={{
-          backgroundImage: backgroundImages['tipo de bombas']
-            ? `linear-gradient(rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.9)), url(/images/fondos/headeres/${backgroundImages['tipo de bombas']})`
+          backgroundImage: getBackgroundImage('Tipo de Bombas')
+            ? `linear-gradient(rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.9)), url(${getBackgroundImage('Tipo de Bombas')})`
             : 'none',
           backgroundSize: 'cover',
           backgroundPosition: 'center',
@@ -187,6 +180,7 @@ function Petroleo() {
         </div>
       </section>
 
+      {/* Sección de Componentes de Dosificación */}
       <section
         id="componentes-dosificacion"
         className="componentes-dosificacion-section"
@@ -258,6 +252,7 @@ function Petroleo() {
         </div>
       </section>
       
+      {/* Sección de Control y Supervisión */}
       <section
         id="control-supervision"
         className="control-supervision-section"
@@ -301,25 +296,35 @@ function Petroleo() {
         </div>
       </section>
 
-      <section id="equipos-inteligentes" className="equipos-inteligentes-section text-white" style={{
-        backgroundImage: backgroundImages['equipos inteligentes']
-          ? `url(/images/fondos/headeres/${backgroundImages['equipos inteligentes']})`
-          : 'none',
-        backgroundSize: 'cover',
-        backgroundPosition: 'center',
-        backgroundColor: backgroundImages['equipos inteligentes']
-          ? 'transparent'
-          : '#0E0A0A',
-        padding: '100px 20px',
-        position: 'relative',
-      }}>
+      {/* Sección de Equipos Inteligentes */}
+      <section
+        id="equipos-inteligentes"
+        className="equipos-inteligentes-section text-white"
+        style={{
+          backgroundImage: getBackgroundImage('Equipos Inteligentes')
+            ? `url(${getBackgroundImage('Equipos Inteligentes')})`
+            : 'none',
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          backgroundColor: backgroundImages['equipos inteligentes']
+            ? 'transparent'
+            : '#0E0A0A',
+          padding: '100px 20px',
+          position: 'relative',
+        }}
+      >
         <h2 id="equipos-inteligentes-section-title">EQUIPOS INTELIGENTES</h2>
-        <div id="equipos-inteligentes-container" className="container d-flex align-items-center justify-content-between">
+        <div
+          id="equipos-inteligentes-container"
+          className="container d-flex align-items-center justify-content-between"
+        >
           <div id="text-content" className="text-content" style={{ flex: '1', maxWidth: '50%' }}>
             <p id="equipos-inteligentes-section-description" className="section-description mb-4">
               Nuestros equipos inteligentes están diseñados para mantenerte conectado y en control, equipados con conectividad WiFi y opciones de comunicación como Modbus RTU 485 y radio, garantizando una integración perfecta con tus sistemas existentes.
             </p>
-            <button id="equipos-inteligentes-section-btn" className="btn btn-outline-light btn-lg">CONOCER MÁS</button>
+            <button id="equipos-inteligentes-section-btn" className="btn btn-outline-light btn-lg">
+              CONOCER MÁS
+            </button>
           </div>
 
           <div id="image-content" className="image-content d-flex justify-content-center align-items-center" style={{ flex: '1' }}>
