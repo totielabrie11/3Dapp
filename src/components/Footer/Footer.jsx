@@ -39,11 +39,11 @@ const Footer = () => {
               <p>Teléfono: 011 2143-2864</p>
               <h3>Redes sociales</h3>
               <div className="social-icons">
-                <a href="/" onClick={(e) => e.preventDefault()}><FaInstagram /></a>
-                <a href="/" onClick={(e) => e.preventDefault()}><FaYoutube /></a>
-                <a href="/" onClick={(e) => e.preventDefault()}><FaWhatsapp /></a>
                 <a href="/" onClick={(e) => e.preventDefault()}><FaLinkedin /></a>
+                <a href="/" onClick={(e) => e.preventDefault()}><FaInstagram /></a>
                 <a href="/" onClick={(e) => e.preventDefault()}><FaFacebook /></a>
+                <a href="/" onClick={(e) => e.preventDefault()}><FaWhatsapp /></a>
+                <a href="/" onClick={(e) => e.preventDefault()}><FaYoutube /></a>
                 <a href="/" onClick={(e) => e.preventDefault()}>X</a>
               </div>
             </section>
