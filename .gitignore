@@ -15,12 +15,15 @@ jspm_packages/
 # Bower dependency directory
 bower_components/
 
-# Environment variables
+# Environment variables (en producción usar variables de entorno)
 .env.local
 .env.development.local
 .env.test.local
 .env.production.local
 
+# Ignorar variables locales pero permitir .env para producción
+.env.development
+.env.test
 
 # Next.js build output
 .next/
@@ -74,7 +77,7 @@ Thumbs.db
 .stylelintrc.yaml
 .stylelintrc.yml
 
-# Docker
+# Docker (si no usas Docker, puedes eliminar estas líneas)
 docker-compose.yml
 Dockerfile
 
@@ -91,8 +94,13 @@ coverage/
 # Typescript
 *.tsbuildinfo
 
-# Build directories
+# Build directories que no son necesarios en producción
 dist/
+build/
 
-# Exclude public and uploads
+# Ignorar imágenes, videos o archivos subidos localmente si no son necesarios en el código fuente
 uploads/
+
+# Archivos temporales del sistema o compilaciones locales
+.temp/
+.cache/
