@@ -15,24 +15,30 @@
   
   .equipo {
     width: 300px;
-    text-align: left;
+    max-height: 800px;
     background-color: #1c1c1c;
     padding: 20px;
     border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;    /* Centra horizontalmente los elementos */
+    text-align: center;     /* Asegura que el texto también quede centrado */
   }
   
   .equipo img {
-    width: 100%;
-    height: auto;
+    width: auto;           /* Cambia a auto para mantener la proporción original de la imagen */
+    max-width: 100%;       /* Limita el ancho de la imagen a su contenedor */
+    height: auto;          /* Asegura que la altura se ajuste automáticamente */
     object-fit: contain;
     margin-bottom: 15px;
+    display: block;        /* Asegura que la imagen sea un bloque */
+    align-self: center;    /* Centra la imagen horizontalmente dentro del flexbox */
   }
   
   .equipo h3 {
     color: #ffffff;
     font-size: 1.5rem;
     margin-bottom: 10px;
-    text-align: center;
   }
   
   .equipo p {
@@ -41,6 +47,7 @@
     line-height: 1.5;
     margin: 10px 0;
   }
+  
   
   .equipo p + p {
     border-top: 1px solid #ffffff;
@@ -51,7 +58,7 @@
     display: inline-block;
     padding: 12px 25px;
     color: #ffffff;
-    background-color: #ff6200;
+    background-color: #0000ff;
     border: none;
     border-radius: 50px;
     text-decoration: none;
@@ -63,8 +70,9 @@
   }
   
   .contizar-btn:hover {
-    background-color: #e55a00;
+    background-color: #ffffff;
     transform: translateY(-2px);
+    color: #000000;
   }
   
 
@@ -72,29 +80,84 @@
     padding: 60px 20px;
   }
   
-  .content-wrapper {
-    max-width: 800px;
-    margin: 0 auto;
-  }
-  
-  .section-title {
-    font-size: 28px;
-    font-weight: bold;
-    margin-bottom: 20px;
-  }
-  
-  .section-description {
-    font-size: 16px;
-    line-height: 1.6;
-    margin-bottom: 15px;
-  }
-  
-  .sub-title {
-    font-size: 22px;
-    font-weight: bold;
-    margin-top: 40px;
-    margin-bottom: 20px;
-  }
+/* CSS para la sección 'tipo-de-bombas' */
+.tipo-de-bombas-section {
+  text-align: center;
+  background-size: cover;
+  background-position: center;
+  padding: 50px 20px;
+  color: #ffffff;
+}
+
+.content-wrapper {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.section-title {
+  font-size: 28px;
+  font-weight: bold;
+  margin-bottom: 10px;
+  line-height: 1.3;
+}
+
+.section-description {
+  font-size: 16px;
+  line-height: 1.5;
+  margin-bottom: 10px;
+}
+
+.sub-title {
+  font-size: 22px;
+  font-weight: bold;
+  margin-top: 30px;
+  margin-bottom: 15px;
+  line-height: 1.4;
+}
+
+.mt-4 {
+  margin-top: 1.5rem;
+}
+
+.btn-ver-bombas {
+  display: inline-block;
+  padding: 15px 30px;
+  font-size: 1rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  color: #ffffff;
+  background-color: #ff5722;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.3s;
+}
+
+.btn-ver-bombas:hover {
+  background-color: #e64a19;
+  transform: translateY(-3px);
+}
+
+.btn-ver-bombas:active {
+  transform: translateY(0);
+}
+
+.image-container {
+  display: flex;
+  justify-content: center;
+  margin: 30px 0;
+}
+
+.image-container img {
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  margin-right: 15px;
+}
+
+.image-container img:last-child {
+  margin-right: 0;
+}
+
   
   .btn-ver-bombas {
     display: inline-block;
@@ -286,6 +349,8 @@
   position: relative;
   overflow: hidden;
   flex-direction: column;
+  font-family: 'Arial', sans-serif;
+  font-weight: 400;
 }
 
 #tipo-de-bombas::before {
@@ -317,6 +382,7 @@
   text-transform: uppercase;
   color: #ffcc00;
   text-align: center;
+  font-family: 'Arial', sans-serif;
 }
 
 #tipo-de-bombas .section-description {
@@ -325,6 +391,7 @@
   margin-bottom: 10px;
   color: #e0e0e0;
   text-align: center;
+  font-family: 'Arial', sans-serif;
 }
 
 #tipo-de-bombas .sub-title {
@@ -334,6 +401,7 @@
   margin-bottom: 10px;
   color: #ffcc00;
   text-align: center;
+  font-family: 'Arial', sans-serif;
 }
 
 #tipo-de-bombas .btn-ver-bombas {
@@ -349,6 +417,7 @@
   border-radius: 5px;
   cursor: pointer;
   transition: background-color 0.3s, transform 0.3s;
+  font-family: 'Arial', sans-serif;
 }
 
 #tipo-de-bombas .btn-ver-bombas:hover {
@@ -413,6 +482,7 @@
   align-items: center;
   padding: 50px 20px;
   min-height: 600px;
+  font-family: 'Arial', sans-serif;
 }
 
 .content-wrapper {
@@ -473,6 +543,7 @@
   flex: 1;
   max-width: 55%;
   text-align: center;
+  font-family: 'Arial', sans-serif;
 }
 
 /* Estilos para ajustar el diseño a pantallas más pequeñas */
@@ -548,7 +619,6 @@
   }
 }
 
-
 /* Sección Equipos Inteligentes */
 #equipos-inteligentes-section {
   position: relative;
@@ -559,6 +629,7 @@
   flex-direction: column;
   align-items: center;
   text-align: center;
+  font-family: 'Arial', sans-serif;
 }
 
 #equipos-inteligentes-section-title {
@@ -566,6 +637,7 @@
   font-weight: bold;
   margin-bottom: 20px;
   text-align: center;
+  font-family: 'Arial', sans-serif;
 }
 
 #equipos-inteligentes-container {
@@ -585,6 +657,7 @@
   position: relative;
   padding: 0 20px;
   margin-bottom: 20px;
+  font-family: 'Arial', sans-serif;
 }
 
 #image-content {
@@ -604,6 +677,7 @@
   line-height: 1.8;
   margin: 0 auto;
   text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+  font-family: 'Arial', sans-serif;
 }
 
 #equipos-inteligentes-section-btn {
@@ -613,6 +687,7 @@
   font-weight: bold;
   transition: all 0.3s ease;
   margin-top: 20px;
+  font-family: 'Arial', sans-serif;
 }
 
 #equipos-inteligentes-section-btn:hover {

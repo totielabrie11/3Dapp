@@ -77,9 +77,9 @@ function Petroleo() {
             <img
               src="assets/img/portfolio/eqsolar.png"
               alt="Equipos Solares"
-              style={{ width: '400px', height: '400px', objectFit: 'contain' }}
+              style={{  objectFit: 'contain' }}
             />
-            <h3 className="text-white mt-3">EQUIPOS SOLARES</h3>
+            <h3 className="text-white mt-3">EQUIPOS < br/>SOLARES</h3>
             <p>Dimensiones: 60 x 91</p>
             <p>Caudal máximo: 840 l/d</p>
             <p>Presión máxima: 650 kg/cm²</p>
@@ -96,7 +96,7 @@ function Petroleo() {
             <img
               src="assets/img/portfolio/eq400.png"
               alt="Equipos Neumáticos"
-              style={{ width: '400px', height: '400px', objectFit: 'contain' }}
+              style={{  objectFit: 'contain' }}
             />
             <h3 className="text-white mt-3">EQUIPOS NEUMÁTICOS</h3>
             <p>Dimensiones: 60 x 91</p>
@@ -115,7 +115,7 @@ function Petroleo() {
             <img
               src="assets/img/portfolio/eq1000.png"
               alt="Equipos Electrónicos"
-              style={{ width: '400px', height: '400px', objectFit: 'contain' }}
+              style={{ objectFit: 'contain' }}
             />
             <h3 className="text-white mt-3">EQUIPOS ELECTRÓNICOS</h3>
             <p>Dimensiones: 76 x 100</p>
@@ -134,51 +134,61 @@ function Petroleo() {
 
       {/* Sección de Tipo de Bombas */}
       <section
-        id="tipo-de-bombas"
-        className="tipo-de-bombas-section text-center"
-        style={{
-          backgroundImage: getBackgroundImage('Tipo de Bombas')
-            ? `linear-gradient(rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.9)), url(${getBackgroundImage('Tipo de Bombas')})`
-            : 'none',
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
-          padding: '50px 20px',
-          color: '#ffffff',
-        }}
-      >
-        <div className="content-wrapper">
-          <h2 className="section-title">APLICACIONES ESPECÍFICAS</h2>
-          <p className="section-description">
-            Inyección de Inhibidores de Corrosión: Protege equipos y tuberías de la
-            corrosión, prolongando su vida útil.
-          </p>
-          <p className="section-description">
-            Dosificación de Metanol: Previene la formación de hidratos en líneas de gas.
-          </p>
-          <p className="section-description">
-            Control de pH y otros parámetros químicos: Esencial en procesos de tratamiento de
-            agua y otros procesos industriales.
-          </p>
-          <p className="section-description">
-            Inyección de Biocidas y otros agentes químicos: Controla el crecimiento de
-            microorganismos en sistemas de enfriamiento y otros procesos.
-          </p>
+  id="tipo-de-bombas"
+  className="tipo-de-bombas-section text-center"
+  style={{
+    backgroundImage: getBackgroundImage('Tipo de Bombas')
+      ? `linear-gradient(rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.9)), url(${getBackgroundImage('Tipo de Bombas')})`
+      : 'none',
+    backgroundSize: 'cover',
+    backgroundPosition: 'center',
+    padding: '50px 20px',
+    color: '#ffffff',
+  }}
+>
+  <div className="content-wrapper">
+    <h2 className="section-title">APLICACIONES ESPECÍFICAS</h2>
+    <p className="section-description">
+      Inyección de Inhibidores de Corrosión: Protege equipos y tuberías de la corrosión, prolongando su vida útil.
+    </p>
+    <p className="section-description">
+      Dosificación de Metanol: Previene la formación de hidratos en líneas de gas.
+    </p>
+    <p className="section-description">
+      Control de pH y otros parámetros químicos: Esencial en procesos de tratamiento de agua y otros procesos industriales.
+    </p>
+    <p className="section-description">
+      Inyección de Biocidas y otros agentes químicos: Controla el crecimiento de microorganismos en sistemas de enfriamiento y otros procesos.
+    </p>
 
-          <h3 className="sub-title mt-4">TIPOS DE BOMBAS</h3>
-          <p className="section-description">
-            Bombas Neumáticas (DEN, DENG): Alta capacidad de presión y bajo mantenimiento.
-          </p>
-          <p className="section-description">
-            Bombas Eléctricas (DECI, DE, DE Duplex, DEAP): Robustas, adecuadas para servicio
-            continuo en exteriores.
-          </p>
-          <p className="section-description">
-            Bombas Solares (DES): Operación eficiente en áreas remotas sin energía eléctrica.
-          </p>
+    <h3 className="sub-title mt-4">TIPOS DE BOMBAS</h3>
+    <p className="section-description">
+      Bombas Neumáticas (DEN, DENG): Alta capacidad de presión y bajo mantenimiento.
+    </p>
+    <p className="section-description">
+      Bombas Eléctricas (DECI, DE, DE Duplex, DEAP): Robustas, adecuadas para servicio continuo en exteriores.
+    </p>
+    <p className="section-description">
+      Bombas Solares (DES): Operación eficiente en áreas remotas sin energía eléctrica.
+    </p>
 
-          <button className="btn-ver-bombas">VER BOMBAS</button>
-        </div>
-      </section>
+    <div className="image-container" style={{ display: 'flex', justifyContent: 'center', margin: '30px 0' }}>
+      <img
+        src="https://via.placeholder.com/150"
+        alt="Ejemplo de bomba"
+        style={{ borderRadius: '10px', boxShadow: '0 4px 8px rgba(0, 0, 0, 0.2)', marginRight: '15px' }}
+      />
+      <img
+        src="https://via.placeholder.com/150"
+        alt="Aplicación de bomba"
+        style={{ borderRadius: '10px', boxShadow: '0 4px 8px rgba(0, 0, 0, 0.2)' }}
+      />
+    </div>
+
+    <button className="btn-ver-bombas">VER BOMBAS</button>
+  </div>
+</section>
+
 
       {/* Sección de Componentes de Dosificación */}
       <section
