@@ -191,21 +191,6 @@
     "caracteristicas": []
   },
   {
-    "name": "DDI",
-    "description": "Bomba dosificadora DDI",
-    "path": "/models/DDI.JPG",
-    "caracteristicas": [
-      "Tipo de Producto: Dosificadora",
-      "Aplicación: Tratamiento de aguas",
-      "Aplicación: industria química en general",
-      "Tipo de accionamiento: Eléctrico",
-      "Tipo de industria: Petroleo",
-      "Rango de caudal:  2 lts/h   -  600 lts/h",
-      "Contrapresión Máxima: 10 kg/cm2",
-      "Tipo de cabeza: PP - PVDF - INOX"
-    ]
-  },
-  {
     "name": "Supervac",
     "description": "Bomba de vacío Supervac",
     "path": "/models/Supervac.png",
@@ -274,5 +259,15 @@
     "path": "/models/tele.jpg",
     "caracteristicas": [],
     "path-image": "/models/tele.jpg"
+  },
+  {
+    "name": "DDI.JPG",
+    "description": "Bomba dosificadora Robusta para aplicación Industrial y Quimica General.",
+    "path": "/models/DDI.JPG",
+    "caracteristicas": [
+      "Tipo de Producto: Dosificadora",
+      "Aplicación: Tratamiento de aguas",
+      "Aplicación: industria química en general"
+    ]
   }
 ]

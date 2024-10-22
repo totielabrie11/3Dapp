@@ -228,11 +228,17 @@ function Aguas() {
         </div>
       </section>
 
-      <section id="variedad-equipos" className="my-5" style={{
-        backgroundImage: getBackgroundImage('Bombas Dosivac: Innovación y Eficiencia en el Tratamiento de Agua') ? `url(${getBackgroundImage('Bombas Dosivac: Innovación y Eficiencia en el Tratamiento de Agua')})` : 'none',
-        backgroundSize: 'cover',
-        backgroundPosition: 'center',
-      }}>
+      <section
+        id="variedad-equipos"
+        className="my-5"
+        style={{
+          backgroundImage: getBackgroundImage('Bombas Dosivac: Innovación y Eficiencia en el Tratamiento de Agua')
+            ? `url(${getBackgroundImage('Bombas Dosivac: Innovación y Eficiencia en el Tratamiento de Agua')})`
+            : 'none',
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+        }}
+      >
         <div className="container">
           <h2 className="text-center">Bombas Dosivac: Innovación y Eficiencia en el Tratamiento de Agua</h2>
           <div className="row equipment-list">
@@ -242,23 +248,41 @@ function Aguas() {
                 <img src="assets/img/portfolio/emd.png" alt="Bombas EMD" className="img-fluid" />
               </div>
               <h3 className="variedad-equipos__title">Bombas EMD</h3>
-              <p className="variedad-equipos__description">Las bombas dosificadoras electromagnéticas de la serie EMD han sido especialmente diseñadas para satisfacer los requisitos modernos de funcionalidad y economía de espacio. Ofrecen una solución eficiente y de bajo costo con mínimo mantenimiento para la potabilización y tratamiento general de agua.</p>
-              <a href={`${BACKEND_URL}/productos/EMD`} target="_blank" className="variedad-equipos__btn btn btn-primary">Ver Bomba</a>
+              <p className="variedad-equipos__description">
+                Las bombas dosificadoras electromagnéticas de la serie EMD han sido especialmente diseñadas para satisfacer los requisitos modernos de funcionalidad y economía de espacio. Ofrecen una solución eficiente y de bajo costo con mínimo mantenimiento para la potabilización y tratamiento general de agua.
+              </p>
+              <a
+                href={`${BACKEND_URL}/assets/img/portfolio/emd.png`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="variedad-equipos__btn btn btn-primary"
+              >
+                Ver Bomba
+              </a>
             </div>
 
             <div className="col-md-6 col-lg-6 variedad-equipos__equipment-item">
               <div className="variedad-equipos__image-container">
-                <img src="assets/img/portfolio/emd-plus.png" alt="Bombas EMD Plus y EMD Max" className="img-fluid" />
-                <img src="assets/img/portfolio/emd-max.png" alt="Bombas EMD Plus y EMD Max" className="img-fluid" />
+                <img src="assets/img/portfolio/emdplus.png" alt="Bombas EMD Plus y EMD Max" className="img-fluid" />
+                <img src="assets/img/portfolio/emdmax.png" alt="Bombas EMD Plus y EMD Max" className="img-fluid" />
               </div>
               <h3 className="variedad-equipos__title">Bombas EMD Plus y EMD Max</h3>
-              <p className="variedad-equipos__description">Las series EMD Plus y EMD Max están desarrolladas para procesos que requieren lazos de control precisos, como potabilización, tratamiento de efluentes y torres de enfriamiento. Sus características incluyen:</p>
+              <p className="variedad-equipos__description">
+                Las series EMD Plus y EMD Max están desarrolladas para procesos que requieren lazos de control precisos, como potabilización, tratamiento de efluentes y torres de enfriamiento. Sus características incluyen:
+              </p>
               <ul className="variedad-equipos__list">
                 <li className="variedad-equipos__list-item">Software Intuitivo y Display Gráfico: Facilitan el manejo y la programación.</li>
                 <li className="variedad-equipos__list-item">Robusta Electrónica: Resistente a fluctuaciones de tensión en áreas con suministro eléctrico inestable.</li>
                 <li className="variedad-equipos__list-item">Sistema de Compensación: Mantiene constante el caudal y la presión incluso con baja tensión de suministro.</li>
               </ul>
-              <a href={`${BACKEND_URL}/productos/EMDMAX`} target="_blank" className="variedad-equipos__btn btn btn-primary">Ver Bomba</a>
+              <a
+                href={`${BACKEND_URL}/assets/img/portfolio/emd.png`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="variedad-equipos__btn btn btn-primary"
+              >
+                Ver Bomba
+              </a>
             </div>
 
             <div className="col-md-6 col-lg-6 variedad-equipos__equipment-item">
@@ -266,8 +290,17 @@ function Aguas() {
                 <img src="assets/img/portfolio/ddi.png" alt="Bomba DDI" className="img-fluid" />
               </div>
               <h3 className="variedad-equipos__title">Bomba DDI</h3>
-              <p className="variedad-equipos__description">Las bombas DDI, de tipo diafragma y con sistema de carrera perdida, son altamente confiables y robustas para la inyección de aditivos líquidos, siempre que la contrapresión no supere los 10 kg/cm². Ofrecen un amplio rango de caudales, adaptándose a diversas aplicaciones industriales.</p>
-              <a href={`${BACKEND_URL}/productos/DDI`} target="_blank" className="variedad-equipos__btn btn btn-primary">Ver Bomba</a>
+              <p className="variedad-equipos__description">
+                Las bombas DDI, de tipo diafragma y con sistema de carrera perdida, son altamente confiables y robustas para la inyección de aditivos líquidos, siempre que la contrapresión no supere los 10 kg/cm². Ofrecen un amplio rango de caudales, adaptándose a diversas aplicaciones industriales.
+              </p>
+              <a
+                href={`${BACKEND_URL}/assets/img/portfolio/ddi.png`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="variedad-equipos__btn btn btn-primary"
+              >
+                Ver Bomba
+              </a>
             </div>
 
             <div className="col-md-6 col-lg-6 variedad-equipos__equipment-item">
@@ -275,8 +308,17 @@ function Aguas() {
                 <img src="assets/img/portfolio/dshc.png" alt="Bomba DSHC" className="img-fluid" />
               </div>
               <h3 className="variedad-equipos__title">Bomba DSHC</h3>
-              <p className="variedad-equipos__description">Las electrobombas DSHC para vacío requieren mínimo mantenimiento, gracias a su diseño monoblock con motor de accionamiento, y la incorporación de una simple válvula de expulsión tipo flapper. Estas bombas están equipadas con axiales de última generación para una eficiencia máxima.</p>
-              <a href={`${BACKEND_URL}/productos/DSHC`} target="_blank" className="variedad-equipos__btn btn btn-primary">Ver Bomba</a>
+              <p className="variedad-equipos__description">
+                Las electrobombas DSHC para vacío requieren mínimo mantenimiento, gracias a su diseño monoblock con motor de accionamiento, y la incorporación de una simple válvula de expulsión tipo flapper. Estas bombas están equipadas con axiales de última generación para una eficiencia máxima.
+              </p>
+              <a
+                href={`${BACKEND_URL}/assets/img/portfolio/dshc.png`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="variedad-equipos__btn btn btn-primary"
+              >
+                Ver Bomba
+              </a>
             </div>
 
             <div className="col-md-6 col-lg-6 variedad-equipos__equipment-item">
@@ -284,13 +326,25 @@ function Aguas() {
                 <img src="assets/img/portfolio/soplador.png" alt="Sopladores de Aire" className="img-fluid" />
               </div>
               <h3 className="variedad-equipos__title">Sopladores de Aire</h3>
-              <p className="variedad-equipos__description">Nuestros sopladores de aire tipo root de desplazamiento positivo trilobulares están diseñados para alta eficiencia, prolongando la vida útil de los rodamientos y reduciendo el nivel de ruido, vibraciones y consumo energético.</p>
-              <a href={`${BACKEND_URL}/productos/soplador`} target="_blank" className="variedad-equipos__btn btn btn-primary">Ver Bomba</a>
+              <p className="variedad-equipos__description">
+                Nuestros sopladores de aire tipo root de desplazamiento positivo trilobulares están diseñados para alta eficiencia, prolongando la vida útil de los rodamientos y reduciendo el nivel de ruido, vibraciones y consumo energético.
+              </p>
+              <a
+                href={`${BACKEND_URL}/assets/img/portfolio/soplador.png`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="variedad-equipos__btn btn btn-primary"
+              >
+                Ver Bomba
+              </a>
             </div>
 
           </div>
         </div>
       </section>
+
+
+
 
 
 
