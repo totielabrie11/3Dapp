@@ -172,23 +172,9 @@ function Petroleo() {
       Bombas Solares (DES): Operación eficiente en áreas remotas sin energía eléctrica.
     </p>
 
-    <div className="image-container" style={{ display: 'flex', justifyContent: 'center', margin: '30px 0' }}>
-      <img
-        src="https://via.placeholder.com/150"
-        alt="Ejemplo de bomba"
-        style={{ borderRadius: '10px', boxShadow: '0 4px 8px rgba(0, 0, 0, 0.2)', marginRight: '15px' }}
-      />
-      <img
-        src="https://via.placeholder.com/150"
-        alt="Aplicación de bomba"
-        style={{ borderRadius: '10px', boxShadow: '0 4px 8px rgba(0, 0, 0, 0.2)' }}
-      />
-    </div>
-
     <button className="btn-ver-bombas">VER BOMBAS</button>
   </div>
 </section>
-
 
       {/* Sección de Componentes de Dosificación */}
       <section
