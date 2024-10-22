@@ -252,7 +252,7 @@ function Aguas() {
                 Las bombas dosificadoras electromagnéticas de la serie EMD han sido especialmente diseñadas para satisfacer los requisitos modernos de funcionalidad y economía de espacio. Ofrecen una solución eficiente y de bajo costo con mínimo mantenimiento para la potabilización y tratamiento general de agua.
               </p>
               <a
-                href={`${BACKEND_URL}/assets/img/portfolio/emd.png`}
+                href={`${BACKEND_URL}/productos/EMD`}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="variedad-equipos__btn btn btn-primary"
@@ -276,7 +276,7 @@ function Aguas() {
                 <li className="variedad-equipos__list-item">Sistema de Compensación: Mantiene constante el caudal y la presión incluso con baja tensión de suministro.</li>
               </ul>
               <a
-                href={`${BACKEND_URL}/assets/img/portfolio/emd.png`}
+                href={`${BACKEND_URL}/productos/EMDMAX`}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="variedad-equipos__btn btn btn-primary"
@@ -294,7 +294,7 @@ function Aguas() {
                 Las bombas DDI, de tipo diafragma y con sistema de carrera perdida, son altamente confiables y robustas para la inyección de aditivos líquidos, siempre que la contrapresión no supere los 10 kg/cm². Ofrecen un amplio rango de caudales, adaptándose a diversas aplicaciones industriales.
               </p>
               <a
-                href={`${BACKEND_URL}/assets/img/portfolio/ddi.png`}
+                href={`${BACKEND_URL}/productos/DDI.JPG`}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="variedad-equipos__btn btn btn-primary"
@@ -312,7 +312,7 @@ function Aguas() {
                 Las electrobombas DSHC para vacío requieren mínimo mantenimiento, gracias a su diseño monoblock con motor de accionamiento, y la incorporación de una simple válvula de expulsión tipo flapper. Estas bombas están equipadas con axiales de última generación para una eficiencia máxima.
               </p>
               <a
-                href={`${BACKEND_URL}/assets/img/portfolio/dshc.png`}
+                href={`${BACKEND_URL}/productos/DSHC`}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="variedad-equipos__btn btn btn-primary"
@@ -330,7 +330,7 @@ function Aguas() {
                 Nuestros sopladores de aire tipo root de desplazamiento positivo trilobulares están diseñados para alta eficiencia, prolongando la vida útil de los rodamientos y reduciendo el nivel de ruido, vibraciones y consumo energético.
               </p>
               <a
-                href={`${BACKEND_URL}/assets/img/portfolio/soplador.png`}
+                href={`${BACKEND_URL}/productos/soplador`}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="variedad-equipos__btn btn btn-primary"

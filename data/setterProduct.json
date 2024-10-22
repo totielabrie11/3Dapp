@@ -550,5 +550,17 @@
     ],
     "isAnimating": false,
     "rotationSpeed": 0.01
+  },
+  {
+    "name": "6(1)",
+    "lightIntensity": 1,
+    "spotLightIntensity": 1,
+    "lightPosition": [
+      10,
+      10,
+      10
+    ],
+    "isAnimating": false,
+    "rotationSpeed": 0.01
   }
 ]

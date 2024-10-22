@@ -53,8 +53,8 @@ function Refineria() {
         id="refineria-mineria"
         className="my-5"
         style={{
-          backgroundImage: getBackgroundImage('Refinería y Minería')
-            ? `url(${getBackgroundImage('Refinería y Minería')})`
+          backgroundImage: getBackgroundImage('Refinería y Minería: Dosivac en la Industria')
+            ? `url(${getBackgroundImage('Refinería y Minería: Dosivac en la Industria')})`
             : 'none',
           backgroundSize: 'cover',
           backgroundPosition: 'center',
@@ -87,12 +87,12 @@ function Refineria() {
           </p>
           <div className="row text-center">
             <div className="col-md-6">
-              <img src="assets/img/portfolio/dosificacion1.jpg" alt="Equipo de Dosificación Minera" className="img-fluid" />
+              <img src="assets/img/portfolio/tratamientoEfluenteDosivac.webp" alt="Equipo de Dosificación Minera" className="img-fluid" />
               <h3>Sistema de Dosificación Modular</h3>
               <p>Diseñado para la dosificación de químicos en plantas de tratamiento de efluentes.</p>
             </div>
             <div className="col-md-6">
-              <img src="assets/img/portfolio/dosificacion2.jpg" alt="Dosificación de Reactivos" className="img-fluid" />
+              <img src="assets/img/portfolio/EquiposMineria.webp" alt="Dosificación de Reactivos" className="img-fluid" />
               <h3>Dosificación de Reactivos</h3>
               <p>Equipos especializados para la dosificación precisa de reactivos en la lixiviación de minerales.</p>
             </div>
@@ -118,7 +118,7 @@ function Refineria() {
             Los sopladores y aireadores de Dosivac son fundamentales en el tratamiento de aguas residuales y en aplicaciones mineras donde es necesario garantizar un suministro de aire constante. Estos equipos están diseñados para proporcionar alta eficiencia y durabilidad en ambientes industriales exigentes.
           </p>
           <div className="image-container" style={{ display: 'flex', justifyContent: 'center' }}>
-            <img src="assets/img/portfolio/soplador.jpg" alt="Soplador Dosivac" className="img-fluid" />
+            <img src="assets/img/portfolio/sopladorMinero2.webp" alt="Soplador Dosivac" className="img-fluid" />
           </div>
           <ul className="list-unstyled text-center" style={{ maxWidth: '800px', margin: '0 auto' }}>
             <li>Alta eficiencia energética.</li>
@@ -147,12 +147,12 @@ function Refineria() {
           </p>
           <div className="row">
             <div className="col-md-6">
-              <img src="assets/img/portfolio/neumatico1.jpg" alt="Sistema de Transporte Neumático" className="img-fluid" />
+              <img src="assets/img/portfolio/transporteNeumatico.webp" alt="Sistema de Transporte Neumático" className="img-fluid" />
               <h3>Sistema de Transporte Neumático</h3>
               <p>Diseñado para el transporte eficiente de materiales en polvos y granulares.</p>
             </div>
             <div className="col-md-6">
-              <img src="assets/img/portfolio/neumatico2.jpg" alt="Equipos de Transporte" className="img-fluid" />
+              <img src="assets/img/portfolio/movimientoMateriales.webp" alt="Equipos de Transporte" className="img-fluid" />
               <h3>Equipos de Transporte de Materiales</h3>
               <p>Soluciones avanzadas para el manejo de materiales en la industria minera.</p>
             </div>
@@ -179,12 +179,12 @@ function Refineria() {
           </p>
           <div className="row">
             <div className="col-md-6">
-              <img src="assets/img/portfolio/control1.jpg" alt="Control de Procesos" className="img-fluid" />
+              <img src="assets/img/portfolio/equipoMineriaAutomatismo.webp" alt="Control de Procesos" className="img-fluid" />
               <h3>Automatización de Procesos</h3>
               <p>Soluciones para el monitoreo y control automatizado de sistemas de dosificación.</p>
             </div>
             <div className="col-md-6">
-              <img src="assets/img/portfolio/control2.jpg" alt="Supervisión Remota" className="img-fluid" />
+              <img src="assets/img/portfolio/TCRMcontrol.webp" alt="Supervisión Remota" className="img-fluid" />
               <h3>Supervisión Remota</h3>
               <p>Monitoreo en tiempo real de parámetros críticos para asegurar una operación eficiente.</p>
             </div>

@@ -269,5 +269,12 @@
       "Aplicación: Tratamiento de aguas",
       "Aplicación: industria química en general"
     ]
+  },
+  {
+    "name": "6(1)",
+    "description": "",
+    "path": "/models/6(1).png",
+    "caracteristicas": [],
+    "path-image": "/models/6(1).png"
   }
 ]
