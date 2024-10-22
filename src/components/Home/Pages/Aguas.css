@@ -180,48 +180,58 @@
   flex-wrap: wrap;
 }
 
+#equipos-cloracion {
+  padding: 3rem 0;
+  background-repeat: no-repeat;
+}
+
+#equipos-cloracion .container {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
 #equipos-cloracion h2 {
+  color: #ffffff; /* Color cambiado a blanco */
+  font-size: 2.5rem; /* Ajuste para igualar el tamaño de letra de otros h2 */
+  font-weight: 800; /* Aumentado el grosor de la letra para mayor visibilidad */
   width: 100%;
-  text-align: center;
-  font-size: 2.5rem;
-  margin-bottom: 1.5rem;
-  color: #003366;
+  display: flex;
+  justify-content: center;
 }
 
 #equipos-cloracion p {
-  width: 100%;
+  color: #ffffff; /* Color cambiado a blanco para mejor visibilidad */
+  font-size: 1.2rem;
+  line-height: 1.6;
   text-align: center;
-  font-size: 1.1rem;
   margin-bottom: 1.5rem;
-  color: #333;
 }
 
-.image-container-aqualine {
+#equipos-cloracion .image-container {
+  flex-basis: 50%;
   display: flex;
   justify-content: center;
   margin-bottom: 2rem;
-  width: 100%;
 }
 
-.image-container img {
-  width: 100%;
+#equipos-cloracion .image-container img {
+  max-width: 100%;
   height: auto;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
-
-#equipos-cloracion .image-container-aqualine {
-  flex-basis: 50%;
-  width: 100%;
+  margin-right: 2rem;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15); /* Mejora de la sombra para mayor profundidad */
+  border-radius: 8px; /* Añadido borde redondeado para mejorar el diseño */
 }
 
 #equipos-cloracion ul {
+  color: #ffffff; /* Color cambiado a blanco para mejor visibilidad */
   flex-basis: 50%;
-  padding: 0;
   list-style: none;
-  text-align: left;
-  font-size: 1rem;
+  font-size: 1.1rem;
   line-height: 1.8;
-  color: #444;
+  padding: 0;
 }
 
 #equipos-cloracion ul li {
@@ -231,12 +241,12 @@
 }
 
 #equipos-cloracion ul li::before {
-  content: '\2022';
+  content: '.';
   position: absolute;
   left: 0;
-  color: #003366;
+  color: #4d0041; /* Mejora del color del marcador para mejor contraste */
   font-weight: bold;
-  font-size: 1.2rem;
+  font-size: 2rem; /* Aumentado el tamaño del punto */
 }
 
 @media (max-width: 768px) {
@@ -248,5 +258,9 @@
   #equipos-cloracion ul {
     flex-basis: 100%;
     margin-bottom: 2rem;
+  }
+  
+  #equipos-cloracion .image-container img {
+    margin-right: 0;
   }
 }
