@@ -764,9 +764,9 @@ app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, 'build', 'index.html'));
 });
 
-// Iniciar el servidor
-const server = app.listen(port, () => {
-  console.log(`Servidor corriendo en el puerto ${port}`);
-});
 
+// Asegúrate de que esté escuchando en 0.0.0.0
+app.listen(PORT, '0.0.0.0', () => {
+  console.log(`Server is running on port ${PORT}`);
+});
 server.setTimeout(10 * 60 * 1000); // 10 minutos de timeout
