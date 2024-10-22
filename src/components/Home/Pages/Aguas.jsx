@@ -242,7 +242,7 @@ function Aguas() {
           <div className="equipment-list" style={{ textAlign: 'left', maxWidth: '800px', margin: '0 auto' }}>
             <div className="variedad-equipos__equipment-item">
               <div className="variedad-equipos__image-container" style={{ display: 'flex', justifyContent: 'center', marginBottom: '1rem' }}>
-                <img src="assets/img/equipment/bombas-emd.png" alt="Bombas EMD" className="img-fluid" />
+                <img src="assets/img/portfolio/emd.png" alt="Bombas EMD" className="img-fluid" />
               </div>
               <h3 className="variedad-equipos__title">Bombas EMD</h3>
               <p className="variedad-equipos__description">Las bombas dosificadoras electromagnéticas de la serie EMD han sido especialmente diseñadas para satisfacer los requisitos modernos de funcionalidad y economía de espacio. Ofrecen una solución eficiente y de bajo costo con mínimo mantenimiento para la potabilización y tratamiento general de agua.</p>
@@ -250,7 +250,8 @@ function Aguas() {
             </div>
             <div className="variedad-equipos__equipment-item">
               <div className="variedad-equipos__image-container" style={{ display: 'flex', justifyContent: 'center', marginBottom: '1rem' }}>
-                <img src="assets/img/equipment/bombas-emd-plus-max.png" alt="Bombas EMD Plus y EMD Max" className="img-fluid" />
+                <img src="assets\img\portfolio\emd-plus.png" alt="Bombas EMD Plus y EMD Max" className="img-fluid" />
+                <img src="assets\img\portfolio\emd-max.png" alt="Bombas EMD Plus y EMD Max" className="img-fluid" />
               </div>
               <h3 className="variedad-equipos__title">Bombas EMD Plus y EMD Max</h3>
               <p className="variedad-equipos__description">Las series EMD Plus y EMD Max están desarrolladas para procesos que requieren lazos de control precisos, como potabilización, tratamiento de efluentes y torres de enfriamiento. Sus características incluyen:</p>
@@ -263,7 +264,7 @@ function Aguas() {
             </div>
             <div className="variedad-equipos__equipment-item">
               <div className="variedad-equipos__image-container" style={{ display: 'flex', justifyContent: 'center', marginBottom: '1rem' }}>
-                <img src="assets/img/equipment/bomba-ddi.png" alt="Bomba DDI" className="img-fluid" />
+                <img src="assets/img/portfolio/ddi.png" alt="Bomba DDI" className="img-fluid" />
               </div>
               <h3 className="variedad-equipos__title">Bomba DDI</h3>
               <p className="variedad-equipos__description">Las bombas DDI, de tipo diafragma y con sistema de carrera perdida, son altamente confiables y robustas para la inyección de aditivos líquidos, siempre que la contrapresión no supere los 10 kg/cm². Ofrecen un amplio rango de caudales, adaptándose a diversas aplicaciones industriales.</p>
@@ -271,7 +272,7 @@ function Aguas() {
             </div>
             <div className="variedad-equipos__equipment-item">
               <div className="variedad-equipos__image-container" style={{ display: 'flex', justifyContent: 'center', marginBottom: '1rem' }}>
-                <img src="assets/img/equipment/bomba-dshc.png" alt="Bomba DSHC" className="img-fluid" />
+                <img src="assets/img/portfolio/dshc.png" alt="Bomba DSHC" className="img-fluid" />
               </div>
               <h3 className="variedad-equipos__title">Bomba DSHC</h3>
               <p className="variedad-equipos__description">Las electrobombas DSHC para vacío requieren mínimo mantenimiento, gracias a su diseño monoblock con motor de accionamiento, y la incorporación de una simple válvula de expulsión tipo flapper. Estas bombas están equipadas con axiales de última generación para una eficiencia máxima.</p>
@@ -279,7 +280,7 @@ function Aguas() {
             </div>
             <div className="variedad-equipos__equipment-item">
               <div className="variedad-equipos__image-container" style={{ display: 'flex', justifyContent: 'center', marginBottom: '1rem' }}>
-                <img src="assets/img/equipment/sopladores-aire.png" alt="Sopladores de Aire" className="img-fluid" />
+                <img src="assets/img/portfolio/soplador.png" alt="Sopladores de Aire" className="img-fluid" />
               </div>
               <h3 className="variedad-equipos__title">Sopladores de Aire</h3>
               <p className="variedad-equipos__description">Nuestros sopladores de aire tipo root de desplazamiento positivo trilobulares están diseñados para alta eficiencia, prolongando la vida útil de los rodamientos y reduciendo el nivel de ruido, vibraciones y consumo energético.</p>
@@ -288,9 +289,6 @@ function Aguas() {
           </div>
         </div>
       </section>
-
-
-
 
 
       {/* Sección de Prueba */}
