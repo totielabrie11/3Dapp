@@ -63,7 +63,7 @@
     "concurrently": "^8.2.2"
   },
   "engines": {
-    "node": "18.x"
+    "node": "20.16.0"
   },
   "proxy": "http://localhost:5000"
 }
