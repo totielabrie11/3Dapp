@@ -759,11 +759,16 @@ app.post('/api/contact', upload.single('file'), enviarCorreo);
 // Servir archivos estáticos desde el directorio 'build'
 app.use(express.static(path.join(__dirname, 'build')));
 
+
 // Para cualquier ruta, servir el archivo 'index.html'
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, 'build', 'index.html'));
 });
 
+// Cargar archivos estáticos del build de React en producción
+if (process.env.NODE_ENV === 'production') {
+  app.use(express.static(path.join(__dirname, 'build')));
+}
 
 // Asegúrate de que esté escuchando en 0.0.0.0
 app.listen(PORT, '0.0.0.0', () => {
