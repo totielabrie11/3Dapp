@@ -32,7 +32,6 @@ build/
 
 # Gatsby files
 .cache/
-public
 uploads/
 
 # Parcel-bundler cache
@@ -97,5 +96,4 @@ coverage/
 dist/
 
 # Exclude public and uploads
-public
 uploads/
