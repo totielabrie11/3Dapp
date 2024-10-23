@@ -1,9 +1,14 @@
 import express from 'express';
 import path from 'path';
 import dotenv from 'dotenv';
+import { fileURLToPath } from 'url';
 
 // Cargar variables de entorno desde .env
 dotenv.config();
+
+// Obtener la ruta correcta para ES Modules
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 const app = express();
 const port = process.env.PORT || 5000;
