@@ -2,6 +2,12 @@ const express = require('express');
 const fs = require('fs');
 const path = require('path');
 const multer = require('multer');
+// Importar dotenv y configurar
+require('dotenv').config();
+
+// Ahora puedes acceder a las variables de entorno con process.env
+console.log(process.env.REACT_APP_BACKEND_URL_PROD);
+
 const getGLTFFiles = require('./scripts/getModels');
 const session = require('express-session');
 const { upload, enviarCorreo } = require('./controllers/emailHandler');
@@ -765,13 +771,17 @@ app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, 'build', 'index.html'));
 });
 
-// Cargar archivos estáticos del build de React en producción
 if (process.env.NODE_ENV === 'production') {
+  // Configuración específica para producción
   app.use(express.static(path.join(__dirname, 'build')));
+} else {
+  // Configuración para desarrollo (puede ser útil para depuración)
+  app.use(express.static(path.join(__dirname, 'public')));
 }
 
+
 // Asegúrate de que esté escuchando en 0.0.0.0
-app.listen(PORT, '0.0.0.0', () => {
-  console.log(`Server is running on port ${PORT}`);
+const server = app.listen(port, '0.0.0.0', () => {
+  console.log(`Server is running on port ${port}`);
 });
 server.setTimeout(10 * 60 * 1000); // 10 minutos de timeout
